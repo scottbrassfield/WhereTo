@@ -1,0 +1,14 @@
+@import "../config/colors";
+@import "~susy/sass/susy";
+
+#map {
+  height: 100px;
+  width: 100px;
+
+}
+
+h2 {
+  font-weight: bold;
+  color: $primary-color;
+  font-style: $primary-font;
+}
