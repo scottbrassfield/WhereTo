@@ -23061,19 +23061,6 @@
 	var connect = _require.connect;
 
 
-	var form = (0, _reduxForm.reduxForm)({
-	  form: 'overview',
-	  onSubmit: function onSubmit() {
-	    console.log('hello');
-	  }
-	});
-
-	var updateInput = function updateInput(event) {
-	  if (event.which === 13) {
-	    console.log('bye');
-	  }
-	};
-
 	var renderInput = function renderInput(_ref) {
 	  var input = _ref.input;
 	  var placeholder = _ref.placeholder;
@@ -23089,16 +23076,20 @@
 	var Overview = function Overview(_ref2) {
 	  var handleSubmit = _ref2.handleSubmit;
 
-	  // debugger;
 	  return React.createElement(
 	    'div',
 	    null,
 	    React.createElement(
+	      'h1',
+	      null,
+	      'Where are you Headed?'
+	    ),
+	    React.createElement(
 	      'form',
 	      { onSubmit: handleSubmit },
-	      React.createElement(_reduxForm.Field, { name: 'destination', component: renderInput, placeholder: 'Where are you going?', onChange: updateInput }),
-	      React.createElement(_reduxForm.Field, { name: 'startDate', component: renderInput, placeholder: 'Start date' }),
-	      React.createElement(_reduxForm.Field, { name: 'endDate', component: renderInput, placeholder: 'End date' }),
+	      React.createElement(_reduxForm.Field, { name: 'destination', type: 'text', component: renderInput, placeholder: 'Destination' }),
+	      React.createElement(_reduxForm.Field, { name: 'startDate', type: 'text', component: renderInput, placeholder: 'Start date' }),
+	      React.createElement(_reduxForm.Field, { name: 'endDate', type: 'text', component: renderInput, placeholder: 'End date' }),
 	      React.createElement(
 	        'button',
 	        { type: 'submit' },
@@ -23107,6 +23098,13 @@
 	    )
 	  );
 	};
+
+	var form = (0, _reduxForm.reduxForm)({
+	  form: 'overview',
+	  onSubmit: function onSubmit(values) {
+	    console.log(values);
+	  }
+	});
 
 	module.exports = connect()(form(Overview));
 

@@ -1,5 +1,5 @@
 const React = require('react');
-const Input = require('./input/input')
+const Input = require('./overview/input')
 
 const App = () => {
   return (
