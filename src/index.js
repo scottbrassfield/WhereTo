@@ -4,6 +4,8 @@ const { Provider } = require('react-redux');
 const App = require('./js/components/app');
 const store = require('./js/redux/store');
 
+window.store = store;
+
 ReactDOM.render(
   <Provider store={ store }>
     <App />
