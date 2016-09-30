@@ -1,6 +1,6 @@
 import React from 'react';
 import Overview from './overview';
-import Summary from './summary'
+import Summary from './summary';
 
 const Input = () => {
   return (

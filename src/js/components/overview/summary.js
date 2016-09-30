@@ -9,7 +9,7 @@ const Summary = ({ destination, startDate, endDate, overview, dispatch}) => {
 
   var summaryClass = classNames({
     'hidden': !overview,
-    'active': !overview
+    'active': overview
   })
 
   return (
