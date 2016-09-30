@@ -1,10 +1,20 @@
 @import "~susy/sass/susy";
 
-$primary-font: Helvetica, sans-serif;
+$susy: (
+  columns: 12,
+  gutters: 1/4,
+  global-box-sizing: border-box,
+  container: 90%
+);
+
+$primary-font: 'Roboto', sans-serif;
 $primary-color: #5d5d5d;
 
 body {
-  @include container(90%);
+  @include container();
+
+  background-color: #fdfdfd;
+  font-family: $primary-font;
 }
 
 .hidden {

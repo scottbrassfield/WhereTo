@@ -1,13 +1,19 @@
 @import "../config/config";
 @import "~susy/sass/susy";
 
-#summary {
-  @include span(6 of 12);
+#itinerary {
+  @include span(isolate 6 at 3 of 12);
 
-  width: 400px;
-  margin-top: 30px;
+  margin-top: 50px;
+  min-height: 500px;
 }
 
-#itinerary {
-  @include span(6 of 12);
+#itinerary-title {
+  margin-top: 30px;
+  text-align: center;
+  color: $primary-color;
+}
+
+.time {
+  width: 100px;
 }

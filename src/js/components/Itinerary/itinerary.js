@@ -1,41 +1,31 @@
 import React from 'react'
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table'
+import Paper from 'material-ui/Paper'
 
 const Itinerary = () => {
   return (
-    <div id='itinerary'>
-      <Table>
+    <Paper id='itinerary'>
+      <div id='itinerary-title'>
+        <h2>Itinerary</h2>
+        <h4>[Insert Date]</h4>
+      </div>
+      <Table id="itinerary-details">
         <TableHeader>
           <TableRow>
-            <TableHeaderColumn>ID</TableHeaderColumn>
-            <TableHeaderColumn>Name</TableHeaderColumn>
+            <TableHeaderColumn className='time'>Time</TableHeaderColumn>
+            <TableHeaderColumn>Plans</TableHeaderColumn>
             <TableHeaderColumn>Status</TableHeaderColumn>
           </TableRow>
         </TableHeader>
-        <TableBody>
+        <TableBody showRowHover={true}>
           <TableRow>
-            <TableRowColumn>1</TableRowColumn>
-            <TableRowColumn>John Smith</TableRowColumn>
-            <TableRowColumn>Employed</TableRowColumn>
-          </TableRow>
-          <TableRow>
-            <TableRowColumn>2</TableRowColumn>
-            <TableRowColumn>Randal White</TableRowColumn>
-            <TableRowColumn>Unemployed</TableRowColumn>
-          </TableRow>
-          <TableRow>
-            <TableRowColumn>3</TableRowColumn>
-            <TableRowColumn>Stephanie Sanders</TableRowColumn>
-            <TableRowColumn>Employed</TableRowColumn>
-          </TableRow>
-          <TableRow>
-            <TableRowColumn>4</TableRowColumn>
-            <TableRowColumn>Steve Brown</TableRowColumn>
-            <TableRowColumn>Employed</TableRowColumn>
+            <TableRowColumn className='time'>2 PM</TableRowColumn>
+            <TableRowColumn>Visit the Louvre</TableRowColumn>
+            <TableRowColumn>Primary</TableRowColumn>
           </TableRow>
         </TableBody>
-        </Table>
-    </div>
+      </Table>
+    </Paper>
   )
 }
 

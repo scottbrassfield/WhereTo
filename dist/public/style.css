@@ -7,6 +7,9 @@ body {
     display: block;
     clear: both; }
 
+.hidden {
+  display: none; }
+
 h1 {
   color: #5d5d5d; }
 
@@ -23,8 +26,17 @@ body {
     display: block;
     clear: both; }
 
+.hidden {
+  display: none; }
+
 #summary {
   width: 49.15254%;
   float: left;
   margin-right: 1.69492%;
-  display: none; }
+  width: 400px;
+  margin-top: 30px; }
+
+#itinerary {
+  width: 32.20339%;
+  float: left;
+  margin-right: 1.69492%; }
