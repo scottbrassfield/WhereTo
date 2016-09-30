@@ -1,9 +1,10 @@
 import React from 'react';
 import { reduxForm, Field }from 'redux-form';
-import TextField from 'material-ui/TextField'
+import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import { connect } from 'react-redux'
-require('../../../stylesheets/components/overview.scss')
+import { connect } from 'react-redux';
+import classNames from 'classnames';
+require('../../../stylesheets/components/overview.scss');
 
 const renderTextField = ({ input, label }) => {
   return (
@@ -14,12 +15,14 @@ const renderTextField = ({ input, label }) => {
 }
 
 let Overview = ({overview, handleSubmit }) => {
-  var status = 'active';
-  if (overview) {
-    status = 'hidden'
-  }
+
+  var overviewClass = classNames({
+    'hidden': overview,
+    'active': !overview
+  })
+
   return (
-    <div id="overview" className={ status }>
+    <div id="overview" className={ overviewClass }>
       <h1>Where are you headed?</h1>
       <form onSubmit={ handleSubmit }>
         <Field name='destination' component={renderTextField} label='Destination' />
