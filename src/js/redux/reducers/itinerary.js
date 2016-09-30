@@ -2,6 +2,7 @@ const initialState = {
   destination: '',
   startDate: '',
   endDate: '',
+  overview: false,
   locations: [],
   lodging: [],
   plans: [
@@ -9,15 +10,15 @@ const initialState = {
       location: '',
       startTime: '',
       endTime: '',
-      backup: '',
+      backup: false,
     }
   ]
 }
 
 const itinerary = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_OVERVIEW':
-      return Object.assign({}, state, {destination: action.dest, startDate: action.start, endDate: action.end});
+    case 'OVERVIEW':
+      return Object.assign({}, state, {destination: action.dest, startDate: action.start, endDate: action.end, overview: action.complete});
     default:
       return state;
   }

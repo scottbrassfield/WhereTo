@@ -6,3 +6,7 @@ $primary-color: #5d5d5d;
 body {
   @include container(90%);
 }
+
+.hidden {
+  display: none;
+}
