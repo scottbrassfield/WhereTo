@@ -1,0 +1,8 @@
+@import "../config/config";
+@import "~susy/sass/susy";
+
+#summary {
+  @include span(6 of 12);
+
+  display: none;
+}

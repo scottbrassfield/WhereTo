@@ -1,0 +1,8 @@
+@import "~susy/sass/susy";
+
+$primary-font: Helvetica, sans-serif;
+$primary-color: #5d5d5d;
+
+body {
+  @include container(90%);
+}

@@ -1,11 +1,13 @@
-const React = require('react');
+import React from 'react';
 import { reduxForm, Field }from 'redux-form';
-const { connect } = require('react-redux');
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton';
+require('../../../stylesheets/components/overview.scss')
 
-const renderInput = ({input, placeholder, type}) => {
+const renderTextField = ({ input, label }) => {
   return (
     <div>
-      <input {...input} placeholder={placeholder} type={type} />
+      <TextField {...input} hintText={label} />
     </div>
   )
 }
@@ -13,12 +15,12 @@ const renderInput = ({input, placeholder, type}) => {
 let Overview = ({ handleSubmit }) => {
   return (
     <div>
-    <h1>Where are you Headed?</h1>
-      <form onSubmit={ handleSubmit }>
-        <Field name='destination' type='text' component={renderInput} placeholder='Destination' />
-        <Field name='startDate' type='text' component={renderInput} placeholder='Start date'/>
-        <Field name='endDate' type='text' component={renderInput} placeholder='End date' />
-        <button type='submit'>Submit</button>
+      <h1>Where are you Headed?</h1>
+      <form id='overview' onSubmit={ handleSubmit }>
+        <Field name='destination' component={renderTextField} label='Destination' />
+        <Field name='startDate' component={renderTextField} label='Start date' />
+        <Field name='endDate' component={renderTextField} label='End date' />
+        <RaisedButton type='submit' label='Submit' />
       </form>
     </div>
   )
@@ -26,9 +28,15 @@ let Overview = ({ handleSubmit }) => {
 
 const form = reduxForm({
   form: 'overview',
-  onSubmit (values) {
-    console.log(values)
+  fields: ['destination', 'startDate', 'endDate'],
+  onSubmit: ({ destination, startDate, endDate }, dispatch) => {
+    dispatch({
+      type: 'ADD_OVERVIEW',
+      dest: destination,
+      start: startDate,
+      end: endDate
+    })
   }
 })
 
-module.exports = connect()(form(Overview))
+module.exports = (form(Overview))

@@ -1,14 +1,14 @@
 const { createStore, combineReducers } = require('redux');
-const overview = require('./reducers/overview');
+const itinerary = require('./reducers/itinerary');
 const plans = require('./reducers/plans');
 const { reducer: formReducer } = require('redux-form');
 
 let reducers = combineReducers({
-  overview: overview,
+  itinerary: itinerary,
   plans: plans,
   form: formReducer
 })
 
-let store = createStore(reducers)
+let store = createStore(reducers, window.devToolsExtension && window.devToolsExtension())
 
 module.exports = store;

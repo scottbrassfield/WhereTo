@@ -1,14 +1,17 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const { Provider } = require('react-redux');
-const App = require('./js/components/app');
-const store = require('./js/redux/store');
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import App from './js/components/app'
+import store from './js/redux/store'
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
+injectTapEventPlugin();
 
 window.store = store;
 
 ReactDOM.render(
-  <Provider store={ store }>
-    <App />
-  </Provider>,
+    <Provider store={ store }>
+      <App />
+    </Provider>,
   document.getElementById('main')
 )

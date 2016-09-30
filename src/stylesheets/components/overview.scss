@@ -1,0 +1,10 @@
+@import "../config/config";
+@import "~susy/sass/susy";
+
+h1 {
+  color: $primary-color;
+}
+
+#overview {
+  @include span(6 of 12);
+}
