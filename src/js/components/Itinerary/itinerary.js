@@ -1,5 +1,5 @@
 import React from 'react'
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table'
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, /*TableRowColumn*/} from 'material-ui/Table'
 import Paper from 'material-ui/Paper'
 
 const Itinerary = () => {
@@ -10,23 +10,41 @@ const Itinerary = () => {
         <h4>[Insert Date]</h4>
       </div>
       <Table id="itinerary-details">
-        <TableHeader>
+        <TableHeader
+          displaySelectAll={false}
+          adjustForCheckbox={false}>
           <TableRow>
-            <TableHeaderColumn className='time'>Time</TableHeaderColumn>
-            <TableHeaderColumn>Plans</TableHeaderColumn>
-            <TableHeaderColumn>Status</TableHeaderColumn>
+            <TableHeaderColumn
+              style={{width: '20%'}}>
+              Time
+            </TableHeaderColumn>
+            <TableHeaderColumn>
+              Plans
+            </TableHeaderColumn>
+            <TableHeaderColumn>
+              Status
+            </TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody showRowHover={true}>
-          <TableRow>
-            <TableRowColumn className='time'>2 PM</TableRowColumn>
-            <TableRowColumn>Visit the Louvre</TableRowColumn>
-            <TableRowColumn>Primary</TableRowColumn>
-          </TableRow>
         </TableBody>
       </Table>
     </Paper>
   )
 }
+
+// <TableRow>
+//   <TableRowColumn
+//     style={{width: '20%'}}>
+//     2 PM
+//   </TableRowColumn>
+//   <TableRowColumn
+//     style={{padding: '5px'}}>
+//     Visit the Louvre
+//   </TableRowColumn>
+//   <TableRowColumn>
+//     Primary
+//   </TableRowColumn>
+// </TableRow>
 
 module.exports = Itinerary;

@@ -1,7 +1,9 @@
 body {
   max-width: 90%;
   margin-left: auto;
-  margin-right: auto; }
+  margin-right: auto;
+  background-color: #fdfdfd;
+  font-family: "Roboto", sans-serif; }
   body:after {
     content: " ";
     display: block;
@@ -14,13 +16,22 @@ h1 {
   color: #5d5d5d; }
 
 #overview {
-  width: 49.15254%;
+  width: 23.72881%;
   float: left;
   margin-right: 1.69492%; }
+
+#summary {
+  width: 23.72881%;
+  float: left;
+  margin-right: 1.69492%;
+  width: 400px;
+  margin-top: 30px; }
 body {
   max-width: 90%;
   margin-left: auto;
-  margin-right: auto; }
+  margin-right: auto;
+  background-color: #fdfdfd;
+  font-family: "Roboto", sans-serif; }
   body:after {
     content: " ";
     display: block;
@@ -29,14 +40,18 @@ body {
 .hidden {
   display: none; }
 
-#summary {
+#itinerary {
   width: 49.15254%;
   float: left;
-  margin-right: 1.69492%;
-  width: 400px;
-  margin-top: 30px; }
+  margin-left: 16.94915%;
+  margin-right: -100%;
+  margin-top: 50px;
+  min-height: 500px; }
 
-#itinerary {
-  width: 32.20339%;
-  float: left;
-  margin-right: 1.69492%; }
+#itinerary-title {
+  margin-top: 30px;
+  text-align: center;
+  color: #5d5d5d; }
+
+.time {
+  width: 100px; }

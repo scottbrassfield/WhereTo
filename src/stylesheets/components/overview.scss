@@ -6,12 +6,15 @@ h1 {
 }
 
 #overview {
-  @include span(3 of 12);
+  @include span(5);
 }
 
 #summary {
-  @include span(3 of 12);
+  @include span(5);
 
-  width: 400px;
   margin-top: 30px;
+}
+
+#summary-card {
+  width: 350px;
 }

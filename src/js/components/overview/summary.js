@@ -13,8 +13,8 @@ const Summary = ({ destination, startDate, endDate, overview, dispatch}) => {
   })
 
   return (
-    <div id='summary' className={ summaryClass }>
-      <Card>
+    <div id="summary" className={ summaryClass }>
+      <Card style={{width: '350px'}}>
         <CardMedia
           overlay={<CardTitle title={destination} subtitle={startDate + ' — ' + endDate}/>}>
           <img src='https://img1.steemit.com/0x0/https://www.saltwaterfarm.com/wp-content/uploads/2016/04/paris.jpg' />

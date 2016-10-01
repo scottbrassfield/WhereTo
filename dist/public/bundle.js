@@ -39230,108 +39230,77 @@
 
 	var _Table = __webpack_require__(437);
 
+	var _Paper = __webpack_require__(400);
+
+	var _Paper2 = _interopRequireDefault(_Paper);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Itinerary = function Itinerary() {
 	  return _react2.default.createElement(
-	    _Table.Table,
+	    _Paper2.default,
 	    { id: 'itinerary' },
 	    _react2.default.createElement(
-	      _Table.TableHeader,
-	      null,
+	      'div',
+	      { id: 'itinerary-title' },
 	      _react2.default.createElement(
-	        _Table.TableRow,
+	        'h2',
 	        null,
-	        _react2.default.createElement(
-	          _Table.TableHeaderColumn,
-	          null,
-	          'Time'
-	        ),
-	        _react2.default.createElement(
-	          _Table.TableHeaderColumn,
-	          null,
-	          'Plans'
-	        ),
-	        _react2.default.createElement(
-	          _Table.TableHeaderColumn,
-	          null,
-	          'Status'
-	        )
+	        'Itinerary'
+	      ),
+	      _react2.default.createElement(
+	        'h4',
+	        null,
+	        '[Insert Date]'
 	      )
 	    ),
 	    _react2.default.createElement(
-	      _Table.TableBody,
-	      null,
+	      _Table.Table,
+	      { id: 'itinerary-details' },
 	      _react2.default.createElement(
-	        _Table.TableRow,
+	        _Table.TableHeader,
 	        null,
-	        _react2.default.createElement(_Table.TableRowColumn, null),
 	        _react2.default.createElement(
-	          _Table.TableRowColumn,
+	          _Table.TableRow,
 	          null,
-	          'John Smith'
-	        ),
-	        _react2.default.createElement(
-	          _Table.TableRowColumn,
-	          null,
-	          'Employed'
+	          _react2.default.createElement(
+	            _Table.TableHeaderColumn,
+	            { className: 'time' },
+	            'Time'
+	          ),
+	          _react2.default.createElement(
+	            _Table.TableHeaderColumn,
+	            null,
+	            'Plans'
+	          ),
+	          _react2.default.createElement(
+	            _Table.TableHeaderColumn,
+	            null,
+	            'Status'
+	          )
 	        )
 	      ),
 	      _react2.default.createElement(
-	        _Table.TableRow,
-	        null,
+	        _Table.TableBody,
+	        { showRowHover: true },
 	        _react2.default.createElement(
-	          _Table.TableRowColumn,
+	          _Table.TableRow,
 	          null,
-	          '2'
-	        ),
-	        _react2.default.createElement(
-	          _Table.TableRowColumn,
-	          null,
-	          'Randal White'
-	        ),
-	        _react2.default.createElement(
-	          _Table.TableRowColumn,
-	          null,
-	          'Unemployed'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _Table.TableRow,
-	        null,
-	        _react2.default.createElement(
-	          _Table.TableRowColumn,
-	          null,
-	          '3'
-	        ),
-	        _react2.default.createElement(
-	          _Table.TableRowColumn,
-	          null,
-	          'Stephanie Sanders'
-	        ),
-	        _react2.default.createElement(
-	          _Table.TableRowColumn,
-	          null,
-	          'Employed'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _Table.TableRow,
-	        null,
-	        _react2.default.createElement(
-	          _Table.TableRowColumn,
-	          null,
-	          '4'
-	        ),
-	        _react2.default.createElement(
-	          _Table.TableRowColumn,
-	          null,
-	          'Steve Brown'
-	        ),
-	        _react2.default.createElement(
-	          _Table.TableRowColumn,
-	          null,
-	          'Employed'
+	          _react2.default.createElement(
+	            _Table.TableRowColumn,
+	            { className: 'time' },
+	            '2 PM'
+	          ),
+	          _react2.default.createElement(
+	            _Table.TableRowColumn,
+	            null,
+	            'Visit the Louvre'
+	          ),
+	          _react2.default.createElement(
+	            _Table.TableRowColumn,
+	            null,
+	            'Primary'
+	          )
 	        )
 	      )
 	    )
