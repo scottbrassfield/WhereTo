@@ -1,5 +1,5 @@
 body {
-  max-width: 90%;
+  max-width: 95%;
   margin-left: auto;
   margin-right: auto;
   background-color: #fdfdfd;
@@ -15,43 +15,18 @@ body {
 h1 {
   color: #5d5d5d; }
 
-#overview {
-  width: 23.72881%;
+#input {
+  width: 30%;
   float: left;
-  margin-right: 1.69492%; }
+  margin-left: 0.625%;
+  margin-right: 0.625%; }
 
 #summary {
-  width: 23.72881%;
+  width: 30%;
   float: left;
-  margin-right: 1.69492%;
-  width: 400px;
+  margin-left: 0.625%;
+  margin-right: 0.625%;
   margin-top: 30px; }
-body {
-  max-width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #fdfdfd;
-  font-family: "Roboto", sans-serif; }
-  body:after {
-    content: " ";
-    display: block;
-    clear: both; }
 
-.hidden {
-  display: none; }
-
-#itinerary {
-  width: 49.15254%;
-  float: left;
-  margin-left: 16.94915%;
-  margin-right: -100%;
-  margin-top: 50px;
-  min-height: 500px; }
-
-#itinerary-title {
-  margin-top: 30px;
-  text-align: center;
-  color: #5d5d5d; }
-
-.time {
-  width: 100px; }
+#summary-card {
+  width: 350px; }
