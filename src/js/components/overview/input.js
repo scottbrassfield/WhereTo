@@ -43,7 +43,7 @@ Input = reduxForm({
   fields: ['destination', 'startDate', 'endDate'],
   onSubmit: ({ destination, startDate, endDate }, dispatch) => {
     dispatch({
-      type: 'OVERVIEW',
+      type: 'ADD_OVERVIEW',
       dest: destination,
       start: startDate,
       end: endDate,

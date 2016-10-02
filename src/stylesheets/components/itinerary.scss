@@ -3,15 +3,6 @@
 
 #itinerary {
   @include span(9 at 8);
-
-  margin-top: 30px;
-  min-height: 500px;
-}
-
-#itinerary-title {
-  margin-top: 10px;
-  text-align: center;
-  color: $primary-color;
 }
 
 .time {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import {Card, CardActions, CardMedia, CardTitle} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import classNames from 'classnames'
-require('../../../stylesheets/components/itinerary.scss')
+import '../../../stylesheets/components/overview.scss'
 
 const Summary = ({ destination, startDate, endDate, overview, dispatch}) => {
 
@@ -13,11 +13,11 @@ const Summary = ({ destination, startDate, endDate, overview, dispatch}) => {
   })
 
   return (
-    <div id="summary" className={ summaryClass }>
+    <div id='summary' className={ summaryClass }>
       <Card style={{width: '350px'}}>
         <CardMedia
           overlay={<CardTitle title={destination} subtitle={startDate + ' — ' + endDate}/>}>
-          <img src='https://img1.steemit.com/0x0/https://www.saltwaterfarm.com/wp-content/uploads/2016/04/paris.jpg' />
+          <img src='http://www.parisperfect.com/blog/wp-content/uploads/2011/03/panoramic_view_chateau_latour.jpg' />
         </CardMedia>
         <CardActions>
           <div onClick={() => dispatch({type: 'UPDATE_OVERVIEW', complete: false}) }>
@@ -40,6 +40,5 @@ function mapState(state) {
     }
   )
 }
-
 
 module.exports = connect(mapState)(Summary);

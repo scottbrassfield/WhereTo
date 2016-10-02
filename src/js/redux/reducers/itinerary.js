@@ -1,24 +1,14 @@
+import * as Actions from '../actions/action-types'
+
 const initialState = {
-  destination: '',
-  startDate: '',
-  endDate: '',
-  locations: [],
-  lodging: [],
-  plans: [
-    {
-      location: '',
-      startTime: '',
-      endTime: '',
-      backup: false,
-    }
-  ]
+  days: [ ]
 }
 
 const itinerary = (state = initialState, action) => {
   switch (action.type) {
-    case 'OVERVIEW':
-      return Object.assign({}, state, {destination: action.dest, startDate: action.start, endDate: action.end, overview: action.complete});
-    case 'UPDATE_OVERVIEW':
+    case Actions.ADD_OVERVIEW:
+      return Object.assign({}, state, {destination: action.dest, startDate: action.start, endDate: action.end, overview: action.complete, currentDate: action.start});
+    case Actions.UPDATE_OVERVIEW:
       return Object.assign({}, state, {overview: action.complete})
     default:
       return state;

@@ -12,6 +12,9 @@ body {
 .hidden {
   display: none; }
 
+.inline {
+  display: inline-block; }
+
 h1 {
   color: #5d5d5d; }
 
@@ -30,3 +33,30 @@ h1 {
 
 #summary-card {
   width: 350px; }
+body {
+  max-width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fdfdfd;
+  font-family: "Roboto", sans-serif; }
+  body:after {
+    content: " ";
+    display: block;
+    clear: both; }
+
+.hidden {
+  display: none; }
+
+.inline {
+  display: inline-block; }
+
+#itinerary {
+  width: 36.25%;
+  float: left;
+  margin-left: 0.625%;
+  margin-right: 0.625%;
+  margin-top: 30px;
+  min-height: 500px; }
+
+.time {
+  width: 20%; }

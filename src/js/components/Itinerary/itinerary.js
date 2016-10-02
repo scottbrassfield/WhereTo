@@ -1,50 +1,16 @@
-import React from 'react'
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, /*TableRowColumn*/} from 'material-ui/Table'
-import Paper from 'material-ui/Paper'
+import React from 'react';
+import Paper from 'material-ui/Paper';
+import Header from './header.js'
+import Plans from './plans.js'
+import '../../../stylesheets/components/itinerary.scss'
 
 const Itinerary = () => {
   return (
-    <Paper id='itinerary'>
-      <div id='itinerary-title'>
-        <h2>Itinerary</h2>
-        <h4>[Insert Date]</h4>
-      </div>
-      <Table id="itinerary-details">
-        <TableHeader
-          displaySelectAll={false}
-          adjustForCheckbox={false}>
-          <TableRow>
-            <TableHeaderColumn
-              style={{width: '20%'}}>
-              Time
-            </TableHeaderColumn>
-            <TableHeaderColumn>
-              Plans
-            </TableHeaderColumn>
-            <TableHeaderColumn>
-              Status
-            </TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
-        <TableBody showRowHover={true}>
-        </TableBody>
-      </Table>
+    <Paper id='itinerary' style={{marginTop: '30px', minHeight: '500px'}}>
+      <Header />
+      <Plans />
     </Paper>
   )
 }
-
-// <TableRow>
-//   <TableRowColumn
-//     style={{width: '20%'}}>
-//     2 PM
-//   </TableRowColumn>
-//   <TableRowColumn
-//     style={{padding: '5px'}}>
-//     Visit the Louvre
-//   </TableRowColumn>
-//   <TableRowColumn>
-//     Primary
-//   </TableRowColumn>
-// </TableRow>
 
 module.exports = Itinerary;
