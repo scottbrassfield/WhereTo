@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 const Calendar = ({ date }) => {
   return (
-    <div style={{width: '20%', marginLeft: '5px', marginTop: '5px'}}>
-      <div style={{textAlign: 'center', height: '50px', fontSize: '30px', paddingTop: '10px', color: 'maroon'}}>
+    <div style={{width: '20%', marginLeft: '5px', marginTop: '5px', marginRight: '50px', display: 'inline-block'}}>
+      <div style={{textAlign: 'center', height: '60px', fontSize: '30px', paddingTop: '10px', color: 'maroon'}}>
         { date }
       </div>
       <div style={{width: '100%', textAlign: 'center', paddingBottom: '5px'}}>
@@ -17,7 +17,7 @@ const Calendar = ({ date }) => {
 }
 
 const mapState = (state) => {
-  return {date: state.itinerary.currentDate}
+  return {date: state.overview.currentDate}
 }
 
 module.exports = connect(mapState)(Calendar);

@@ -7,11 +7,11 @@ import '../../../stylesheets/components/overview.scss';
 import { updateOverview } from '../../redux/actions/action-creators';
 
 
-const Summary = ({ destination, startDate, endDate, overview, updateOverview}) => {
+const Summary = ({ destination, startDate, endDate, complete, updateOverview}) => {
 
   var summaryClass = classNames({
-    'hidden': !overview,
-    'active': overview
+    'hidden': !complete,
+    'active': complete
   })
 
   return (
@@ -32,13 +32,12 @@ const Summary = ({ destination, startDate, endDate, overview, updateOverview}) =
 }
 
 const mapState = (state) => {
-  let itinerary = state.itinerary;
   return (
     {
-      destination: itinerary.destination,
-      startDate: itinerary.startDate,
-      endDate: itinerary.endDate,
-      overview: itinerary.overview
+      destination: state.overview.destination,
+      startDate: state.overview.startDate,
+      endDate: state.overview.endDate,
+      complete: state.overview.complete
     }
   )
 }

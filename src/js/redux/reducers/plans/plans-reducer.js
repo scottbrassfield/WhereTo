@@ -1,6 +1,8 @@
+import * as Actions from '../../actions/action-types';
+
 const plan = (state = {}, action) => {
   switch(action.type) {
-    case 'ADD_PLAN':
+    case Actions.ADD_PLAN:
       return (Object.assign({}, state,
         {
           id: action.id,
@@ -16,7 +18,7 @@ const plan = (state = {}, action) => {
 
 const plans = (state = [], action) => {
   switch (action.type) {
-    case 'ADD_PLAN':
+    case Actions.ADD_PLAN:
       return state.concat(plan(undefined, action))
     default:
       return state;

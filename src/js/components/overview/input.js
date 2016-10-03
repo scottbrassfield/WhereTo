@@ -14,11 +14,11 @@ const renderTextField = ({ input, label }) => {
   )
 }
 
-let Input = ({ overview, handleSubmit }) => {
+let Input = ({ complete, handleSubmit }) => {
 
   var inputClass = classNames({
-    'hidden': overview,
-    'active': !overview
+    'hidden': complete,
+    'active': !complete
   })
 
   return (
@@ -35,7 +35,7 @@ let Input = ({ overview, handleSubmit }) => {
 }
 
 function mapState(state) {
-  return { overview: state.itinerary.overview }
+  return { complete: state.overview.complete }
 }
 
 Input = reduxForm({
