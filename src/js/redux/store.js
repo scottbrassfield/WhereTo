@@ -1,11 +1,10 @@
-const { createStore, combineReducers } = require('redux');
-const itinerary = require('./reducers/itinerary');
-const plans = require('./reducers/plans');
-const { reducer: formReducer } = require('redux-form');
+import { createStore, combineReducers } from 'redux';
+import itinerary from './reducers/itinerary';
+// import plans from './reducers/plans';
+import { reducer as formReducer } from 'redux-form';
 
 let reducers = combineReducers({
-  itinerary: itinerary,
-  plans: plans,
+  itinerary,
   form: formReducer
 })
 

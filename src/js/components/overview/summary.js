@@ -1,11 +1,13 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React from 'react';
+import { connect } from 'react-redux';
 import {Card, CardActions, CardMedia, CardTitle} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
-import classNames from 'classnames'
-import '../../../stylesheets/components/overview.scss'
+import classNames from 'classnames';
+import '../../../stylesheets/components/overview.scss';
+import { updateOverview } from '../../redux/actions/action-creators';
 
-const Summary = ({ destination, startDate, endDate, overview, dispatch}) => {
+
+const Summary = ({ destination, startDate, endDate, overview, updateOverview}) => {
 
   var summaryClass = classNames({
     'hidden': !overview,
@@ -20,7 +22,7 @@ const Summary = ({ destination, startDate, endDate, overview, dispatch}) => {
           <img src='http://www.parisperfect.com/blog/wp-content/uploads/2011/03/panoramic_view_chateau_latour.jpg' />
         </CardMedia>
         <CardActions>
-          <div onClick={() => dispatch({type: 'UPDATE_OVERVIEW', complete: false}) }>
+          <div onClick={() => updateOverview(false) }>
             <RaisedButton label='Update Trip Summary' />
           </div>
         </CardActions>
@@ -29,7 +31,7 @@ const Summary = ({ destination, startDate, endDate, overview, dispatch}) => {
   )
 }
 
-function mapState(state) {
+const mapState = (state) => {
   let itinerary = state.itinerary;
   return (
     {
@@ -41,4 +43,4 @@ function mapState(state) {
   )
 }
 
-module.exports = connect(mapState)(Summary);
+module.exports = connect(mapState, {updateOverview})(Summary);

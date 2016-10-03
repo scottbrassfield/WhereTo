@@ -51,12 +51,10 @@ body {
   display: inline-block; }
 
 #itinerary {
-  width: 36.25%;
-  float: left;
+  width: 55%;
+  float: right;
   margin-left: 0.625%;
-  margin-right: 0.625%;
-  margin-top: 30px;
-  min-height: 500px; }
+  margin-right: 0.625%; }
 
 .time {
   width: 20%; }

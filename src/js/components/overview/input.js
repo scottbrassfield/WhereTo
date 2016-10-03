@@ -14,7 +14,7 @@ const renderTextField = ({ input, label }) => {
   )
 }
 
-let Input = ({overview, handleSubmit }) => {
+let Input = ({ overview, handleSubmit }) => {
 
   var inputClass = classNames({
     'hidden': overview,
@@ -40,13 +40,12 @@ function mapState(state) {
 
 Input = reduxForm({
   form: 'overviewForm',
-  fields: ['destination', 'startDate', 'endDate'],
   onSubmit: ({ destination, startDate, endDate }, dispatch) => {
     dispatch({
       type: 'ADD_OVERVIEW',
-      dest: destination,
-      start: startDate,
-      end: endDate,
+      destination,
+      startDate,
+      endDate,
       complete: true,
     })
   }
