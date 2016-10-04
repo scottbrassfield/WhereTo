@@ -1,25 +1,36 @@
-import * as Actions from '../../actions/action-types';
-import { makeDays, addLodging } from './day-case-functions';
+import { combineReducers } from 'redux';
+import { ADD_OVERVIEW, ADD_LODGING } from '../../actions/action-types';
+import { startTrip, addLodging } from './day-case-functions';
 
-const initialState = {
-  byId: {},
-  allIds: [],
-  currentDay: {}
-}
-
-const days = (state = initialState, action) => {
+const byId = (state = {}, action) => {
   switch(action.type) {
-    case Actions.ADD_OVERVIEW:
+    case ADD_OVERVIEW:
       return Object.assign(
         {}, state,
-        makeDays(undefined, action));
-    case Actions.ADD_LODGING:
+        startTrip(undefined, action)
+      );
+    case ADD_LODGING:
       return Object.assign(
         {}, state,
-        {currentDay: addLodging(state, action)})
+        addLodging(state, action)
+      );
     default:
       return state;
   }
 }
+
+const allIds = (state = [], action) => {
+  switch(action.type) {
+    case ADD_OVERVIEW:
+      return Object.keys(startTrip(undefined, action))
+    default:
+      return state;
+  }
+}
+
+const days = combineReducers({
+  byId,
+  allIds
+})
 
 export default days;

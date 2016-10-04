@@ -1,12 +1,21 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
+import days from './days/days-reducer';
+import plans from './plans/plans-reducer';
 import overview from './overview-reducer';
-import entities from './entities-reducer'
+import currentDay from './current-day-reducer';
 
-const reducer = combineReducers({
-  form: formReducer,
-  overview,
-  entities
+
+const entities = combineReducers({
+  days,
+  plans
 })
 
-export default reducer;
+const rootReducer = combineReducers({
+  form: formReducer,
+  overview,
+  entities,
+  currentDay
+})
+
+export default rootReducer;

@@ -7,9 +7,7 @@ require('../../../stylesheets/components/itinerary.scss');
 
 const renderTextField = ({ input, label, style }) => {
   return (
-    <div style={{ display: 'inline-block', width: '35%', marginRight: '10px' }}>
-      <TextField {...input} hintText={label} style={style} />
-    </div>
+    <TextField {...input} hintText={label} style={style} />
   )
 }
 
@@ -18,9 +16,9 @@ let LodgingInput = ({ handleSubmit }) => {
     <div>
       <form onSubmit={ handleSubmit }>
         <Field name='lodging' component={renderTextField} label='Where are you staying?'
-          style={{display: 'inline-block', width: '100%', fontSize: '12px', marginRight: '10px'}}/>
-        <Field name='nights' component={renderTextField} label='For how many nights?'
-          style={{display: 'inline-block', width: '100%', fontSize: '12px'}} />
+          style={{ display: 'inline-block', marginRight: '10px', width: '60%', fontSize: '12px' }}/>
+        <Field name='nights' component={renderTextField} label='How many nights?'
+          style={{ display: 'inline-block', marginRight: '10px', width: '20%', fontSize: '12px' }} />
         <RaisedButton type='submit' label='Add'
           style={{minWidth: '20px'}} labelStyle={{fontSize: '10px'}} />
       </form>
@@ -40,22 +38,28 @@ LodgingInput = reduxForm({
   }
 })(LodgingInput)
 
-//
-// const LodgingSummary = () => {
-//   return (
-//     <div>
-//     </div>
-//   )
-// }
+const LodgingSummary = ({hotel}) => {
+  return (
+    <div>
+      <span style={{marginRight: '10px'}}>Staying:</span>
+      <span>{ hotel }</span>
+    </div>
+  )
+}
+
+const getDayId = ({entities: { days }, currentDay}) => {
+  return days.byId ? currentDay : ''
+}
 
 const mapState = (state) => {
-  return {day: state.entities.days.currentDay.id}
+  return { dayId: getDayId(state) }
 }
 
 const Lodging = () => {
   return (
     <div>
       <LodgingInput />
+      <LodgingSummary />
     </div>
   )
 }

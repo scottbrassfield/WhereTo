@@ -1,41 +1,27 @@
 import moment from 'moment';
 
-export const addLodging = (state, action) => {
-  const day = state.currentDay;
-  return Object.assign({}, day, {lodging: action.lodging})
-}
+export const startTrip = (state = {}, action) => {
+    let firstDay = moment(action.startDate, 'M/D/YYYY', true);
+    let lastDay = moment(action.endDate, 'M/D/YYYY', true);
+    let totalDays = lastDay.diff(firstDay, 'days');
 
-export const makeDays = (state = {}, action) => {
-  const firstDay = moment(action.startDate, 'M/D/YYYY', true);
-  const lastDay = moment(action.endDate, 'M/D/YYYY', true);
-  const totalDays = lastDay.diff(firstDay, 'days');
-
-  const days = (totalDays, day) => {
-    let days = {
-      byId: {},
-      allIds: [],
-      currentDay: {}
-    };
-
+    let day = firstDay.clone();
     let currentId = 1;
+
     while (totalDays >= 0) {
-      days['byId'][currentId] =
-      {
-        id: currentId,
-        date: day,
-        dateString: day.format('MMM D')
-      }
-      days['allIds'].push(currentId);
-      if (currentId === 1) {
-        days['currentDay'] = Object.assign(
-          {},
-          { id: currentId, date: day, dateString: day.format('MMM D') })
-      }
+      state[currentId] = { id: currentId, date: day }
       day = day.clone().add(1, 'days');
       totalDays--;
       currentId++;
     }
-    return days;
+    return state;
   }
-  return days(totalDays, firstDay);
+
+export const addLodging = (state, action) => {
+  let day = getCurrentDay(state);
+  return Object.assign({}, day, {lodging: action.lodging})
 }
+
+  export const getCurrentDay = ({ entities: { days }, currentDay }) => {
+    return days.byId[currentDay]
+  }

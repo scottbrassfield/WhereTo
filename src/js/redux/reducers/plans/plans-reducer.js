@@ -25,4 +25,4 @@ const plans = (state = [], action) => {
   }
 }
 
-module.exports = plans;
+export default plans;

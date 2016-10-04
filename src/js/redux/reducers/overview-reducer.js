@@ -1,4 +1,4 @@
-import * as Actions from '../actions/action-types'
+import { ADD_OVERVIEW, UPDATE_OVERVIEW } from '../actions/action-types'
 
 const initialState = {
   complete: false
@@ -6,7 +6,7 @@ const initialState = {
 
 const overview = (state = initialState, action) => {
   switch (action.type) {
-    case Actions.ADD_OVERVIEW:
+    case ADD_OVERVIEW:
       return Object.assign({}, state,
         {
           destination: action.destination,
@@ -15,7 +15,7 @@ const overview = (state = initialState, action) => {
           complete: action.complete
         }
       )
-    case Actions.UPDATE_OVERVIEW:
+    case UPDATE_OVERVIEW:
       return Object.assign({}, state, { complete: action.complete })
     default:
       return state;
