@@ -4,7 +4,7 @@ import {Card, CardActions, CardMedia, CardTitle} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import classNames from 'classnames';
 import '../../../stylesheets/components/overview.scss';
-import { updateOverview } from '../../redux/actions/action-creators';
+import { updateOverview } from '../../actions/action-creators';
 
 
 const Summary = ({ destination, startDate, endDate, complete, updateOverview}) => {

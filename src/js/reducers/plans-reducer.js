@@ -1,4 +1,4 @@
-import * as Actions from '../../actions/action-types';
+import * as Actions from '../actions/action-types';
 
 const plan = (state = {}, action) => {
   switch(action.type) {
