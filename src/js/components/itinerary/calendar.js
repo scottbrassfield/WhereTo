@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
-const Calendar = ({ date }) => {
+const Calendar = ({ day }) => {
   return (
     <div style={{width: '20%', marginLeft: '5px', marginTop: '5px', marginRight: '50px', display: 'inline-block'}}>
       <div style={{textAlign: 'center', height: '60px', fontSize: '30px', paddingTop: '10px', color: 'maroon'}}>
-        { date }
+        <div>{day.dateString}</div>
       </div>
       <div style={{width: '100%', textAlign: 'center', paddingBottom: '5px'}}>
         <button><i className="material-icons md-14">keyboard_arrow_left</i></button>
@@ -17,7 +18,7 @@ const Calendar = ({ date }) => {
 }
 
 const mapState = (state) => {
-  return {date: state.overview.currentDate}
+  return { day: state.entities.days.currentDay}
 }
 
 module.exports = connect(mapState)(Calendar);

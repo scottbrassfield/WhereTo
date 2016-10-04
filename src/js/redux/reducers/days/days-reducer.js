@@ -1,7 +1,13 @@
 import * as Actions from '../../actions/action-types';
-import makeDays from './make-days';
+import makeDays from './day-case-functions';
 
-const days = (state = {}, action) => {
+const initialState = {
+  byId: {},
+  allIds: [],
+  currentDay: {}
+}
+
+const days = (state = initialState, action) => {
   switch(action.type) {
     case Actions.ADD_OVERVIEW:
       return Object.assign({}, state, makeDays(undefined, action));

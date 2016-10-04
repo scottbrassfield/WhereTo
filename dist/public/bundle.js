@@ -23135,13 +23135,13 @@
 	};
 	
 	var Input = function Input(_ref2) {
-	  var overview = _ref2.overview;
+	  var complete = _ref2.complete;
 	  var handleSubmit = _ref2.handleSubmit;
 	
 	
 	  var inputClass = (0, _classnames2.default)({
-	    'hidden': overview,
-	    'active': !overview
+	    'hidden': complete,
+	    'active': !complete
 	  });
 	
 	  return _react2.default.createElement(
@@ -23164,7 +23164,7 @@
 	};
 	
 	function mapState(state) {
-	  return { overview: state.itinerary.overview };
+	  return { complete: state.overview.complete };
 	}
 	
 	Input = (0, _reduxForm.reduxForm)({
@@ -36627,13 +36627,13 @@
 	  var destination = _ref.destination;
 	  var startDate = _ref.startDate;
 	  var endDate = _ref.endDate;
-	  var overview = _ref.overview;
+	  var complete = _ref.complete;
 	  var updateOverview = _ref.updateOverview;
 	
 	
 	  var summaryClass = (0, _classnames2.default)({
-	    'hidden': !overview,
-	    'active': overview
+	    'hidden': !complete,
+	    'active': complete
 	  });
 	
 	  return _react2.default.createElement(
@@ -36664,12 +36664,11 @@
 	};
 	
 	var mapState = function mapState(state) {
-	  var itinerary = state.itinerary;
 	  return {
-	    destination: itinerary.destination,
-	    startDate: itinerary.startDate,
-	    endDate: itinerary.endDate,
-	    overview: itinerary.overview
+	    destination: state.overview.destination,
+	    startDate: state.overview.startDate,
+	    endDate: state.overview.endDate,
+	    complete: state.overview.complete
 	  };
 	};
 	
@@ -39394,7 +39393,7 @@
 	};
 	
 	var mapState = function mapState(state) {
-	  return { date: state.itinerary.currentDate };
+	  return { date: state.overview.currentDate };
 	};
 	
 	module.exports = (0, _reactRedux.connect)(mapState)(Calendar);
@@ -47083,8 +47082,12 @@
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
+	var initialState = {
+	  complete: false
+	};
+	
 	var overview = function overview() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
 	  var action = arguments[1];
 	
 	  switch (action.type) {
@@ -47093,11 +47096,11 @@
 	        destination: action.destination,
 	        startDate: action.startDate,
 	        endDate: action.endDate,
-	        overview: action.complete,
+	        complete: action.complete,
 	        currentDate: action.startDate
 	      });
 	    case Actions.UPDATE_OVERVIEW:
-	      return Object.assign({}, state, { overview: action.complete });
+	      return Object.assign({}, state, { complete: action.complete });
 	    default:
 	      return state;
 	  }
@@ -47128,7 +47131,15 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var entities = (0, _redux.combineReducers)({
+	  workingDay: function workingDay() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	    return state;
+	  },
 	  days: _daysReducer2.default,
+	  workingPlan: function workingPlan() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	    return state;
+	  },
 	  plans: _plansReducer2.default
 	});
 	
@@ -47163,6 +47174,8 @@
 	  switch (action.type) {
 	    case Actions.ADD_OVERVIEW:
 	      return Object.assign({}, state, (0, _makeDays2.default)(undefined, action));
+	    default:
+	      return state;
 	  }
 	};
 	
@@ -47184,19 +47197,27 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	//
+	// const initialState = {
+	//   byId: {},
+	//   allIds: []
+	// }
+	
 	var makeDays = function makeDays() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 	  var action = arguments[1];
-	
 	
 	  var firstDay = (0, _moment2.default)(action.startDate, 'M/D/YYYY', true);
 	  var lastDay = (0, _moment2.default)(action.endDate, 'M/D/YYYY', true);
 	  var totalDays = lastDay.diff(firstDay, 'days');
 	  var addDays = function addDays(totalDays, currentDay) {
-	    var days = {};
+	    var days = {
+	      byId: {},
+	      allIds: []
+	    };
 	    var currentId = 1;
 	    while (totalDays >= 0) {
-	      days['ById'][currentId] = { id: currentId, date: currentDay };
+	      days['byId'][currentId] = { id: currentId, date: currentDay };
 	      currentDay = currentDay.clone().add(1, 'days');
 	      totalDays--;
 	      currentId++;

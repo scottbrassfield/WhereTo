@@ -1,8 +1,8 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
-import Header from './header.js'
-import Plans from './plans.js'
-import '../../../stylesheets/components/itinerary.scss'
+import Header from './header.js';
+import Plans from './plans.js';
+import '../../../stylesheets/components/itinerary.scss';
 
 const Itinerary = () => {
   return (

@@ -12,8 +12,7 @@ const overview = (state = initialState, action) => {
           destination: action.destination,
           startDate: action.startDate,
           endDate: action.endDate,
-          complete: action.complete,
-          currentDate: action.startDate,
+          complete: action.complete
         }
       )
     case Actions.UPDATE_OVERVIEW:

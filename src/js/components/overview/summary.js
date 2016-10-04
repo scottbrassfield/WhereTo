@@ -22,7 +22,7 @@ const Summary = ({ destination, startDate, endDate, complete, updateOverview}) =
           <img src='http://www.parisperfect.com/blog/wp-content/uploads/2011/03/panoramic_view_chateau_latour.jpg' />
         </CardMedia>
         <CardActions>
-          <div onClick={() => updateOverview(false) }>
+          <div onClick={() => updateOverview(!complete) }>
             <RaisedButton label='Update Trip Summary' />
           </div>
         </CardActions>

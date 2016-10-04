@@ -39,7 +39,7 @@ function mapState(state) {
 }
 
 Input = reduxForm({
-  form: 'overviewForm',
+  form: 'overview',
   onSubmit: ({ destination, startDate, endDate }, dispatch) => {
     dispatch({
       type: 'ADD_OVERVIEW',

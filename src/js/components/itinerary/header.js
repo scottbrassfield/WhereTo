@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <div>
       <Calendar />
-      <div style={{display: 'inline-block', width: '70%', verticalAlign: 'top', paddingTop: '20px'}}>
+      <div style={{display: 'inline-block', width: '70%', verticalAlign: 'top', paddingTop: '10px'}}>
         <Lodging />
       </div>
     </div>
