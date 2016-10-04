@@ -1,8 +1,8 @@
 import React from 'react';
 import { reduxForm, Field }from 'redux-form';
+import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import { connect } from 'react-redux';
 require('../../../stylesheets/components/itinerary.scss');
 
 const renderTextField = ({ input, label, style }) => {
@@ -30,14 +30,16 @@ let LodgingInput = ({ handleSubmit }) => {
 
 LodgingInput = reduxForm({
   form: 'lodging',
-  onSubmit: ({ lodging, nights }, dispatch) => {
+  onSubmit: ({ lodging, nights, dayId }, dispatch) => {
     dispatch({
       type: 'ADD_LODGING',
+      id: dayId,
       lodging,
       nights
     })
   }
 })(LodgingInput)
+
 //
 // const LodgingSummary = () => {
 //   return (
@@ -45,6 +47,10 @@ LodgingInput = reduxForm({
 //     </div>
 //   )
 // }
+
+const mapState = (state) => {
+  return {day: state.entities.days.currentDay.id}
+}
 
 const Lodging = () => {
   return (
@@ -54,6 +60,4 @@ const Lodging = () => {
   )
 }
 
-// const mapState = (state) => state.itinerary.days
-
-module.exports = Lodging
+module.exports = connect(mapState)(Lodging)

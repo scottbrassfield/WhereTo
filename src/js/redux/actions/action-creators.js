@@ -16,3 +16,12 @@ export const updateOverview = (complete) => {
       complete
   }
 }
+
+export const addLodging = (id, lodging, nights) => {
+  return {
+    type: Actions.ADD_LODGING,
+    id,
+    lodging,
+    nights
+  }
+}
