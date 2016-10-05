@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 const Calendar = ({ date }) => {
   return (
-    <div style={{width: '20%', marginLeft: '5px', marginTop: '5px', marginRight: '50px', display: 'inline-block'}}>
+    <div style={{width: '20%', marginLeft: '5px', marginTop: '5px', marginRight: '30px', display: 'inline-block'}}>
       <div style={{textAlign: 'center', height: '60px', fontSize: '30px', paddingTop: '10px', color: 'maroon'}}>
         <div>{ date }</div>
       </div>
