@@ -4,12 +4,7 @@ import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { addLodging } from '../../actions/action-creators'
-require('../../../stylesheets/components/itinerary.scss');
-
-//
-// const addLodging = (values) => {
-//   console.log(values)
-// }
+import '../../../stylesheets/components/itinerary.scss';
 
 const renderTextField = ({ input, label, style }) => {
   return (
@@ -38,13 +33,6 @@ LodgingInput = reduxForm({
     dispatch(addLodging(dayId, stay, nights))
   }
 })(LodgingInput)
-//
-// const LodgingSummary = () => {
-//   return (
-//     <div>
-//     </div>
-//   )
-// }
 
 const getDayId = ({entities: { days }, currentDay}) => {
   return days.byId ? currentDay : ''
@@ -53,14 +41,5 @@ const getDayId = ({entities: { days }, currentDay}) => {
 const mapState = (state) => {
   return { dayId: getDayId(state) }
 }
-//
-// const LodgingInput = () => {
-//   return (
-//     <div>
-//       <LodgingInput />
-//       <LodgingSummary />
-//     </div>
-//   )
-// }
 
 module.exports = connect(mapState)(LodgingInput)
