@@ -3,7 +3,7 @@ import {
   UPDATE_OVERVIEW,
   ADD_LODGING,
   ADD_PLAN
-} from './action-types';
+} from './action-types'
 
 export const addOverview = ({ destination, startDate, endDate }, complete) => {
   return {

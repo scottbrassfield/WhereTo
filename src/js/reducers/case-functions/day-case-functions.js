@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment'
 
 export const startTrip = (state = {}, action) => {
   let firstDay = moment(action.startDate, 'M/D/YYYY', true);

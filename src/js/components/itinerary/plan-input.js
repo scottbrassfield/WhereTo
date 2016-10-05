@@ -1,10 +1,10 @@
-import React from 'react';
-import { reduxForm, Field }from 'redux-form';
-import { connect } from 'react-redux';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import { addPlan } from '../../actions/action-creators';
-import '../../../stylesheets/components/itinerary.scss';
+import React from 'react'
+import { reduxForm, Field }from 'redux-form'
+import { connect } from 'react-redux'
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
+import { addPlan } from '../../actions/action-creators'
+import '../../../stylesheets/components/itinerary.scss'
 
 const renderTextField = ({ input, label, style }) => {
   return (
