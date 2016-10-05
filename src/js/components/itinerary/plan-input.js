@@ -3,6 +3,7 @@ import { reduxForm, Field }from 'redux-form';
 import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import { addPlan } from '../../actions/action-creators';
 import '../../../stylesheets/components/itinerary.scss';
 
 const renderTextField = ({ input, label, style }) => {
@@ -20,7 +21,7 @@ let PlanInput = ({ handleSubmit }) => {
         <Field name='startTime' component={renderTextField}
           label='Start Time'
           style={{ display: 'inline-block', marginRight: '10px', width: '15%', fontSize: '12px' }}/>
-        <Field name='duration' component={renderTextField}
+        <Field name='endTime' component={renderTextField}
           label='End Time'
           style={{ display: 'inline-block', marginRight: '10px', width: '15%', fontSize: '12px' }} />
         <RaisedButton type='submit' label='Add'
@@ -31,19 +32,22 @@ let PlanInput = ({ handleSubmit }) => {
 }
 
 PlanInput = reduxForm({
-  form: 'plan'
+  form: 'plan',
+  onSubmit: (values, dispatch, { dayId }) => {
+    dispatch(addPlan(values, dayId))
+  }
 })(PlanInput)
-//
-// const getDayId = ({entities: { days }, currentDay}) => {
-//   return days.byId ? currentDay : ''
-// }
-//
-// const mapState = (state) => {
-//   return {
-//     dayId: getDayId(state)
-//   }
-// }
 
-PlanInput = connect(/*mapState*/)(PlanInput)
+const getDayId = ({entities: { days }, currentDay}) => {
+  return days.byId ? currentDay : ''
+}
+
+const mapState = (state) => {
+  return {
+    dayId: getDayId(state)
+  }
+}
+
+PlanInput = connect(mapState)(PlanInput)
 
 export default PlanInput;

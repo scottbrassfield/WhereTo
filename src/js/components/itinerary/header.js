@@ -1,6 +1,6 @@
 import React from 'react'
 import Calendar from './calendar'
-import LodgingInput from './lodging'
+import LodgingInput from './lodging-input'
 import PlanInput from './plan-input'
 
 const Header = () => {

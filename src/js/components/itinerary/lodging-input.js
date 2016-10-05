@@ -16,7 +16,7 @@ let LodgingInput = ({ handleSubmit }) => {
   return (
     <div>
       <form onSubmit={ handleSubmit }>
-        <Field name='stay' component={renderTextField} label='Where are you staying?'
+        <Field name='lodging' component={renderTextField} label='Where are you staying?'
           style={{ display: 'inline-block', marginRight: '10px', width: '50%', fontSize: '12px' }}/>
         <Field name='nights' component={renderTextField} label='How many nights?'
           style={{ display: 'inline-block', marginRight: '10px', width: '25%', fontSize: '12px' }} />
@@ -29,8 +29,8 @@ let LodgingInput = ({ handleSubmit }) => {
 
 LodgingInput = reduxForm({
   form: 'lodging',
-  onSubmit: ({ stay, nights }, dispatch, { dayId }) => {
-    dispatch(addLodging(dayId, stay, nights))
+  onSubmit: (values, dispatch, { dayId }) => {
+    dispatch(addLodging(values, dayId))
   }
 })(LodgingInput)
 

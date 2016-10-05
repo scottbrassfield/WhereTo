@@ -17,11 +17,22 @@ export const updateOverview = (complete) => {
   }
 }
 
-export const addLodging = (id, lodging, nights) => {
+export const addLodging = ({ lodging, nights }, id) => {
   return {
     type: Actions.ADD_LODGING,
     id,
     lodging,
     nights
+  }
+}
+
+let nextPlanId = 0;
+export const addPlan = ({ plan, startTime, endTime }) => {
+  return {
+    type: Actions.ADD_PLAN,
+    planId: ++nextPlanId,
+    plan,
+    startTime,
+    endTime
   }
 }
