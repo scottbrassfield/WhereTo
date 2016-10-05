@@ -1,9 +1,9 @@
 import React from 'react';
 import { reduxForm, Field }from 'redux-form';
-import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { addLodging } from '../../actions/action-creators'
+import classNames from 'classnames'
 import '../../../stylesheets/components/itinerary.scss';
 
 const renderTextField = ({ input, label, style }) => {
@@ -12,9 +12,17 @@ const renderTextField = ({ input, label, style }) => {
   )
 }
 
-let LodgingInput = ({ handleSubmit }) => {
+let LodgingInput = ({ handleSubmit, lodging }) => {
+
+  console.log(lodging)
+
+  let inputClass = classNames({
+    'hidden': lodging,
+    'active': !lodging
+  })
+
   return (
-    <div>
+    <div className={inputClass}>
       <form onSubmit={ handleSubmit }>
         <Field name='lodging' component={renderTextField} label='Where are you staying?'
           style={{ display: 'inline-block', marginRight: '10px', width: '50%', fontSize: '12px' }}/>
@@ -34,12 +42,4 @@ LodgingInput = reduxForm({
   }
 })(LodgingInput)
 
-const getDayId = ({entities: { days }, currentDay}) => {
-  return days.byId ? currentDay : ''
-}
-
-const mapState = (state) => {
-  return { dayId: getDayId(state) }
-}
-
-module.exports = connect(mapState)(LodgingInput)
+export default LodgingInput

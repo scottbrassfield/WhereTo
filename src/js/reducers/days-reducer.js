@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import { ADD_OVERVIEW, ADD_LODGING, ADD_PLAN } from '../actions/action-types';
-import { startTrip, addLodging, updatePlanIds } from './case-functions/day-case-functions';
+import { ADD_OVERVIEW, ADD_LODGING, ADD_PLAN, UPDATE_LODGING } from '../actions/action-types';
+import { startTrip, addLodging, removeLodging, updatePlanIds } from './case-functions/day-case-functions';
 
 const byId = (state = {}, action) => {
   switch(action.type) {
@@ -13,6 +13,9 @@ const byId = (state = {}, action) => {
       return Object.assign({}, state,
         { [action.id]: addLodging(state, action) }
       );
+    case UPDATE_LODGING:
+      return Object.assign({}, state,
+        { [action.id]: removeLodging(state, action) })
     case ADD_PLAN:
       return Object.assign({}, state,
         { [action.id]: updatePlanIds(state, action) }

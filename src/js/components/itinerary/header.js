@@ -1,6 +1,6 @@
 import React from 'react'
 import Calendar from './calendar'
-import LodgingInput from './lodging-input'
+import Lodging from '../../containers/lodging'
 import PlanInput from './plan-input'
 
 const Header = () => {
@@ -8,7 +8,7 @@ const Header = () => {
     <div>
       <Calendar />
       <div style={{display: 'inline-block', width: '70%', verticalAlign: 'top', paddingTop: '10px'}}>
-        <LodgingInput />
+        <Lodging />
         <PlanInput />
       </div>
     </div>

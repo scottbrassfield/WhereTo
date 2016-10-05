@@ -22,6 +22,11 @@ export const addLodging = (state, action) => {
   return Object.assign({}, day, {lodging: action.lodging})
 }
 
+export const removeLodging = (state, action) => {
+  let day = state[action.id];
+  return Object.assign({}, day, {lodging: ''})
+}
+
 export const updatePlanIds = (byId, action) => {
   let day = byId[action.id];
   let planIds = day.plans || [];
