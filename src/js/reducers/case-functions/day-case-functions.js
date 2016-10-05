@@ -21,3 +21,13 @@ export const addLodging = (state, action) => {
   let day = state[action.id];
   return Object.assign({}, day, {lodging: action.lodging})
 }
+
+export const updatePlanIds = (byId, action) => {
+  let day = byId[action.id];
+  let planIds = day.plans || [];
+  return Object.assign({}, day, {plans: addPlanId(planIds, action)} )
+}
+
+const addPlanId = (planIds, action) => {
+  return planIds.concat(action.planId)
+}

@@ -36619,7 +36619,10 @@
 	  };
 	};
 	
-	var addLodging = exports.addLodging = function addLodging(id, lodging, nights) {
+	var addLodging = exports.addLodging = function addLodging(_ref2, id) {
+	  var lodging = _ref2.lodging;
+	  var nights = _ref2.nights;
+	
 	  return {
 	    type: Actions.ADD_LODGING,
 	    id: id,
@@ -36628,9 +36631,18 @@
 	  };
 	};
 	
-	var addPlan = exports.addPlan = function addPlan() {
+	var nextPlanId = 0;
+	var addPlan = exports.addPlan = function addPlan(_ref3) {
+	  var plan = _ref3.plan;
+	  var startTime = _ref3.startTime;
+	  var endTime = _ref3.endTime;
+	
 	  return {
-	    type: Actions.ADD_PLAN
+	    type: Actions.ADD_PLAN,
+	    planId: ++nextPlanId,
+	    plan: plan,
+	    startTime: startTime,
+	    endTime: endTime
 	  };
 	};
 
@@ -39473,7 +39485,7 @@
 	    _react2.default.createElement(
 	      'form',
 	      { onSubmit: handleSubmit },
-	      _react2.default.createElement(_reduxForm.Field, { name: 'stay', component: renderTextField, label: 'Where are you staying?',
+	      _react2.default.createElement(_reduxForm.Field, { name: 'lodging', component: renderTextField, label: 'Where are you staying?',
 	        style: { display: 'inline-block', marginRight: '10px', width: '50%', fontSize: '12px' } }),
 	      _react2.default.createElement(_reduxForm.Field, { name: 'nights', component: renderTextField, label: 'How many nights?',
 	        style: { display: 'inline-block', marginRight: '10px', width: '25%', fontSize: '12px' } }),
@@ -39485,18 +39497,16 @@
 	
 	LodgingInput = (0, _reduxForm.reduxForm)({
 	  form: 'lodging',
-	  onSubmit: function onSubmit(_ref3, dispatch, _ref4) {
-	    var stay = _ref3.stay;
-	    var nights = _ref3.nights;
-	    var dayId = _ref4.dayId;
+	  onSubmit: function onSubmit(values, dispatch, _ref3) {
+	    var dayId = _ref3.dayId;
 	
-	    dispatch((0, _actionCreators.addLodging)(dayId, stay, nights));
+	    dispatch((0, _actionCreators.addLodging)(values, dayId));
 	  }
 	})(LodgingInput);
 	
-	var getDayId = function getDayId(_ref5) {
-	  var days = _ref5.entities.days;
-	  var currentDay = _ref5.currentDay;
+	var getDayId = function getDayId(_ref4) {
+	  var days = _ref4.entities.days;
+	  var currentDay = _ref4.currentDay;
 	
 	  return days.byId ? currentDay : '';
 	};
@@ -39541,6 +39551,8 @@
 	
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 	
+	var _actionCreators = __webpack_require__(404);
+	
 	__webpack_require__(441);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -39567,7 +39579,7 @@
 	      _react2.default.createElement(_reduxForm.Field, { name: 'startTime', component: renderTextField,
 	        label: 'Start Time',
 	        style: { display: 'inline-block', marginRight: '10px', width: '15%', fontSize: '12px' } }),
-	      _react2.default.createElement(_reduxForm.Field, { name: 'duration', component: renderTextField,
+	      _react2.default.createElement(_reduxForm.Field, { name: 'endTime', component: renderTextField,
 	        label: 'End Time',
 	        style: { display: 'inline-block', marginRight: '10px', width: '15%', fontSize: '12px' } }),
 	      _react2.default.createElement(_RaisedButton2.default, { type: 'submit', label: 'Add',
@@ -39577,20 +39589,28 @@
 	};
 	
 	PlanInput = (0, _reduxForm.reduxForm)({
-	  form: 'plan'
-	})(PlanInput);
-	//
-	// const getDayId = ({entities: { days }, currentDay}) => {
-	//   return days.byId ? currentDay : ''
-	// }
-	//
-	// const mapState = (state) => {
-	//   return {
-	//     dayId: getDayId(state)
-	//   }
-	// }
+	  form: 'plan',
+	  onSubmit: function onSubmit(values, dispatch, _ref3) {
+	    var dayId = _ref3.dayId;
 	
-	PlanInput = (0, _reactRedux.connect)()(PlanInput);
+	    dispatch((0, _actionCreators.addPlan)(values, dayId));
+	  }
+	})(PlanInput);
+	
+	var getDayId = function getDayId(_ref4) {
+	  var days = _ref4.entities.days;
+	  var currentDay = _ref4.currentDay;
+	
+	  return days.byId ? currentDay : '';
+	};
+	
+	var mapState = function mapState(state) {
+	  return {
+	    dayId: getDayId(state)
+	  };
+	};
+	
+	PlanInput = (0, _reactRedux.connect)(mapState)(PlanInput);
 	
 	exports.default = PlanInput;
 
@@ -61712,6 +61732,10 @@
 	
 	var _actionTypes = __webpack_require__(405);
 	
+	var _redux = __webpack_require__(179);
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	var plan = function plan() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 	  var action = arguments[1];
@@ -61719,9 +61743,9 @@
 	  switch (action.type) {
 	    case _actionTypes.ADD_PLAN:
 	      return Object.assign({}, state, {
-	        id: action.id,
-	        location: action.location,
-	        beginTime: action.beginTime,
+	        id: action.planId,
+	        plan: action.plan,
+	        startTime: action.startTime,
 	        endTime: action.endTime
 	      });
 	    default:
@@ -61729,17 +61753,35 @@
 	  }
 	};
 	
-	var plans = function plans() {
+	var byId = function byId() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 	  var action = arguments[1];
 	
 	  switch (action.type) {
 	    case _actionTypes.ADD_PLAN:
-	      return state;
+	    case _actionTypes.UPDATE_PLAN:
+	      return Object.assign({}, state, _defineProperty({}, action.planId, plan(undefined, action)));
 	    default:
 	      return state;
 	  }
 	};
+	
+	var allIds = function allIds() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case _actionTypes.ADD_PLAN:
+	      return state.concat(action.planId);
+	    default:
+	      return state;
+	  }
+	};
+	
+	var plans = (0, _redux.combineReducers)({
+	  byId: byId,
+	  allIds: allIds
+	});
 	
 	exports.default = plans;
 

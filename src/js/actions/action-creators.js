@@ -1,8 +1,13 @@
-import * as Actions from './action-types';
+import {
+  ADD_OVERVIEW,
+  UPDATE_OVERVIEW,
+  ADD_LODGING,
+  ADD_PLAN
+} from './action-types';
 
 export const addOverview = ({ destination, startDate, endDate }, complete) => {
   return {
-    type: Actions.ADD_OVERVIEW,
+    type: ADD_OVERVIEW,
     destination,
     startDate,
     endDate,
@@ -12,14 +17,14 @@ export const addOverview = ({ destination, startDate, endDate }, complete) => {
 
 export const updateOverview = (complete) => {
   return {
-      type: Actions.UPDATE_OVERVIEW,
+      type: UPDATE_OVERVIEW,
       complete
   }
 }
 
 export const addLodging = ({ lodging, nights }, id) => {
   return {
-    type: Actions.ADD_LODGING,
+    type: ADD_LODGING,
     id,
     lodging,
     nights
@@ -27,9 +32,10 @@ export const addLodging = ({ lodging, nights }, id) => {
 }
 
 let nextPlanId = 0;
-export const addPlan = ({ plan, startTime, endTime }) => {
+export const addPlan = ({ plan, startTime, endTime }, id) => {
   return {
-    type: Actions.ADD_PLAN,
+    type: ADD_PLAN,
+    id,
     planId: ++nextPlanId,
     plan,
     startTime,
