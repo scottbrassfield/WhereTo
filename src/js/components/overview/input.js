@@ -4,7 +4,8 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-require('../../../stylesheets/components/overview.scss');
+import { addOverview } from '../../actions/action-creators'
+import '../../../stylesheets/components/overview.scss';
 
 const renderTextField = ({ input, label }) => {
   return (
@@ -40,14 +41,9 @@ function mapState(state) {
 
 Input = reduxForm({
   form: 'overview',
-  onSubmit: ({ destination, startDate, endDate }, dispatch) => {
-    dispatch({
-      type: 'ADD_OVERVIEW',
-      destination,
-      startDate,
-      endDate,
-      complete: true,
-    })
+  fields: ['destination', 'startDate', 'endDate'],
+  onSubmit: (values, dispatch) => {
+    dispatch(addOverview(values, true))
   }
 })(Input)
 

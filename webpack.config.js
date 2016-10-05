@@ -2,7 +2,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
-  
+
   entry: './src/index.js',
   output: {
     path: './dist/public/',
@@ -20,7 +20,8 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: ['react', 'es2015']
+          presets: ['react', 'es2015'],
+          plugins: ['transform-object-rest-spread']
         }
       },
       {
@@ -31,6 +32,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('style.css')
+    new ExtractTextPlugin('style.css'),
+
   ]
 }

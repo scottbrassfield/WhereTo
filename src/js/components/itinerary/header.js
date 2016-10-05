@@ -1,13 +1,13 @@
 import React from 'react'
 import Calendar from './calendar'
-import Lodging from './lodging'
+import LodgingInput from './lodging'
 
 const Header = () => {
   return (
     <div>
       <Calendar />
       <div style={{display: 'inline-block', width: '70%', verticalAlign: 'top', paddingTop: '10px'}}>
-        <Lodging />
+        <LodgingInput />
       </div>
     </div>
   )

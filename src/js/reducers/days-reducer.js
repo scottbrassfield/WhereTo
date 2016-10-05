@@ -12,7 +12,7 @@ const byId = (state = {}, action) => {
     case ADD_LODGING:
       return Object.assign(
         {}, state,
-        addLodging(state, action)
+        { [action.id]: addLodging(state, action) }
       );
     default:
       return state;

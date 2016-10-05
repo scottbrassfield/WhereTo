@@ -1,6 +1,6 @@
 import React from 'react';
-import Overview from './overview/overview'
-import Itinerary from './itinerary/itinerary'
+import Overview from './overview/index'
+import Itinerary from './itinerary/index'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 const App = () => {

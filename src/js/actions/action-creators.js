@@ -1,12 +1,12 @@
 import * as Actions from './action-types';
 
-export const addOverview = (destination, startDate, endDate, complete) => {
+export const addOverview = ({ destination, startDate, endDate }, complete) => {
   return {
-      type: Actions.ADD_OVERVIEW,
-      destination,
-      startDate,
-      endDate,
-      complete
+    type: Actions.ADD_OVERVIEW,
+    destination,
+    startDate,
+    endDate,
+    complete
   }
 }
 
