@@ -11,7 +11,7 @@ const LodgingSummary = ({ lodging, dayId, onButtonClick }) => {
   })
 
   return (
-    <Card className={summaryClass} style={{marginTop: '15px', padding: '20px', position: 'relative'}}>
+    <Card className={summaryClass} style={{marginTop: '5px', padding: '15px', position: 'relative'}}>
       <div
         style={{marginRight: '10px', display: 'inline-block'}}>
         Lodging:
@@ -21,7 +21,7 @@ const LodgingSummary = ({ lodging, dayId, onButtonClick }) => {
         {lodging}
       </div>
       <RaisedButton
-        style={{position: 'absolute', right: '20px', top: '12px', minWidth: '20px', lineHeight: '30px'}} type='button' label='Update'
+        style={{position: 'absolute', right: '30px', top: '7px', minWidth: '20px', lineHeight: '30px'}} type='button' label='Update'
         labelStyle={{fontSize: '10px'}}
         onClick={() => onButtonClick(dayId)}
       />

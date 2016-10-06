@@ -14,7 +14,7 @@ let Lodging = ({ lodging, dayId, onButtonClick }) => {
         lodging={lodging}
       />
       <LodgingSummary
-        dayId={dayId}
+        dayId={dayId  }
         lodging={lodging}
         onButtonClick={onButtonClick}
       />
@@ -22,12 +22,12 @@ let Lodging = ({ lodging, dayId, onButtonClick }) => {
   )
 }
 
-const getDayId = ({entities: { days }, currentDay}) => {
-  return days.byId ? currentDay : ''
+const getDayId = ({entities: { days: { byId} }, currentDay}) => {
+  return byId ? currentDay : null
 }
 
-const getLodging = ({ entities:{ days }, currentDay }) => {
-  return days.byId[currentDay] ? days.byId[currentDay].lodging : null
+const getLodging = ({ entities: { days: { byId } }, currentDay }) => {
+  return byId[currentDay] ? byId[currentDay].lodging : null
 }
 
 const mapState = (state) => {
