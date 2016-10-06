@@ -1,16 +1,27 @@
-import React from 'react';
-import Paper from 'material-ui/Paper';
-import Header from './header.js';
-import VisiblePlans from '../../containers/visible-plans.js';
-import '../../../stylesheets/components/itinerary.scss';
+import React from 'react'
+import Paper from 'material-ui/Paper'
+import classNames from 'classnames'
+import { connect  } from 'react-redux'
+import Header from './header.js'
+import VisiblePlans from '../../containers/visible-plans.js'
+import '../../../stylesheets/components/itinerary.scss'
 
-const Itinerary = () => {
+const Itinerary = ({ overview }) => {
+
+  let itineraryClass = classNames({
+    'hidden': !overview
+  })
+
   return (
-    <Paper id='itinerary' style={{marginTop: '30px', minHeight: '500px'}}>
+    <Paper className={itineraryClass} id='itinerary' style={{marginTop: '30px', minHeight: '500px'}}>
       <Header />
       <VisiblePlans />
     </Paper>
   )
 }
 
-module.exports = Itinerary;
+const mapState = (state) => {
+  return {overview: state.overview.complete}
+}
+
+export default connect(mapState)(Itinerary)
