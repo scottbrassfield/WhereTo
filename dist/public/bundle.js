@@ -39296,6 +39296,10 @@
 
 	'use strict';
 	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -39303,6 +39307,12 @@
 	var _Paper = __webpack_require__(400);
 	
 	var _Paper2 = _interopRequireDefault(_Paper);
+	
+	var _classnames = __webpack_require__(403);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	var _reactRedux = __webpack_require__(172);
 	
 	var _header = __webpack_require__(438);
 	
@@ -39316,16 +39326,27 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Itinerary = function Itinerary() {
+	var Itinerary = function Itinerary(_ref) {
+	  var overview = _ref.overview;
+	
+	
+	  var itineraryClass = (0, _classnames2.default)({
+	    'hidden': !overview
+	  });
+	
 	  return _react2.default.createElement(
 	    _Paper2.default,
-	    { id: 'itinerary', style: { marginTop: '30px', minHeight: '500px' } },
+	    { className: itineraryClass, id: 'itinerary', style: { marginTop: '30px', minHeight: '500px' } },
 	    _react2.default.createElement(_header2.default, null),
 	    _react2.default.createElement(_visiblePlans2.default, null)
 	  );
 	};
 	
-	module.exports = Itinerary;
+	var mapState = function mapState(state) {
+	  return { overview: state.overview.complete };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapState)(Itinerary);
 
 /***/ },
 /* 438 */
@@ -39483,9 +39504,11 @@
 	    'div',
 	    null,
 	    _react2.default.createElement(_lodgingInput2.default, {
-	      dayId: dayId
+	      dayId: dayId,
+	      lodging: lodging
 	    }),
 	    _react2.default.createElement(_lodgingSummary2.default, {
+	      dayId: dayId,
 	      lodging: lodging,
 	      onButtonClick: onButtonClick
 	    })
@@ -39493,17 +39516,17 @@
 	};
 	
 	var getDayId = function getDayId(_ref2) {
-	  var days = _ref2.entities.days;
+	  var byId = _ref2.entities.days.byId;
 	  var currentDay = _ref2.currentDay;
 	
-	  return days.byId ? currentDay : '';
+	  return byId ? currentDay : null;
 	};
 	
 	var getLodging = function getLodging(_ref3) {
-	  var days = _ref3.entities.days;
+	  var byId = _ref3.entities.days.byId;
 	  var currentDay = _ref3.currentDay;
 	
-	  return days.byId[currentDay] ? days.byId[currentDay].lodging : null;
+	  return byId[currentDay] ? byId[currentDay].lodging : null;
 	};
 	
 	var mapState = function mapState(state) {
@@ -39646,7 +39669,7 @@
 	
 	  return _react2.default.createElement(
 	    _materialUi.Card,
-	    { className: summaryClass, style: { marginTop: '15px', padding: '20px', position: 'relative' } },
+	    { className: summaryClass, style: { marginTop: '5px', padding: '15px', position: 'relative' } },
 	    _react2.default.createElement(
 	      'div',
 	      {
@@ -39660,7 +39683,7 @@
 	      lodging
 	    ),
 	    _react2.default.createElement(_materialUi.RaisedButton, {
-	      style: { position: 'absolute', right: '20px', top: '12px', minWidth: '20px', lineHeight: '30px' }, type: 'button', label: 'Update',
+	      style: { position: 'absolute', right: '30px', top: '7px', minWidth: '20px', lineHeight: '30px' }, type: 'button', label: 'Update',
 	      labelStyle: { fontSize: '10px' },
 	      onClick: function onClick() {
 	        return onButtonClick(dayId);
@@ -67436,6 +67459,9 @@
 	      }
 	    });
 	  }
+	  thePlans.sort(function (a, b) {
+	    return a.startTime - b.startTime;
+	  });
 	  return thePlans;
 	};
 	

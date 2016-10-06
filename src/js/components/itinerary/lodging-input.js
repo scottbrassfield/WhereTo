@@ -14,8 +14,6 @@ const renderTextField = ({ input, label, style }) => {
 
 let LodgingInput = ({ handleSubmit, lodging }) => {
 
-  console.log(lodging)
-
   let inputClass = classNames({
     'hidden': lodging,
     'active': !lodging

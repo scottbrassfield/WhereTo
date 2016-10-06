@@ -3,7 +3,6 @@ import { Card, RaisedButton } from 'material-ui'
 import classNames from 'classnames'
 import '../../../stylesheets/components/itinerary.scss'
 
-
 const LodgingSummary = ({ lodging, dayId, onButtonClick }) => {
 
   let summaryClass = classNames({
@@ -30,5 +29,3 @@ const LodgingSummary = ({ lodging, dayId, onButtonClick }) => {
 }
 
 export default LodgingSummary
-
-//

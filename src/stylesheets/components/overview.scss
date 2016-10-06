@@ -6,7 +6,11 @@ h1 {
 }
 
 #input {
-  @include span(5);
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
 }
 
 #summary {

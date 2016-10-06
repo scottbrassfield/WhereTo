@@ -33,8 +33,9 @@ let PlanInput = ({ handleSubmit }) => {
 
 PlanInput = reduxForm({
   form: 'plan',
-  onSubmit: (values, dispatch, { dayId }) => {
+  onSubmit: (values, dispatch, { dayId, reset }) => {
     dispatch(addPlan(values, dayId))
+    reset()
   }
 })(PlanInput)
 

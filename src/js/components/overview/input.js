@@ -29,7 +29,7 @@ let Input = ({ complete, handleSubmit }) => {
         <Field name='destination' component={renderTextField} label='Destination' />
         <Field name='startDate' component={renderTextField} label='Start date' />
         <Field name='endDate' component={renderTextField} label='End date' />
-        <RaisedButton type='submit' label='Submit' />
+        <RaisedButton type='submit' label='Submit' primary={true} style={{marginTop: '20px'}}/>
       </form>
     </div>
   )

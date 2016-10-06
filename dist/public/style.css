@@ -1,3 +1,8 @@
+nav {
+  position: fixed;
+  background-color: #254b59;
+  height: 30px; }
+
 body {
   max-width: 95%;
   margin-left: auto;
@@ -36,6 +41,11 @@ h1 {
 
 #summary-card {
   width: 350px; }
+nav {
+  position: fixed;
+  background-color: #254b59;
+  height: 30px; }
+
 body {
   max-width: 95%;
   margin-left: auto;
@@ -64,6 +74,11 @@ body {
 
 .time {
   width: 20%; }
+nav {
+  position: fixed;
+  background-color: #254b59;
+  height: 30px; }
+
 body {
   max-width: 95%;
   margin-left: auto;
