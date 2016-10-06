@@ -10,6 +10,9 @@ const mapIdsToPlans = (planIds, plans) => {
       }
     })
   }
+  thePlans.sort((a, b) => {
+    return a.startTime - b.startTime
+  })
   return thePlans
 }
 
