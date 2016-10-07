@@ -1,8 +1,7 @@
-import React from 'react';
+import React from 'react'
 import Overview from './overview/index'
 import Itinerary from './itinerary/index'
-import Map from './map/map'
-// import LoadedMap from './map/map_stateless_composite'
+import LoadedMap from './map/map'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 const App = () => {
@@ -11,7 +10,7 @@ const App = () => {
       <div>
         <div id='left'>
           <Overview />
-          <Map />
+          <LoadedMap />
         </div>
         <Itinerary />
       </div>
@@ -19,4 +18,4 @@ const App = () => {
   )
 }
 
-module.exports = App;
+export default App;

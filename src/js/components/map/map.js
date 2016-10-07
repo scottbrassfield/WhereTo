@@ -1,62 +1,30 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import classNames from 'classnames'
+import WrappedMap from './map-wrapped'
+import '../../../stylesheets/config/config.scss'
 
-class Map extends React.Component {
+const LoadedMap = ({ overview }) => {
 
-  componentDidMount() {
-
-    var map = new google.maps.Map(
-      this.refs.map,
-      this.props.mapOptions
-    );
-
-    this.props.markers.forEach( (marker) => {
-      new google.maps.Marker({
-        position: marker.position,
-        map: map,
-        title: marker.title
-      });
-    })
-
-    this.saveMap(map, this.props.dispatch)
+  if (!overview) {
+    return <div></div>
   }
+  let style = {display: 'block', height: '500px', marginTop: '12px'}
 
-  saveMap(map, dispatch) {
-    dispatch({
-      type: 'LOAD_MAP',
-      map
-    })
-  }
-
-  toggleMap() {
-    let mapClass = classNames({
-      'hidden': !this.props.overview
-    })
-    return mapClass
-  }
-
-  render() {
-    const mapStyle = {
-      marginTop: 12,
-      width: '100%',
-      height: 500
-    }
-
-    return (
-      <div ref='map' style={mapStyle} className={this.toggleMap()}></div>
-    )
-  }
+  return (
+    <WrappedMap
+      containerElement={<div style={style} />}
+      mapElement={<div style={style} />}
+    />
+  )
 }
 
 const mapState = (state) => {
   return {
     mapOptions: state.map.details,
     markers: state.map.markers,
-    overview: state.overview.complete,
     destination: state.overview.destination,
-    map: state.map.main
+    overview: state.overview.complete,
   }
 }
 
-export default connect(mapState)(Map)
+export default connect(mapState)(LoadedMap)

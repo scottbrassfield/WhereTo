@@ -23,7 +23,7 @@ let LodgingInput = ({ handleSubmit, lodging }) => {
     <div className={inputClass}>
       <form onSubmit={ handleSubmit }>
         <Field name='lodging' component={renderTextField} label='Where are you staying?'
-          style={{ display: 'inline-block', marginRight: '10px', width: '50%', fontSize: '12px' }}/>
+          style={{ display: 'inline-block', marginRight: '10px', width: '57%', fontSize: '12px' }}/>
         <Field name='nights' component={renderTextField} label='How many nights?'
           style={{ display: 'inline-block', marginRight: '10px', width: '25%', fontSize: '12px' }} />
         <RaisedButton type='submit' label='Add'
