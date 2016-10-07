@@ -13,7 +13,7 @@ const Itinerary = ({ overview }) => {
   })
 
   return (
-    <Paper className={itineraryClass} id='itinerary' style={{marginTop: '30px', minHeight: '500px'}}>
+    <Paper className={itineraryClass} id='itinerary' style={{marginTop: '30px', height: '570px'}}>
       <Header />
       <VisiblePlans />
     </Paper>

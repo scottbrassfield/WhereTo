@@ -29,3 +29,7 @@ body {
 .active {
   display: block;
 }
+
+#left {
+  @include span(7);
+}

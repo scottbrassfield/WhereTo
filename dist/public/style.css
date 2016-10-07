@@ -1,13 +1,8 @@
-nav {
-  position: fixed;
-  background-color: #254b59;
-  height: 30px; }
-
 body {
   max-width: 95%;
   margin-left: auto;
   margin-right: auto;
-  background-color: #fdfdfd;
+  background-color: #fafafa;
   font-family: "Roboto", sans-serif; }
   body:after {
     content: " ";
@@ -22,35 +17,33 @@ body {
 
 .active {
   display: block; }
+
+#left {
+  width: 42.5%;
+  float: left;
+  margin-left: 0.625%;
+  margin-right: 0.625%; }
 
 h1 {
   color: #5d5d5d; }
 
 #input {
-  width: 30%;
-  float: left;
-  margin-left: 0.625%;
-  margin-right: 0.625%; }
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center; }
 
 #summary {
-  width: 30%;
-  float: left;
-  margin-left: 0.625%;
-  margin-right: 0.625%;
   margin-top: 30px; }
 
 #summary-card {
   width: 350px; }
-nav {
-  position: fixed;
-  background-color: #254b59;
-  height: 30px; }
-
 body {
   max-width: 95%;
   margin-left: auto;
   margin-right: auto;
-  background-color: #fdfdfd;
+  background-color: #fafafa;
   font-family: "Roboto", sans-serif; }
   body:after {
     content: " ";
@@ -65,6 +58,12 @@ body {
 
 .active {
   display: block; }
+
+#left {
+  width: 42.5%;
+  float: left;
+  margin-left: 0.625%;
+  margin-right: 0.625%; }
 
 #itinerary {
   width: 55%;
@@ -74,16 +73,11 @@ body {
 
 .time {
   width: 20%; }
-nav {
-  position: fixed;
-  background-color: #254b59;
-  height: 30px; }
-
 body {
   max-width: 95%;
   margin-left: auto;
   margin-right: auto;
-  background-color: #fdfdfd;
+  background-color: #fafafa;
   font-family: "Roboto", sans-serif; }
   body:after {
     content: " ";
@@ -98,5 +92,11 @@ body {
 
 .active {
   display: block; }
+
+#left {
+  width: 42.5%;
+  float: left;
+  margin-left: 0.625%;
+  margin-right: 0.625%; }
 
 /*# sourceMappingURL=style.css.map*/

@@ -1,7 +1,8 @@
 import { ADD_OVERVIEW, UPDATE_OVERVIEW } from '../actions/action-types'
 
 const initialState = {
-  complete: false
+  complete: false,
+  destination: 'test'
 }
 
 const overview = (state = initialState, action) => {

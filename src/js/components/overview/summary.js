@@ -18,7 +18,7 @@ const Summary = ({ destination, startDate, endDate, complete, updateOverview}) =
     <Paper
       id='summary'
       className={ summaryClass }
-      style={{width: '500px', position: 'relative'}}>
+      style={{width: '100%', position: 'relative'}}>
       <div
         style={{fontSize: '30px', fontWeight: 'bold', display: 'inline-block', marginRight: '40px', padding: '12px', verticalAlign: 'middle'}}>
         {destination}

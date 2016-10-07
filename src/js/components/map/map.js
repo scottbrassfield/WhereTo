@@ -1,60 +1,62 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+import React from 'react'
+import { connect } from 'react-redux'
+import classNames from 'classnames'
 
-// var map;
-// function initMap() {
-//   map = new google.maps.Map(document.getElementByID('map'), {
-//     center: {lat: -34.397, lng: 150.644},
-//     zoom: 8
-//   });
-// }
+class Map extends React.Component {
 
-const TheMap = () => {
-  return (
-    <div>
-      <h1>Locations</h1>
-      <div id='map'></div>
-    </div>
-  )
-}
+  componentDidMount() {
 
-module.exports = TheMap
+    var map = new google.maps.Map(
+      this.refs.map,
+      this.props.mapOptions
+    );
 
-
-
-//synchronous dispatch
-const myAction = {
-  type: 'TYPE_NAME',
-  payload: '...some data'
-}
-
-dispatch(myAction)
-
-
-//asynchronous action
-const doMyAction = (dispatch, getState) => {
-  //do some async stuff
-  //.then()
-  fetch('/api/beers')
-    .then(res => res.json())
-    .then(beers => {
-      dispatch({type: 'BEERS_LOADED', payload: beers})
+    this.props.markers.forEach( (marker) => {
+      new google.maps.Marker({
+        position: marker.position,
+        map: map,
+        title: marker.title
+      });
     })
 
-/*can't just do dispatch(myAction) because this is a function,
-and dispatch wants an Object*/
+    this.saveMap(map, this.props.dispatch)
+  }
 
-//redux-thunk allows us to dispatch functions
-const store = createStore(
-  rootReducer,
-  applyMiddleware(thunk)
-)
+  saveMap(map, dispatch) {
+    dispatch({
+      type: 'SAVE_MAP',
+      map
+    })
+  }
 
+  toggleMap() {
+    let mapClass = classNames({
+      'hidden': !this.props.overview
+    })
+    return mapClass
+  }
 
+  render() {
+    const mapStyle = {
+      marginTop: 12,
+      width: '100%',
+      height: 500
+    }
 
-//can use action creators for thunk
+    return (
+      <div ref='map' style={mapStyle} className={this.toggleMap()}></div>
+    )
+  }
+}
 
-const getThatBeer = id => (dispatch, getState) =>
-  fetch('/api/beers/' + id)
-    .then(res => res.json())
-    .then(beer=> dispatch(gotTheBeer(beer)))
+const mapState = (state) => {
+  return {
+    mapOptions: state.map.details,
+    markers: state.map.markers,
+    overview: state.overview.complete,
+    destination: state.overview.destination,
+    map: state.map.main
+  }
+}
+
+export default connect(mapState)(Map)
