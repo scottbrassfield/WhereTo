@@ -24,7 +24,7 @@ class Map extends React.Component {
 
   saveMap(map, dispatch) {
     dispatch({
-      type: 'SAVE_MAP',
+      type: 'LOAD_MAP',
       map
     })
   }

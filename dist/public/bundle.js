@@ -23049,7 +23049,6 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	// import Map from './map/map_stateless'
 	var App = function App() {
 	  return _react2.default.createElement(
 	    _MuiThemeProvider2.default,
@@ -36676,7 +36675,7 @@
 	var ADD_LODGING = exports.ADD_LODGING = 'ADD_LODGING';
 	var UPDATE_LODGING = exports.UPDATE_LODGING = 'UPDATE_LODGING';
 	var SAVE_SEARCH = exports.SAVE_SEARCH = 'SAVE_SEARCH';
-	var SAVE_MAP = exports.SAVE_MAP = 'SAVE_MAP';
+	var LOAD_MAP = exports.LOAD_MAP = 'LOAD_MAP';
 
 /***/ },
 /* 406 */
@@ -82479,7 +82478,7 @@
 	  var action = arguments[1];
 	
 	  switch (action.type) {
-	    case _actionTypes.SAVE_MAP:
+	    case SAVE_MAP:
 	      return Object.assign({}, state, action.map);
 	    default:
 	      return state;
@@ -82534,7 +82533,8 @@
 	  var action = arguments[1];
 	
 	  switch (action.type) {
-	    case _actionTypes.SAVE_MAP:
+	    case _actionTypes.LOAD_MAP:
+	      state = true;
 	      return state;
 	    default:
 	      return state;
