@@ -5,7 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { addOverview } from '../../actions/action-creators'
-import '../../../stylesheets/components/overview.scss';
+// import { normalizeDates } from '../normalizeForms'
+import '../../../stylesheets/components/overview.scss'
 
 const renderTextField = ({ input, label }) => {
   return (
