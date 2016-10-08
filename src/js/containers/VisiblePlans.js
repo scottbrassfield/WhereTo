@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Plans from '../components/itinerary/plans.js'
+import Plans from '../components/itinerary/Plans.js'
 
 const mapIdsToPlans = (planIds, plans) => {
   let thePlans = [];

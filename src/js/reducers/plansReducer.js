@@ -1,5 +1,5 @@
-import { ADD_PLAN, UPDATE_PLAN } from '../actions/action-types';
 import { combineReducers } from 'redux';
+import { ADD_PLAN, UPDATE_PLAN } from '../actions/actionTypes';
 
 const plan = (state = {}, action) => {
   switch(action.type) {

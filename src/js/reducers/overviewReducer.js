@@ -1,4 +1,4 @@
-import { ADD_OVERVIEW, UPDATE_OVERVIEW } from '../actions/action-types'
+import { ADD_OVERVIEW, UPDATE_OVERVIEW } from '../actions/actionTypes'
 
 const initialState = {
   complete: false,

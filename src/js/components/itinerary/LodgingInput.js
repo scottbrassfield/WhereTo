@@ -1,9 +1,9 @@
 import React from 'react'
 import { reduxForm, Field }from 'redux-form'
+import classNames from 'classnames'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
-import { addLodging } from '../../actions/action-creators'
-import classNames from 'classnames'
+import { addLodging } from '../../actions/actionCreators'
 import '../../../stylesheets/components/itinerary.scss'
 
 const validate = values => {
@@ -31,7 +31,7 @@ let LodgingInput = ({ handleSubmit, lodging }) => {
   return (
     <div className={inputClass}>
       <form onSubmit={ handleSubmit }>
-        <Field name='lodging' component={renderTextField} label='Where are you staying?' 
+        <Field name='lodging' component={renderTextField} label='Where are you staying?'
           style={{ display: 'inline-block', marginRight: '10px', width: '57%', fontSize: '12px' }}/>
         <Field name='nights' component={renderTextField} label='How many nights?'
           style={{ display: 'inline-block', marginRight: '10px', width: '25%', fontSize: '12px' }} />

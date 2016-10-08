@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import WrappedMap from './map-wrapped'
+import WrappedMap from './WrappedMap'
 import '../../../stylesheets/config/config.scss'
 
 const LoadedMap = ({ overview }) => {

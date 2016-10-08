@@ -1,12 +1,10 @@
 import { combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
-import days from './days-reducer'
-import plans from './plans-reducer'
-import overview from './overview-reducer'
-import currentDay from './current-day-reducer'
-import map from './map-reducer'
-
-
+import days from './daysReducer'
+import plans from './plansReducer'
+import overview from './overviewReducer'
+import currentDay from './currentDayReducer'
+import map from './mapReducer'
 
 const entities = combineReducers({
   days,

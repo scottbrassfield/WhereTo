@@ -1,5 +1,5 @@
 import React from 'react'
-import Plan from './plan.js'
+import Plan from './Plan.js'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'material-ui/Table'
 
 let Plans = ({ plans }) => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import Calendar from './calendar'
-import Lodging from '../../containers/lodging'
-import PlanInput from './plan-input'
+import Lodging from '../../containers/Lodging'
+import PlanInput from './PlanInput'
 
 const Header = () => {
   return (

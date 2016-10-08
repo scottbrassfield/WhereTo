@@ -1,7 +1,7 @@
 import React from 'react'
 import Overview from './overview/index'
 import Itinerary from './itinerary/index'
-import LoadedMap from './map/map'
+import LoadedMap from './map/LoadedMap'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 const App = () => {

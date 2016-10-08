@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import LodgingInput from '../components/itinerary/lodging-input'
-import LodgingSummary from '../components/itinerary/lodging-summary'
-import { updateLodging } from '../actions/action-creators'
+import LodgingInput from '../components/itinerary/LodgingInput'
+import LodgingSummary from '../components/itinerary/LodgingSummary'
+import { updateLodging } from '../actions/actionCreators'
 import '../../stylesheets/config/config.scss'
 
 let Lodging = ({ lodging, dayId, onButtonClick }) => {

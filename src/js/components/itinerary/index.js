@@ -1,9 +1,9 @@
 import React from 'react'
-import Paper from 'material-ui/Paper'
-import classNames from 'classnames'
 import { connect  } from 'react-redux'
-import Header from './header.js'
-import VisiblePlans from '../../containers/visible-plans.js'
+import classNames from 'classnames'
+import Paper from 'material-ui/Paper'
+import Header from './Header.js'
+import VisiblePlans from '../../containers/VisiblePlans.js'
 import '../../../stylesheets/components/itinerary.scss'
 
 const Itinerary = ({ overview }) => {

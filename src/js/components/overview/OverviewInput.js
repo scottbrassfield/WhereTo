@@ -1,11 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { reduxForm, Field }from 'redux-form';
+import classNames from 'classnames';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import { connect } from 'react-redux';
-import classNames from 'classnames';
-import { addOverview } from '../../actions/action-creators'
-// import { normalizeDates } from '../normalizeForms'
+import { addOverview } from '../../actions/actionCreators'
 import '../../../stylesheets/components/overview.scss'
 
 const renderTextField = ({ input, label }) => {

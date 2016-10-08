@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import classNames from 'classnames';
 import '../../../stylesheets/components/overview.scss';
-import { updateOverview } from '../../actions/action-creators';
-
+import { updateOverview } from '../../actions/actionCreators';
 
 const Summary = ({ destination, startDate, endDate, complete, updateOverview}) => {
 

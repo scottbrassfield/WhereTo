@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux'
-import { SAVE_SEARCH, ADD_OVERVIEW, LOAD_MAP } from '../actions/action-types'
-import { mapSearch } from './case-functions/map-case-functions'
+import { LOAD_MAP } from '../actions/actionTypes'
 
 const main = (state = {}, action) => {
   switch (action.type) {
@@ -39,9 +38,6 @@ const details = (state = initialDetailState, action) => {
 
 const searchResults = (state = [], action) => {
   switch (action.type) {
-    case SAVE_SEARCH:
-    // case ADD_OVERVIEW:
-      return state.concat(mapSearch(undefined, action))
     default:
       return state;
   }

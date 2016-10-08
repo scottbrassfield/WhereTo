@@ -1,6 +1,6 @@
 import React from 'react'
-import { Card, RaisedButton } from 'material-ui'
 import classNames from 'classnames'
+import { Card, RaisedButton } from 'material-ui'
 import '../../../stylesheets/components/itinerary.scss'
 
 const LodgingSummary = ({ lodging, dayId, onButtonClick }) => {

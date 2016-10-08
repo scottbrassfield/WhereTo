@@ -1,4 +1,4 @@
-import { ADD_OVERVIEW, NEXT_DAY, PREVIOUS_DAY } from '../actions/action-types'
+import { ADD_OVERVIEW, NEXT_DAY, PREVIOUS_DAY } from '../actions/actionTypes'
 
 const currentDay = (state = 0, action) => {
   switch(action.type) {

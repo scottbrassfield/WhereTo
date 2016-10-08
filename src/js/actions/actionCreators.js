@@ -4,7 +4,7 @@ import {
   ADD_LODGING,
   UPDATE_LODGING,
   ADD_PLAN
-} from './action-types'
+} from './actionTypes'
 
 export const addOverview = ({ destination, startDate, endDate }, complete) => {
   return {

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import { ADD_OVERVIEW, ADD_LODGING, ADD_PLAN, UPDATE_LODGING } from '../actions/action-types';
-import { startTrip, addLodging, removeLodging, updatePlanIds } from './case-functions/day-case-functions';
+import { ADD_OVERVIEW, ADD_LODGING, ADD_PLAN, UPDATE_LODGING } from '../actions/actionTypes';
+import { startTrip, addLodging, removeLodging, updatePlanIds } from './caseFunctions/dayCaseFunctions';
 
 const byId = (state = {}, action) => {
   switch(action.type) {
