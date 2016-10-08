@@ -3,7 +3,9 @@ import {
   UPDATE_OVERVIEW,
   ADD_LODGING,
   UPDATE_LODGING,
-  ADD_PLAN
+  ADD_PLAN,
+  NEXT_DAY,
+  PRIOR_DAY
 } from './actionTypes'
 
 export const addOverview = ({ destination, startDate, endDate }, complete) => {
@@ -48,5 +50,19 @@ export const addPlan = ({ plan, startTime, endTime }, id) => {
     plan,
     startTime,
     endTime
+  }
+}
+
+export const nextDay = (totalDays) => {
+  return {
+    type: NEXT_DAY,
+    totalDays
+  }
+}
+
+export const priorDay = () => {
+  return {
+    type: PRIOR_DAY
+
   }
 }
