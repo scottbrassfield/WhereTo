@@ -6,22 +6,13 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { addLodging } from '../../actions/actionCreators'
 import '../../../stylesheets/components/itinerary.scss'
 
-const validate = values => {
-  const errors = {}
-  if (!values.lodging) {
-    errors.lodging = 'Please enter lodging information'
-  }
-  return errors
-}
-
 const renderTextField = ({ input, label, style }) => {
   return (
     <TextField {...input} hintText={label} style={style} />
   )
 }
 
-
-let LodgingInput = ({ handleSubmit, lodging }) => {
+let LodgingInput = ({ handleSubmit, lodging, reset}) => {
 
   let inputClass = classNames({
     'hidden': lodging,
@@ -44,10 +35,10 @@ let LodgingInput = ({ handleSubmit, lodging }) => {
 
 LodgingInput = reduxForm({
   form: 'lodging',
-  onSubmit: (values, dispatch, { dayId }) => {
+  onSubmit: (values, dispatch, { dayId, reset }) => {
     dispatch(addLodging(values, dayId))
-  },
-  validate
+    reset()
+  }
 })(LodgingInput)
 
 export default LodgingInput

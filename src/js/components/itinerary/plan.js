@@ -6,7 +6,7 @@ let Plan = ({ startTime, plan }) => {
       <TableRow>
         <TableRowColumn style={{width: '20%'}}>{startTime}</TableRowColumn>
         <TableRowColumn>{plan}</TableRowColumn>
-        <TableRowColumn>Reservation</TableRowColumn>
+        <TableRowColumn></TableRowColumn>
       </TableRow>
   )
 }

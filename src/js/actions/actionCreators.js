@@ -8,6 +8,8 @@ import {
   PRIOR_DAY
 } from './actionTypes'
 
+import { initialize } from 'react-redux'
+
 export const addOverview = ({ destination, startDate, endDate }, complete) => {
   return {
     type: ADD_OVERVIEW,
@@ -63,6 +65,5 @@ export const nextDay = (totalDays) => {
 export const priorDay = () => {
   return {
     type: PRIOR_DAY
-
   }
 }

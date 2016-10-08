@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import Calendar from '../components/itinerary/Calendar'
 import { nextDay, priorDay } from '../actions/actionCreators'
 
-const getDate = ({entities: { days: { byId } }, currentDay}) => {
+const getCurrentDay = ({entities: { days: { byId } }, currentDay}) => {
   return byId[currentDay] ? byId[currentDay].date.format('MMM D') : null
 }
 
@@ -12,7 +12,7 @@ const getTotalDays = ({entities: { days: { byId } }}) => {
 
 const mapState = (state) => {
   return {
-    currentDay: getDate(state),
+    currentDay: getCurrentDay(state),
     totalDays: getTotalDays(state)
   }
 }

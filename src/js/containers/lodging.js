@@ -14,7 +14,7 @@ let Lodging = ({ lodging, dayId, onButtonClick }) => {
         lodging={lodging}
       />
       <LodgingSummary
-        dayId={dayId  }
+        dayId={dayId}
         lodging={lodging}
         onButtonClick={onButtonClick}
       />
@@ -27,13 +27,14 @@ const getDayId = ({entities: { days: { byId} }, currentDay}) => {
 }
 
 const getLodging = ({ entities: { days: { byId } }, currentDay }) => {
-  return byId[currentDay] ? byId[currentDay].lodging : null
+  return byId[currentDay] ? byId[currentDay].lodging : ''
 }
 
 const mapState = (state) => {
   return {
     lodging: getLodging(state),
-    dayId: getDayId(state)
+    dayId: getDayId(state),
+    initialValues: {lodging: getLodging(state)}
   }
 }
 
@@ -41,6 +42,4 @@ const mapDispatch = ({
   onButtonClick: updateLodging
 })
 
-Lodging = connect(mapState, mapDispatch)(Lodging)
-
-export default Lodging
+export default connect(mapState, mapDispatch)(Lodging)
