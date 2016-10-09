@@ -1,6 +1,6 @@
 import React from 'react'
 import ConnectedCalendar from '../../containers/ConnectedCalendar'
-import Lodging from '../../containers/Lodging'
+import Lodging from '../../containers/ConnectedLodging'
 import PlanInput from './PlanInput'
 
 const Header = () => {

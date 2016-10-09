@@ -4,14 +4,12 @@ import { ADD_PLAN, UPDATE_PLAN } from '../actions/actionTypes';
 const plan = (state = {}, action) => {
   switch(action.type) {
     case ADD_PLAN:
-      return (Object.assign({}, state,
-        {
-          id: action.planId,
+      return { ...state,
+          id: action.id,
           plan: action.plan,
           startTime: action.startTime,
           endTime: action.endTime
-        })
-      )
+        }
     default:
       return state;
   }
@@ -21,8 +19,9 @@ const byId = (state = {}, action) => {
   switch (action.type) {
     case ADD_PLAN:
     case UPDATE_PLAN:
-      return Object.assign({}, state,
-        { [action.planId]: plan(undefined, action) })
+      return { ...state,
+        [action.id]: plan(undefined, action)
+      }
     default:
       return state;
   }
@@ -31,7 +30,7 @@ const byId = (state = {}, action) => {
 const allIds = (state = [], action) => {
   switch (action.type) {
     case ADD_PLAN:
-      return state.concat(action.planId)
+      return [...state, action.planId]
     default:
       return state;
   }

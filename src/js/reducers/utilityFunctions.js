@@ -6,10 +6,10 @@ export const startTrip = (state = {}, action) => {
   let totalDays = lastDay.diff(firstDay, 'days');
 
   let day = firstDay.clone();
-  let currentId = 1;
+  let currentId = 0;
 
   while (totalDays >= 0) {
-    state[currentId] = { id: currentId, date: day }
+    state[currentId] = { id: currentId, date: day, plans: [] }
     day = day.clone().add(1, 'days');
     totalDays--;
     currentId++;
@@ -17,22 +17,16 @@ export const startTrip = (state = {}, action) => {
   return state;
 }
 
-export const addLodging = (state, action) => {
-  let day = state[action.id];
-  return Object.assign({}, day, {lodging: action.lodging})
-}
-
-export const removeLodging = (state, action) => {
-  let day = state[action.id];
-  return Object.assign({}, day, {lodging: ''})
+export const addId = (ids, id) => {
+  return [ ...ids, id]
 }
 
 export const updatePlanIds = (byId, action) => {
   let day = byId[action.id];
   let planIds = day.plans || [];
-  return Object.assign({}, day, {plans: addPlanId(planIds, action)} )
+  return {...day, plans: addPlanId(planIds, action) }
 }
 
 const addPlanId = (planIds, action) => {
-  return planIds.concat(action.planId)
+  return [...planIds, action.planId]
 }

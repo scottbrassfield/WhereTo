@@ -1,26 +1,7 @@
-import React from 'react'
 import { connect } from 'react-redux'
-import LodgingInput from '../components/itinerary/LodgingInput'
-import LodgingSummary from '../components/itinerary/LodgingSummary'
+import Lodging from '../components/itinerary/Lodging'
 import { updateLodging } from '../actions/actionCreators'
 import '../../stylesheets/config/config.scss'
-
-let Lodging = ({ lodging, dayId, onButtonClick }) => {
-
-  return (
-    <div>
-      <LodgingInput
-        dayId={dayId}
-        lodging={lodging}
-      />
-      <LodgingSummary
-        dayId={dayId}
-        lodging={lodging}
-        onButtonClick={onButtonClick}
-      />
-    </div>
-  )
-}
 
 const getDayId = ({entities: { days: { byId} }, currentDay}) => {
   return byId ? currentDay : null

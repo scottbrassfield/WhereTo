@@ -16,12 +16,10 @@ const mapIdsToPlans = (planIds, plans) => {
   return thePlans
 }
 
-const getPlans = ({entities: { days, plans }, currentDay}) => {
-  if (currentDay) {
-    if (days.byId[currentDay].hasOwnProperty('plans')) {
-      let planIds = days.byId[currentDay].plans;
-      return mapIdsToPlans(planIds, plans)
-    }
+const getPlans = ({entities: { days: { byId }, plans }, currentDay}) => {
+  if (byId[currentDay]) {
+    let planIds = byId[currentDay].plans;
+    return mapIdsToPlans(planIds, plans)
   }
   return []
 }

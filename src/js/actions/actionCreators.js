@@ -8,8 +8,6 @@ import {
   PRIOR_DAY
 } from './actionTypes'
 
-import { initialize } from 'react-redux'
-
 export const addOverview = ({ destination, startDate, endDate }, complete) => {
   return {
     type: ADD_OVERVIEW,
@@ -27,28 +25,32 @@ export const updateOverview = (complete) => {
   }
 }
 
-export const addLodging = ({ lodging, nights }, id) => {
+let lodgingId = 0
+export const addLodging = ({ lodging, nights }, dayId) => {
   return {
     type: ADD_LODGING,
-    id,
-    lodging,
+    dayId,
+    id: lodgingId++,
+    name: lodging,
     nights
   }
 }
 
-export const updateLodging = (id) => {
+export const updateLodging = (dayId, initialize) => {
   return {
     type: UPDATE_LODGING,
-    id
+    dayId,
+    initialize
   }
 }
 
-let nextPlanId = 0;
-export const addPlan = ({ plan, startTime, endTime }, id) => {
+let planId = 0
+export const addPlan = ({ plan, startTime, endTime }, dayId) => {
   return {
     type: ADD_PLAN,
-    id,
-    planId: ++nextPlanId,
+    property: 'plans',
+    dayId,
+    id: planId++,
     plan,
     startTime,
     endTime
