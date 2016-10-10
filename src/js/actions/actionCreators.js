@@ -26,21 +26,22 @@ export const updateOverview = (complete) => {
 }
 
 let lodgingId = 0
-export const addLodging = ({ lodging, nights }, dayId) => {
+export const addLodging = (lodging, nights, dayId) => {
   return {
     type: ADD_LODGING,
-    dayId,
     id: lodgingId++,
     name: lodging,
-    nights
+    nights,
+    dayId,
+    complete: true
   }
 }
 
-export const updateLodging = (dayId, initialize) => {
+export const updateLodging = (id) => {
   return {
     type: UPDATE_LODGING,
-    dayId,
-    initialize
+    id,
+    complete: false
   }
 }
 

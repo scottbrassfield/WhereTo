@@ -30,3 +30,17 @@ export const updatePlanIds = (byId, action) => {
 const addPlanId = (planIds, action) => {
   return [...planIds, action.planId]
 }
+
+export const lodgingDays = (state = [], { nights, dayId }) => {
+  nights = parseInt(nights)
+  while (nights > 0) {
+    state = state.concat(dayId)
+    dayId++
+    nights--
+  }
+  return state
+}
+
+export const updateLodgingDays = (state = [], { nights, dayId }) => {
+  
+}
