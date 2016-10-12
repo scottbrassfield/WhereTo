@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, Field }from 'redux-form';
-import classNames from 'classnames';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import { addOverview } from '../../actions/actionCreators'
-import '../../../stylesheets/components/overview.scss'
+import { addOverview } from '../actions/actionCreators'
+import '../../stylesheets/components/overview.scss'
 
 const renderTextField = ({ input, label }) => {
   return (
@@ -15,17 +14,14 @@ const renderTextField = ({ input, label }) => {
   )
 }
 
-let Input = ({ complete, handleSubmit }) => {
-
-  var inputClass = classNames({
-    'hidden': complete,
-    'active': !complete
-  })
-
+let NewTrip = ({ handleSubmit, dispatch }) => {
   return (
-    <div id="input" className={ inputClass }>
+    <div id="input">
       <h1>Where are you headed?</h1>
-      <form onSubmit={ handleSubmit }>
+      <form onSubmit={ handleSubmit(values => {
+          dispatch(addOverview(values, true)) })
+        }
+      >
         <Field name='destination' component={renderTextField} label='Destination' />
         <Field name='startDate' component={renderTextField} label='Start date' />
         <Field name='endDate' component={renderTextField} label='End date' />
@@ -39,12 +35,9 @@ function mapState(state) {
   return { complete: state.overview.complete }
 }
 
-Input = reduxForm({
+NewTrip = reduxForm({
   form: 'overview',
   fields: ['destination', 'startDate', 'endDate'],
-  onSubmit: (values, dispatch) => {
-    dispatch(addOverview(values, true))
-  }
-})(Input)
+})(NewTrip)
 
-module.exports = connect(mapState)(Input)
+module.exports = connect(mapState)(NewTrip)

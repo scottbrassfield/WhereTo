@@ -1,51 +1,52 @@
 import { connect } from 'react-redux'
-import Lodging from '../components/itinerary/Lodging'
-import { addLodging, updateLodging } from '../actions/actionCreators'
+import LodgingInput from '../components/lodging/LodgingInput'
+import { addLodging, showForm } from '../actions/actionCreators'
 import '../../stylesheets/config/config.scss'
 
 const getDayId = ({entities: { days: { byId} }, currentDay}) => {
   return byId ? currentDay : null
 }
+//
+// const findLodging = ({ entities: { lodging: { byId } }, currentDay }) => {
+//   let lodging;
+//   for (var prop in byId) {
+//     byId[prop].days.forEach( (dayId) => {
+//       if (dayId === currentDay) {
+//         lodging = byId[prop]
+//       }
+//     })
+//   }
+//   return {
+//     getName: () => lodging ? lodging.name : '',
+//     complete: () => lodging ? lodging.complete : '',
+//     getId: () => lodging ? lodging.id : '',
+//   }
+// }
 
-const findLodging = ({ entities: { lodging: { byId } }, currentDay }) => {
-  let lodging;
-  for (var prop in byId) {
-    byId[prop].days.forEach( (dayId) => {
-      if (dayId === currentDay) {
-        lodging = byId[prop]
-      }
-    })
-  }
-  return {
-    getName: () => lodging ? lodging.name : '',
-    getNights: () => lodging ? lodging.nights : '',
-    complete: () => lodging ? lodging.complete : '',
-    getId: () => lodging ? lodging.id : '',
-  }
-}
 
-const submitNights = ({lodging, nights}, dispatch, dayId, reset) => {
-  dispatch(addLodging(lodging, nights, dayId))
+const submitNights = (values, dispatch, tripDates, reset) => {
+  dispatch(addLodging(values, tripDates))
   reset()
 }
 
 const mapState = (state) => {
-  const lodging = findLodging(state)
+  // const lodging = findLodging(state)
   return {
-    dayId: getDayId(state),
-    id: lodging.getId(),
-    lodging: lodging.getName(),
-    initialValues: {
-      lodging: lodging.getName(),
-      nights: lodging.getNights()
-    },
-    complete: lodging.complete()
+    overview: state.overview.complete,
+    tripDates: state.overview.dates,
+    // dayId: getDayId(state),
+    // id: lodging.getId(),
+    // lodging: lodging.getName(),
+    // initialValues: {
+      // lodging: lodging.getName()
+    // },
+    formVisible: state.entities.lodging.formVisible
   }
 }
 
 const mapDispatch = ({
-  onButtonClick: updateLodging,
-  onFormSubmit: submitNights
+  onFormSubmit: submitNights,
+  showForm
 })
 
-export default connect(mapState, mapDispatch)(Lodging)
+export default connect(mapState, mapDispatch)(LodgingInput)

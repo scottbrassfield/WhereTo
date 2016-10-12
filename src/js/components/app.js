@@ -1,21 +1,37 @@
 import React from 'react'
-import Overview from './overview/index'
+import { connect } from 'react-redux'
+import Overview from './Overview'
+import NewTrip from './NewTrip'
 import Itinerary from './itinerary/index'
 import LoadedMap from './map/LoadedMap'
+import Lodging from './lodging/index'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
-const App = () => {
-  return (
-    <MuiThemeProvider>
-      <div>
-        <div id='left'>
-          <Overview />
-          <LoadedMap />
+const App = ({ overview }) => {
+  if (!overview) {
+    return (
+      <MuiThemeProvider>
+        <NewTrip />
+      </MuiThemeProvider>
+    )
+  } else {
+    return (
+      <MuiThemeProvider>
+        <div>
+          <div id='left'>
+            <Overview />
+            <Lodging />
+            <LoadedMap />
+          </div>
+          <Itinerary />
         </div>
-        <Itinerary />
-      </div>
-    </MuiThemeProvider>
-  )
+      </MuiThemeProvider>
+    )
+  }
 }
 
-export default App;
+const mapState = (state) => {
+  return { overview: state.overview.complete }
+}
+
+export default connect(mapState)(App);

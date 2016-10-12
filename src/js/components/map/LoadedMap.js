@@ -3,12 +3,9 @@ import { connect } from 'react-redux'
 import WrappedMap from './WrappedMap'
 import '../../../stylesheets/config/config.scss'
 
-const LoadedMap = ({ overview }) => {
+const LoadedMap = ( ) => {
 
-  if (!overview) {
-    return <div></div>
-  }
-  let style = {display: 'block', height: '500px', marginTop: '12px'}
+  let style = {display: 'block', height: '400px', marginTop: '12px'}
 
   return (
     <WrappedMap

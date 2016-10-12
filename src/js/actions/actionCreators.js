@@ -5,7 +5,8 @@ import {
   UPDATE_LODGING,
   ADD_PLAN,
   NEXT_DAY,
-  PRIOR_DAY
+  PRIOR_DAY,
+  SHOW_FORM
 } from './actionTypes'
 
 export const addOverview = ({ destination, startDate, endDate }, complete) => {
@@ -26,14 +27,14 @@ export const updateOverview = (complete) => {
 }
 
 let lodgingId = 0
-export const addLodging = (lodging, nights, dayId) => {
+export const addLodging = ({ lodging, startDate, endDate}, tripDates) => {
   return {
     type: ADD_LODGING,
     id: lodgingId++,
     name: lodging,
-    nights,
-    dayId,
-    complete: true
+    startDate,
+    endDate,
+    tripDates
   }
 }
 
@@ -68,5 +69,13 @@ export const nextDay = (totalDays) => {
 export const priorDay = () => {
   return {
     type: PRIOR_DAY
+  }
+}
+
+export const showForm = (form, bool) => {
+  return {
+    type: SHOW_FORM,
+    form,
+    show: bool
   }
 }

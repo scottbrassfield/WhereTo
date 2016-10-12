@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import '../../../stylesheets/components/overview.scss';
-import { updateOverview } from '../../actions/actionCreators';
+import '../../stylesheets/components/overview.scss';
+import { updateOverview } from '../actions/actionCreators';
 
-const Summary = ({ destination, startDate, endDate, complete, updateOverview}) => {
+const Overview = ({ destination, startDate, endDate, complete, updateOverview}) => {
 
   var summaryClass = classNames({
     'hidden': !complete,
@@ -46,4 +46,4 @@ const mapState = (state) => {
   )
 }
 
-module.exports = connect(mapState, {updateOverview})(Summary);
+module.exports = connect(mapState, {updateOverview})(Overview);

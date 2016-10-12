@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { ADD_LODGING, UPDATE_LODGING } from '../actions/actionTypes';
+import { ADD_LODGING, UPDATE_LODGING, SHOW_FORM } from '../actions/actionTypes';
 import { lodgingDays } from './utilityFunctions'
 
 const stay = (state = {}, action) => {
@@ -8,8 +8,6 @@ const stay = (state = {}, action) => {
       return {...state,
         id: action.id,
         name: action.name,
-        nights: action.nights,
-        complete: action.complete,
         days: lodgingDays(undefined, action),
       }
     case UPDATE_LODGING:
@@ -48,9 +46,25 @@ const allIds = (state = [], action) => {
   }
 }
 
+
+const formVisible = (state = false, action) => {
+  switch (action.type) {
+    case SHOW_FORM:
+      if (action.form === 'lodging') {
+        state = action.show
+        return state;
+      } else {
+        return state;
+      }
+    default:
+      return state;
+  }
+}
+
 const lodging = combineReducers({
   byId,
-  allIds
+  allIds,
+  formVisible
 })
 
 export default lodging

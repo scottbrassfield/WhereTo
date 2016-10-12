@@ -70,9 +70,6 @@ body {
   float: right;
   margin-left: 0.625%;
   margin-right: 0.625%; }
-
-.time {
-  width: 20%; }
 body {
   max-width: 95%;
   margin-left: auto;
@@ -98,5 +95,43 @@ body {
   float: left;
   margin-left: 0.625%;
   margin-right: 0.625%; }
+body {
+  max-width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fafafa;
+  font-family: "Roboto", sans-serif; }
+  body:after {
+    content: " ";
+    display: block;
+    clear: both; }
+
+.hidden {
+  display: none; }
+
+.inline {
+  display: inline-block; }
+
+.active {
+  display: block; }
+
+#left {
+  width: 42.5%;
+  float: left;
+  margin-left: 0.625%;
+  margin-right: 0.625%; }
+
+.lodging-form {
+  display: block;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  padding: 20px;
+  z-index: 1000;
+  background-color: #fefefe;
+  border: 1px solid grey;
+  border-radius: 4px; }
 
 /*# sourceMappingURL=style.css.map*/
