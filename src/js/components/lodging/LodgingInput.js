@@ -9,12 +9,12 @@ const renderTextField = ({ input, label, style }) => {
   )
 }
 
-let LodgingInput = ({ dayId, onFormSubmit, reset, handleSubmit, dispatch, showForm, formVisible, tripDates }) => {
+let LodgingInput = ({ onFormSubmit, reset, handleSubmit, dispatch, showForm, formVisible, tripDates }) => {
   if (formVisible) {
     return (
       <div className='lodging-form'>
         <form
-          onSubmit={ handleSubmit((values) => onFormSubmit(values, dispatch, dayId, reset)) }>
+          onSubmit={ handleSubmit((values) => onFormSubmit(values, dispatch, tripDates, reset)) }>
           <Field name='lodging' component={renderTextField}
             label='Where are you staying?'
             style={{ marginRight: '10px', width: '98%'}} />

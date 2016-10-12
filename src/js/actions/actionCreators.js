@@ -27,7 +27,7 @@ export const updateOverview = (complete) => {
 }
 
 let lodgingId = 0
-export const addLodging = ({ lodging, startDate, endDate}, tripDates) => {
+export const addLodging = ({ lodging, startDate, endDate }, tripDates) => {
   return {
     type: ADD_LODGING,
     id: lodgingId++,
