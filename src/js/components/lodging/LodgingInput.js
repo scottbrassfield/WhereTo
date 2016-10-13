@@ -1,6 +1,7 @@
 import React from 'react'
 import { reduxForm, Field }from 'redux-form'
 import { TextField, RaisedButton } from 'material-ui/'
+import { submitNights } from '../../containers/ConnectedLodging'
 import '../../../stylesheets/components/lodging.scss'
 
 const renderTextField = ({ input, label, style }) => {
@@ -9,12 +10,13 @@ const renderTextField = ({ input, label, style }) => {
   )
 }
 
-let LodgingInput = ({ onFormSubmit, reset, handleSubmit, dispatch, showForm, formVisible, tripDates }) => {
+let LodgingInput = ({ reset, handleSubmit, dispatch, showForm, formVisible, tripDates }) => {
+  console.log(showForm)
   if (formVisible) {
     return (
       <div className='lodging-form'>
         <form
-          onSubmit={ handleSubmit((values) => onFormSubmit(values, dispatch, tripDates, reset)) }>
+          onSubmit={ handleSubmit((values) => submitNights(values, dispatch, tripDates, reset)) }>
           <Field name='lodging' component={renderTextField}
             label='Where are you staying?'
             style={{ marginRight: '10px', width: '98%'}} />

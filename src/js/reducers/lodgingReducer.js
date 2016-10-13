@@ -8,7 +8,9 @@ const stay = (state = {}, action) => {
       return {...state,
         id: action.id,
         name: action.name,
-        days: lodgingDays(undefined, action),
+        startDate: action.startDate,
+        endDate: action.endDate,
+        days: lodgingDays(undefined, action)
       }
     case UPDATE_LODGING:
       return {

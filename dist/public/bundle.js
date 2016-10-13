@@ -26433,14 +26433,18 @@
 	};
 	
 	var lodgingId = 0;
-	var addLodging = exports.addLodging = function addLodging(lodging, nights, dayId) {
+	var addLodging = exports.addLodging = function addLodging(_ref2, tripDates) {
+	  var lodging = _ref2.lodging;
+	  var startDate = _ref2.startDate;
+	  var endDate = _ref2.endDate;
+	
 	  return {
 	    type: _actionTypes.ADD_LODGING,
 	    id: lodgingId++,
 	    name: lodging,
-	    nights: nights,
-	    dayId: dayId,
-	    complete: true
+	    startDate: startDate,
+	    endDate: endDate,
+	    tripDates: tripDates
 	  };
 	};
 	
@@ -26453,10 +26457,10 @@
 	};
 	
 	var planId = 0;
-	var addPlan = exports.addPlan = function addPlan(_ref2, dayId) {
-	  var plan = _ref2.plan;
-	  var startTime = _ref2.startTime;
-	  var endTime = _ref2.endTime;
+	var addPlan = exports.addPlan = function addPlan(_ref3, dayId) {
+	  var plan = _ref3.plan;
+	  var startTime = _ref3.startTime;
+	  var endTime = _ref3.endTime;
 	
 	  return {
 	    type: _actionTypes.ADD_PLAN,
@@ -26527,10 +26531,6 @@
 	
 	var _reduxForm = __webpack_require__(230);
 	
-	var _classnames = __webpack_require__(197);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
 	var _TextField = __webpack_require__(404);
 	
 	var _TextField2 = _interopRequireDefault(_TextField);
@@ -26557,18 +26557,12 @@
 	};
 	
 	var NewTrip = function NewTrip(_ref2) {
-	  var complete = _ref2.complete;
 	  var handleSubmit = _ref2.handleSubmit;
-	
-	
-	  var inputClass = (0, _classnames2.default)({
-	    'hidden': complete,
-	    'active': !complete
-	  });
+	  var dispatch = _ref2.dispatch;
 	
 	  return _react2.default.createElement(
 	    'div',
-	    { id: 'input', className: inputClass },
+	    { id: 'input' },
 	    _react2.default.createElement(
 	      'h1',
 	      null,
@@ -26576,7 +26570,10 @@
 	    ),
 	    _react2.default.createElement(
 	      'form',
-	      { onSubmit: handleSubmit },
+	      { onSubmit: handleSubmit(function (values) {
+	          dispatch((0, _actionCreators.addOverview)(values, true));
+	        })
+	      },
 	      _react2.default.createElement(_reduxForm.Field, { name: 'destination', component: renderTextField, label: 'Destination' }),
 	      _react2.default.createElement(_reduxForm.Field, { name: 'startDate', component: renderTextField, label: 'Start date' }),
 	      _react2.default.createElement(_reduxForm.Field, { name: 'endDate', component: renderTextField, label: 'End date' }),
@@ -26591,10 +26588,7 @@
 	
 	NewTrip = (0, _reduxForm.reduxForm)({
 	  form: 'overview',
-	  fields: ['destination', 'startDate', 'endDate'],
-	  onSubmit: function onSubmit(values, dispatch) {
-	    dispatch((0, _actionCreators.addOverview)(values, true));
-	  }
+	  fields: ['destination', 'startDate', 'endDate']
 	})(NewTrip);
 	
 	module.exports = (0, _reactRedux.connect)(mapState)(NewTrip);
@@ -48102,32 +48096,74 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var LodgingList = function LodgingList(_ref) {
-	  var dispatch = _ref.dispatch;
-	
-	  return _react2.default.createElement(
-	    _materialUi.Paper,
-	    {
-	      style: { width: '100%', position: 'relative', marginTop: '10px' } },
+	var ListItem = function ListItem(name, startDate, endDate) {
+	  _react2.default.createElement(
+	    'li',
+	    null,
 	    _react2.default.createElement(
 	      'div',
-	      {
-	        style: { fontSize: '30px', fontWeight: 'bold', display: 'inline-block', marginRight: '40px', padding: '12px', verticalAlign: 'middle' } },
-	      'Lodging'
+	      { style: { display: 'inline-block' } },
+	      name
 	    ),
-	    _react2.default.createElement('div', {
-	      style: { display: 'inline-block', verticalAlign: 'middle', fontSize: '20px' } }),
-	    _react2.default.createElement(_materialUi.RaisedButton, {
-	      label: 'Add Hotel',
-	      style: { display: 'inline-block', position: 'absolute', top: '20%', right: '30px' },
-	      onClick: function onClick() {
-	        return dispatch((0, _actionCreators.showForm)('lodging', true));
-	      }
-	    })
+	    _react2.default.createElement(
+	      'div',
+	      { style: { display: 'inline-block' } },
+	      startDate - endDate
+	    )
 	  );
 	};
 	
-	exports.default = (0, _reactRedux.connect)()(LodgingList);
+	var LodgingList = function LodgingList(_ref) {
+	  var dispatch = _ref.dispatch;
+	  var lodging = _ref.lodging;
+	
+	
+	  var list = function list(lodging) {
+	    var list = [];
+	    for (var prop in lodging) {
+	      list.push(lodging[prop]);
+	    }
+	    return list;
+	  };
+	
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      _materialUi.Paper,
+	      {
+	        style: { width: '100%', position: 'relative', marginTop: '10px' } },
+	      _react2.default.createElement(
+	        'div',
+	        {
+	          style: { fontSize: '25px', fontWeight: 'bold', display: 'inline-block', padding: '12px', verticalAlign: 'middle' } },
+	        'Lodging Summary'
+	      ),
+	      _react2.default.createElement(_materialUi.RaisedButton, {
+	        label: '+ New Hotel',
+	        color: 'primary',
+	        style: { display: 'inline-block', position: 'absolute', top: '15%', right: '6%', fontSize: '12px' },
+	        labelStyle: { fontSize: '12px' },
+	        onClick: function onClick() {
+	          return dispatch((0, _actionCreators.showForm)('lodging', true));
+	        }
+	      })
+	    ),
+	    _react2.default.createElement(
+	      _materialUi.Paper,
+	      null,
+	      _react2.default.createElement(
+	        'ul',
+	        null,
+	        list.map(function (item) {
+	          return _react2.default.createElement(ListItem, { name: item.name, startDate: item.startDate, endDate: item.endDate });
+	        })
+	      )
+	    )
+	  );
+	};
+	
+	exports.default = LodgingList;
 
 /***/ },
 /* 640 */
@@ -73664,56 +73700,23 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var getDayId = function getDayId(_ref) {
-	  var byId = _ref.entities.days.byId;
-	  var currentDay = _ref.currentDay;
-	
-	  return byId ? currentDay : null;
-	};
-	
-	var findLodging = function findLodging(_ref2) {
-	  var byId = _ref2.entities.lodging.byId;
-	  var currentDay = _ref2.currentDay;
-	
-	  var lodging = void 0;
-	  for (var prop in byId) {
-	    byId[prop].days.forEach(function (dayId) {
-	      if (dayId === currentDay) {
-	        lodging = byId[prop];
-	      }
-	    });
-	  }
-	  return {
-	    getName: function getName() {
-	      return lodging ? lodging.name : '';
-	    },
-	    complete: function complete() {
-	      return lodging ? lodging.complete : '';
-	    },
-	    getId: function getId() {
-	      return lodging ? lodging.id : '';
-	    }
-	  };
-	};
-	
-	var submitNights = function submitNights(_ref3, dispatch, dayId, reset) {
-	  var lodging = _ref3.lodging;
-	
-	  dispatch((0, _actionCreators.addLodging)(lodging, dayId));
+	var submitNights = function submitNights(values, dispatch, tripDates, reset) {
+	  dispatch((0, _actionCreators.addLodging)(values, tripDates));
+	  dispatch((0, _actionCreators.showForm)('lodging', false));
 	  reset();
 	};
 	
+	var getLodgingById = function getLodgingById(_ref) {
+	  var lodging = _ref.entities.lodging;
+	  return lodging.byId ? lodging.byId : '';
+	};
+	
 	var mapState = function mapState(state) {
-	  var lodging = findLodging(state);
 	  return {
 	    overview: state.overview.complete,
-	    dayId: getDayId(state),
-	    id: lodging.getId(),
-	    lodging: lodging.getName(),
-	    initialValues: {
-	      lodging: lodging.getName()
-	    },
-	    formVisible: state.entities.lodging.formVisible
+	    tripDates: state.overview.dates,
+	    formVisible: state.entities.lodging.formVisible,
+	    lodging: getLodgingById(state)
 	  };
 	};
 	
@@ -73757,13 +73760,13 @@
 	};
 	
 	var LodgingInput = function LodgingInput(_ref2) {
-	  var dayId = _ref2.dayId;
 	  var onFormSubmit = _ref2.onFormSubmit;
 	  var reset = _ref2.reset;
 	  var handleSubmit = _ref2.handleSubmit;
 	  var dispatch = _ref2.dispatch;
 	  var showForm = _ref2.showForm;
 	  var formVisible = _ref2.formVisible;
+	  var tripDates = _ref2.tripDates;
 	
 	  if (formVisible) {
 	    return _react2.default.createElement(
@@ -73773,7 +73776,7 @@
 	        'form',
 	        {
 	          onSubmit: handleSubmit(function (values) {
-	            return onFormSubmit(values, dispatch, dayId, reset);
+	            return onFormSubmit(values, dispatch, tripDates, reset);
 	          }) },
 	        _react2.default.createElement(_reduxForm.Field, { name: 'lodging', component: renderTextField,
 	          label: 'Where are you staying?',
@@ -73999,7 +74002,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.updatePlanIds = exports.addId = exports.startTrip = exports.tripDates = undefined;
+	exports.lodgingDays = exports.updatePlanIds = exports.addId = exports.startTrip = exports.getTripDates = undefined;
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
@@ -74011,7 +74014,7 @@
 	
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
-	var tripDates = exports.tripDates = function tripDates() {
+	var getTripDates = exports.getTripDates = function getTripDates() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 	  var action = arguments[1];
 	
@@ -74032,7 +74035,7 @@
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 	  var action = arguments[1];
 	
-	  var dates = tripDates(state, action);
+	  var dates = getTripDates(undefined, action);
 	  dates.forEach(function (date, index) {
 	    state[index] = { id: index, date: date, plans: [] };
 	  });
@@ -74051,6 +74054,22 @@
 	
 	var addPlanId = function addPlanId(planIds, action) {
 	  return [].concat(_toConsumableArray(planIds), [action.planId]);
+	};
+	
+	var lodgingDays = exports.lodgingDays = function lodgingDays() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+	  var action = arguments[1];
+	
+	  var lodgingDates = getTripDates(undefined, action);
+	  var days = [];
+	  lodgingDates.forEach(function (lodgingDate) {
+	    action.tripDates.forEach(function (tripDate, index) {
+	      if (lodgingDate.isSame(tripDate)) {
+	        days.push(index);
+	      }
+	    });
+	  });
+	  return days;
 	};
 
 /***/ },
@@ -88550,8 +88569,8 @@
 	      return _extends({}, state, {
 	        id: action.id,
 	        name: action.name,
-	        nights: action.nights,
-	        complete: action.complete,
+	        startDate: action.startDate,
+	        endDate: action.endDate,
 	        days: (0, _utilityFunctions.lodgingDays)(undefined, action)
 	      });
 	    case _actionTypes.UPDATE_LODGING:
@@ -88638,12 +88657,12 @@
 	
 	  switch (action.type) {
 	    case _actionTypes.ADD_OVERVIEW:
-	      console.log('running');
 	      return Object.assign({}, state, {
 	        destination: action.destination,
 	        startDate: action.startDate,
 	        endDate: action.endDate,
-	        complete: action.complete
+	        complete: action.complete,
+	        dates: (0, _utilityFunctions.getTripDates)(undefined, action)
 	      });
 	    case _actionTypes.UPDATE_OVERVIEW:
 	      return Object.assign({}, state, { complete: action.complete });
