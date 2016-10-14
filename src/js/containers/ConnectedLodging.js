@@ -15,8 +15,8 @@ const Lodging = (props) => {
 }
 
 export const submitNights = (values, dispatch, tripDates, reset) => {
-  addLodging(values, tripDates)
-  showForm('lodging', false)
+  dispatch(addLodging(values, tripDates))
+  dispatch(showForm('lodging', false))
   reset()
 }
 
@@ -31,4 +31,4 @@ const mapState = (state) => {
   }
 }
 
-export default connect(mapState, { showForm })(Lodging)
+export default connect(mapState)(Lodging)

@@ -3,19 +3,25 @@ import { Paper, RaisedButton } from 'material-ui/'
 import { showForm } from '../../actions/actionCreators'
 import '../../../stylesheets/components/itinerary.scss'
 
-const ListItem = (name, startDate, endDate) => {
-  <li>
-    <div style={{display: 'inline-block'}}>{name}</div>
-    <div style={{display: 'inline-block'}}>{startDate - endDate}</div>
+const ListItem = ({name, startDate, endDate}) => (
+  <li style={{listStyle: 'none', padding: '10px'}}>
+    <div
+      style={{display: 'inline-block'}}>
+      {name}
+    </div>
+    <div
+      style={{display: 'inline-block', position: 'absolute', right: '60px' }}>
+      {startDate} - {endDate}
+    </div>
   </li>
-}
+)
 
 
-let LodgingList = (props) => {
-  console.log(props)
+let LodgingList = ({ lodging, dispatch}) => {
+
   let list = [];
-  for (var prop in props.lodging) {
-    list.push(props.lodging[prop])
+  for (var prop in lodging) {
+    list.push(lodging[prop])
   }
 
   return (
@@ -31,13 +37,13 @@ let LodgingList = (props) => {
           color='primary'
           style={{display: 'inline-block', position: 'absolute', top: '15%', right: '6%', fontSize: '12px'}}
           labelStyle={{fontSize: '12px'}}
-          onClick={() => showForm('lodging', true)}
+          onClick={() => dispatch(showForm('lodging', true))}
         />
       </Paper>
       <Paper>
-        <ul>
-          { list.map((item) => {
-            return <ListItem name={item.name} startDate={item.startDate} endDate={item.endDate} />
+        <ul style={{marginTop: '0px', position: 'relative'}}>
+          { list.map((item, index) => {
+            return <ListItem name={item.name} startDate={item.startDate} endDate={item.endDate} key={index} />
           }) }
         </ul>
       </Paper>

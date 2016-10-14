@@ -1,7 +1,7 @@
 import React from 'react'
 import { reduxForm, Field }from 'redux-form'
 import { TextField, RaisedButton } from 'material-ui/'
-import { submitNights } from '../../containers/ConnectedLodging'
+import { addLodging, showForm } from '../../actions/actionCreators'
 import '../../../stylesheets/components/lodging.scss'
 
 const renderTextField = ({ input, label, style }) => {
@@ -10,13 +10,12 @@ const renderTextField = ({ input, label, style }) => {
   )
 }
 
-let LodgingInput = ({ reset, handleSubmit, dispatch, showForm, formVisible, tripDates }) => {
-  console.log(showForm)
+let LodgingInput = ({ handleSubmit, formVisible, dispatch }) => {
   if (formVisible) {
     return (
       <div className='lodging-form'>
         <form
-          onSubmit={ handleSubmit((values) => submitNights(values, dispatch, tripDates, reset)) }>
+          onSubmit={ handleSubmit }>
           <Field name='lodging' component={renderTextField}
             label='Where are you staying?'
             style={{ marginRight: '10px', width: '98%'}} />
@@ -31,7 +30,7 @@ let LodgingInput = ({ reset, handleSubmit, dispatch, showForm, formVisible, trip
               style={{minWidth: '40px', marginRight: '8px'}} labelStyle={{fontSize: '10px', }} />
             <RaisedButton type='button' label='Cancel'
               style={{minWidth: '40px'}} labelStyle={{fontSize: '10px'}}
-              onClick={() => showForm('lodging', false)} />
+              onClick={() => dispatch(showForm('lodging', false))} />
           </div>
         </form>
       </div>
@@ -45,5 +44,10 @@ let LodgingInput = ({ reset, handleSubmit, dispatch, showForm, formVisible, trip
 
 export default reduxForm({
   form: 'lodging',
-  enableReinitialize: true
+  enableReinitialize: true,
+  onSubmit: (values, dispatch, { tripDates, reset }) => {
+    dispatch(addLodging(values, tripDates))
+    dispatch(showForm('lodging', false))
+    reset()
+  }
 })(LodgingInput)
