@@ -1,19 +1,23 @@
 import React from 'react'
-import { Paper, RaisedButton } from 'material-ui/'
+import { Paper, Divider, RaisedButton } from 'material-ui/'
 import { showForm } from '../../actions/actionCreators'
 import '../../../stylesheets/components/itinerary.scss'
 
 const ListItem = ({name, startDate, endDate}) => (
-  <li style={{listStyle: 'none', padding: '10px'}}>
-    <div
-      style={{display: 'inline-block'}}>
-      {name}
-    </div>
-    <div
-      style={{display: 'inline-block', position: 'absolute', right: '60px' }}>
-      {startDate} - {endDate}
-    </div>
-  </li>
+  <div style={{paddingLeft: '30px', paddingRight: '30px'}}>
+    <li style={{listStyle: 'none', paddingTop: '10px', paddingBottom: '10px'}}>
+      <div
+        style={{display: 'inline-block'}}>
+        {name}
+      </div>
+      <div
+        style={{display: 'inline-block', position: 'absolute', right: '60px' }}>
+        {startDate} - {endDate}
+      </div>
+    </li>
+    <Divider />
+  </div>
+
 )
 
 
@@ -41,7 +45,7 @@ let LodgingList = ({ lodging, dispatch}) => {
         />
       </Paper>
       <Paper>
-        <ul style={{marginTop: '0px', position: 'relative'}}>
+        <ul style={{marginTop: '0px', position: 'relative', paddingLeft: '0px'}}>
           { list.map((item, index) => {
             return <ListItem name={item.name} startDate={item.startDate} endDate={item.endDate} key={index} />
           }) }

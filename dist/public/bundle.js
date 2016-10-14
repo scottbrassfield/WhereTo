@@ -48078,8 +48078,8 @@
 	};
 	
 	var submitNights = exports.submitNights = function submitNights(values, dispatch, tripDates, reset) {
-	  (0, _actionCreators.addLodging)(values, tripDates);
-	  (0, _actionCreators.showForm)('lodging', false);
+	  dispatch((0, _actionCreators.addLodging)(values, tripDates));
+	  dispatch((0, _actionCreators.showForm)('lodging', false));
 	  reset();
 	};
 	
@@ -48097,7 +48097,7 @@
 	  };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapState, { showForm: _actionCreators.showForm })(Lodging);
+	exports.default = (0, _reactRedux.connect)(mapState)(Lodging);
 
 /***/ },
 /* 639 */
@@ -48119,7 +48119,7 @@
 	
 	var _materialUi = __webpack_require__(640);
 	
-	var _ConnectedLodging = __webpack_require__(638);
+	var _actionCreators = __webpack_require__(227);
 	
 	__webpack_require__(834);
 	
@@ -48134,14 +48134,10 @@
 	};
 	
 	var LodgingInput = function LodgingInput(_ref2) {
-	  var reset = _ref2.reset;
 	  var handleSubmit = _ref2.handleSubmit;
-	  var dispatch = _ref2.dispatch;
-	  var showForm = _ref2.showForm;
 	  var formVisible = _ref2.formVisible;
-	  var tripDates = _ref2.tripDates;
+	  var dispatch = _ref2.dispatch;
 	
-	  console.log(showForm);
 	  if (formVisible) {
 	    return _react2.default.createElement(
 	      'div',
@@ -48149,9 +48145,7 @@
 	      _react2.default.createElement(
 	        'form',
 	        {
-	          onSubmit: handleSubmit(function (values) {
-	            return (0, _ConnectedLodging.submitNights)(values, dispatch, tripDates, reset);
-	          }) },
+	          onSubmit: handleSubmit },
 	        _react2.default.createElement(_reduxForm.Field, { name: 'lodging', component: renderTextField,
 	          label: 'Where are you staying?',
 	          style: { marginRight: '10px', width: '98%' } }),
@@ -48169,7 +48163,7 @@
 	          _react2.default.createElement(_materialUi.RaisedButton, { type: 'button', label: 'Cancel',
 	            style: { minWidth: '40px' }, labelStyle: { fontSize: '10px' },
 	            onClick: function onClick() {
-	              return showForm('lodging', false);
+	              return dispatch((0, _actionCreators.showForm)('lodging', false));
 	            } })
 	        )
 	      )
@@ -48181,7 +48175,15 @@
 	
 	exports.default = (0, _reduxForm.reduxForm)({
 	  form: 'lodging',
-	  enableReinitialize: true
+	  enableReinitialize: true,
+	  onSubmit: function onSubmit(values, dispatch, _ref3) {
+	    var tripDates = _ref3.tripDates;
+	    var reset = _ref3.reset;
+	
+	    dispatch((0, _actionCreators.addLodging)(values, tripDates));
+	    dispatch((0, _actionCreators.showForm)('lodging', false));
+	    reset();
+	  }
 	})(LodgingInput);
 
 /***/ },
@@ -73725,24 +73727,34 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var ListItem = function ListItem(name, startDate, endDate) {
-	  _react2.default.createElement(
+	var ListItem = function ListItem(_ref) {
+	  var name = _ref.name;
+	  var startDate = _ref.startDate;
+	  var endDate = _ref.endDate;
+	  return _react2.default.createElement(
 	    'li',
-	    null,
+	    { style: { listStyle: 'none', padding: '10px' } },
 	    _react2.default.createElement(
 	      'div',
-	      { style: { display: 'inline-block' } },
+	      {
+	        style: { display: 'inline-block' } },
 	      name
 	    ),
 	    _react2.default.createElement(
 	      'div',
-	      { style: { display: 'inline-block' } },
-	      startDate - endDate
+	      {
+	        style: { display: 'inline-block', position: 'absolute', right: '60px' } },
+	      startDate,
+	      ' - ',
+	      endDate
 	    )
 	  );
 	};
 	
-	var LodgingList = function LodgingList(lodging, showForm) {
+	var LodgingList = function LodgingList(_ref2) {
+	  var lodging = _ref2.lodging;
+	  var dispatch = _ref2.dispatch;
+	
 	
 	  var list = [];
 	  for (var prop in lodging) {
@@ -73768,7 +73780,7 @@
 	        style: { display: 'inline-block', position: 'absolute', top: '15%', right: '6%', fontSize: '12px' },
 	        labelStyle: { fontSize: '12px' },
 	        onClick: function onClick() {
-	          return showForm('lodging', true);
+	          return dispatch((0, _actionCreators.showForm)('lodging', true));
 	        }
 	      })
 	    ),
@@ -73777,9 +73789,9 @@
 	      null,
 	      _react2.default.createElement(
 	        'ul',
-	        null,
-	        list.map(function (item) {
-	          return _react2.default.createElement(ListItem, { name: item.name, startDate: item.startDate, endDate: item.endDate });
+	        { style: { marginTop: '0px', position: 'relative' } },
+	        list.map(function (item, index) {
+	          return _react2.default.createElement(ListItem, { name: item.name, startDate: item.startDate, endDate: item.endDate, key: index });
 	        })
 	      )
 	    )
