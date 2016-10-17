@@ -15,6 +15,7 @@ const ListItem = ({name, startDate, endDate}) => (
         {startDate} - {endDate}
       </div>
     </li>
+
     <Divider />
   </div>
 
@@ -56,3 +57,16 @@ let LodgingList = ({ lodging, dispatch}) => {
 }
 
 export default LodgingList
+
+
+// <RaisedButton label='Edit'/>
+// <RaisedButton label='Remove' />
+// <IconMenu
+//   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+//   anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+//   targetOrigin={{horizontal: 'left', vertical: 'top'}}
+// >
+//   <MenuItem primaryText='Edit' />
+//   <MenuItem primaryText='Remove' />
+//   <MenuItem primaryText='Details' />
+// </IconMenu>

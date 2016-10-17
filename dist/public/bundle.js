@@ -73732,22 +73732,27 @@
 	  var startDate = _ref.startDate;
 	  var endDate = _ref.endDate;
 	  return _react2.default.createElement(
-	    'li',
-	    { style: { listStyle: 'none', padding: '10px' } },
+	    'div',
+	    { style: { paddingLeft: '30px', paddingRight: '30px' } },
 	    _react2.default.createElement(
-	      'div',
-	      {
-	        style: { display: 'inline-block' } },
-	      name
+	      'li',
+	      { style: { listStyle: 'none', paddingTop: '10px', paddingBottom: '10px' } },
+	      _react2.default.createElement(
+	        'div',
+	        {
+	          style: { display: 'inline-block' } },
+	        name
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        {
+	          style: { display: 'inline-block', position: 'absolute', right: '60px' } },
+	        startDate,
+	        ' - ',
+	        endDate
+	      )
 	    ),
-	    _react2.default.createElement(
-	      'div',
-	      {
-	        style: { display: 'inline-block', position: 'absolute', right: '60px' } },
-	      startDate,
-	      ' - ',
-	      endDate
-	    )
+	    _react2.default.createElement(_materialUi.Divider, null)
 	  );
 	};
 	
@@ -73789,7 +73794,7 @@
 	      null,
 	      _react2.default.createElement(
 	        'ul',
-	        { style: { marginTop: '0px', position: 'relative' } },
+	        { style: { marginTop: '0px', position: 'relative', paddingLeft: '0px' } },
 	        list.map(function (item, index) {
 	          return _react2.default.createElement(ListItem, { name: item.name, startDate: item.startDate, endDate: item.endDate, key: index });
 	        })
@@ -73799,6 +73804,18 @@
 	};
 	
 	exports.default = LodgingList;
+	
+	// <RaisedButton label='Edit'/>
+	// <RaisedButton label='Remove' />
+	// <IconMenu
+	//   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+	//   anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+	//   targetOrigin={{horizontal: 'left', vertical: 'top'}}
+	// >
+	//   <MenuItem primaryText='Edit' />
+	//   <MenuItem primaryText='Remove' />
+	//   <MenuItem primaryText='Details' />
+	// </IconMenu>
 
 /***/ },
 /* 836 */
