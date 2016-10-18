@@ -3,10 +3,9 @@ import { connect } from 'react-redux'
 import { reduxForm, Field }from 'redux-form'
 import Moment from 'moment'
 import RaisedButton from 'material-ui/RaisedButton'
-import { addPlan, showForm } from '../../actions/actionCreators'
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
-
 import momentLocalizer from 'react-widgets/lib/localizers/moment'
+import { addPlan, showForm } from '../../actions/actionCreators'
 import '../../../stylesheets/config/config.scss'
 import 'react-widgets/dist/css/react-widgets.css'
 
@@ -23,54 +22,53 @@ const renderInput = ({ input, meta: { touched, error}, style, placeholder}) => {
 
 const renderTimePicker = ({ input, placeholder }) => {
   return (
-    <DateTimePicker
-    {...input}
-    calendar={false}
-    placeholder={placeholder}
-    value = {input.value !== '' ? new Date(input.value) : null}
-    onChange = {(event, value) => { input.onChange(value)}}
-    style={{width: '8em'}}
-    />
+    <div
+      style={{display: 'inline-block', marginRight: '10px', width: '45%'}}
+    >
+      <DateTimePicker
+        {...input}
+        calendar={false}
+        placeholder={placeholder}
+        value = {input.value !== '' ? new Date(input.value) : null}
+        onChange = {(event, value) => { input.onChange(value)}}
+      />
+    </div>
   )
 }
 
 let PlanInput = ({ handleSubmit, formVisible, dispatch }) => {
-    if (formVisible) {
-      return (
-        <div className='toggle-form'>
-          <form
-            onSubmit={ handleSubmit }>
-            <Field name='plan' component={renderInput}
-              label='What do you want to do?'
-              style={{ marginRight: '10px', width: '98%'}} />
-            <Field name='startTime' component={renderTimePicker}
-              label='Start Date'
-              style={{ display: 'inline-block', marginRight: '10px', marginTop: '20px', width: '45%'}} />
-            <Field name='endTime' component={renderTimePicker}
-              label='End Date'
-              style={{ display: 'inline-block', marginRight: '10px', width: '45%'}} />
-            <div style={{marginTop: '15px'}}>
-              <RaisedButton type='submit' label='Add'
-                style={{minWidth: '40px', marginRight: '8px'}} labelStyle={{fontSize: '10px', }} />
-              <RaisedButton type='button' label='Cancel'
-                style={{minWidth: '40px'}} labelStyle={{fontSize: '10px'}}
-                onClick={() => dispatch(showForm('plan', false))} />
-            </div>
-          </form>
-        </div>
-      )
-    } else {
-      return (
-        <div></div>
-      )
-    }
+  if (formVisible) {
+    return (
+      <div className='toggle-form'>
+        <form
+          onSubmit={ handleSubmit }>
+          <Field name='plan' component={renderInput}
+            placeholder='Description of plans'
+            style={{ marginRight: '10px', width: '90%', height: '25px', marginBottom: '10px', borderRadius: '4px', border: '1px solid #cccccc', padding: '7px 13px', fontSize: '16px'}} />
+          <Field name='startTime' component={renderTimePicker} placeholder='Start Time'/>
+          <Field name='endTime' component={renderTimePicker} placeholder='End Time'/>
+          <div style={{marginTop: '15px'}}>
+            <RaisedButton type='submit' label='Add'
+              style={{minWidth: '40px', marginRight: '8px'}} labelStyle={{fontSize: '10px', }} />
+            <RaisedButton type='button' label='Cancel'
+              style={{minWidth: '40px'}} labelStyle={{fontSize: '10px'}}
+              onClick={() => dispatch(showForm('plans', false))} />
+          </div>
+        </form>
+      </div>
+    )
+  } else {
+    return (
+      <div></div>
+    )
   }
+}
 
 PlanInput = reduxForm({
-  form: 'plan',
+  form: 'plans',
   onSubmit: (values, dispatch, { dayId, reset }) => {
     dispatch(addPlan(values, dayId))
-    dispatch(showForm('plan', false))
+    dispatch(showForm('plans', false))
     reset()
   }
 })(PlanInput)

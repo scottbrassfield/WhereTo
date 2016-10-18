@@ -2,7 +2,7 @@ import React from 'react'
 import Plan from './Plan.js'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'material-ui/Table'
 
-let Plans = ({ plans }) => {
+let PlanList = ({ plans }) => {
   return (
     <Table>
       <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
@@ -24,4 +24,4 @@ let Plans = ({ plans }) => {
   )
 }
 
-export default Plans
+export default PlanList

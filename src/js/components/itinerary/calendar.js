@@ -7,7 +7,7 @@ const Calendar = ({ totalDays, currentDay, nextDay, priorDay }) => {
       style={{width: '20%', marginLeft: '5px', marginTop: '5px', marginRight: '30px', display: 'inline-block'}}
     >
       <div
-        style={{textAlign: 'center', height: '60px', fontSize: '30px', paddingTop: '10px', color: 'maroon'}}
+        style={{textAlign: 'center', height: '50px', fontSize: '30px', paddingTop: '10px', color: 'maroon'}}
       >
         <div>{currentDay}</div>
       </div>

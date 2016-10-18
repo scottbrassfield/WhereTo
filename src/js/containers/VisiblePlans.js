@@ -1,5 +1,16 @@
+import React from 'react'
 import { connect } from 'react-redux'
-import Plans from '../components/itinerary/Plans.js'
+import PlanList from '../components/itinerary/PlanList'
+import PlanInput from '../components/itinerary/PlanInput'
+
+const Plans = (props) => {
+  return (
+    <div>
+      <PlanInput  {...props} />
+      <PlanList {...props} />
+    </div>
+  )
+}
 
 const mapIdsToPlans = (planIds, plans) => {
   let thePlans = [];
@@ -27,7 +38,8 @@ const getPlans = ({entities: { days: { byId }, plans }, currentDay}) => {
 const mapState = (state) => {
   return {
     currentDay: state.currentDay,
-    plans: getPlans(state)
+    plans: getPlans(state),
+    formVisible: state.entities.plans.formVisible
   }
 }
 
