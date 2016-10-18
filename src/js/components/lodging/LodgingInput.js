@@ -2,7 +2,7 @@ import React from 'react'
 import { reduxForm, Field }from 'redux-form'
 import { TextField, RaisedButton } from 'material-ui/'
 import { addLodging, showForm } from '../../actions/actionCreators'
-import '../../../stylesheets/components/lodging.scss'
+import '../../../stylesheets/config/config.scss'
 
 const renderTextField = ({ input, label, style }) => {
   return (
@@ -13,7 +13,7 @@ const renderTextField = ({ input, label, style }) => {
 let LodgingInput = ({ handleSubmit, formVisible, dispatch }) => {
   if (formVisible) {
     return (
-      <div className='lodging-form'>
+      <div className='toggle-form'>
         <form
           onSubmit={ handleSubmit }>
           <Field name='lodging' component={renderTextField}

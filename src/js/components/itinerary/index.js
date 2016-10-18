@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import Paper from 'material-ui/Paper'
 import Header from './Header.js'
 import VisiblePlans from '../../containers/VisiblePlans.js'
-import '../../../stylesheets/components/itinerary.scss'
+import '../../../stylesheets/config/config.scss'
 
 const Itinerary = ({ overview }) => {
 

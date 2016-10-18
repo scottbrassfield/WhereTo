@@ -33,3 +33,21 @@ body {
 #left {
   @include span(7);
 }
+
+#right {
+  @include span(9 at 8);
+}
+
+.toggle-form {
+  display: block;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 300px;
+  padding: 20px;
+  z-index: 1000;
+  background-color: #fefefe;
+  border: 1px solid grey;
+  border-radius: 4px;
+}

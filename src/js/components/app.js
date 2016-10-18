@@ -23,7 +23,9 @@ const App = ({ overview }) => {
             <Lodging />
             <LoadedMap />
           </div>
-          <Itinerary />
+          <div id='right'>
+            <Itinerary />
+          </div>
         </div>
       </MuiThemeProvider>
     )
