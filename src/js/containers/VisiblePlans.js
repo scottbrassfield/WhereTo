@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PlanList from '../components/itinerary/PlanList'
 import PlanInput from '../components/itinerary/PlanInput'
+import moment from 'moment'
 
 const Plans = (props) => {
   return (
@@ -24,7 +25,15 @@ const mapIdsToPlans = (planIds, plans) => {
   thePlans.sort((a, b) => {
     return a.startTime - b.startTime
   })
-  return thePlans
+
+  return thePlans.map(plan => {
+    let { startTime, endTime } = plan
+    return Object.assign(
+      {},
+      plan,
+      {startTime: moment(startTime).format('LT'), endTime: moment(endTime).format('LT')
+    })
+  })
 }
 
 const getPlans = ({entities: { days: { byId }, plans }, currentDay}) => {
@@ -35,9 +44,17 @@ const getPlans = ({entities: { days: { byId }, plans }, currentDay}) => {
   return []
 }
 
+const getCurrentDate = ({ entities: { days: { byId }}, currentDay }) => {
+  if (byId[currentDay]) {
+    var currentDate = byId[currentDay].date.format('MM/DD/YYYY');
+  }
+  return currentDate
+}
+
 const mapState = (state) => {
   return {
     currentDay: state.currentDay,
+    currentDate: getCurrentDate(state),
     plans: getPlans(state),
     formVisible: state.entities.plans.formVisible
   }
