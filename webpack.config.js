@@ -11,7 +11,8 @@ module.exports = {
   devServer:  {
     port: 3000,
     contentBase: './dist/public/',
-    inline: true
+    inline: true,
+    stats: 'minimal'
   },
   module: {
     loaders: [
