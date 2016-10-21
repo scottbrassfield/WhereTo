@@ -40,7 +40,7 @@ const renderDatePicker= ({ input, placeholder }) => {
         {...input}
         time={false}
         placeholder={placeholder}
-        value= {input.value !== '' ? new Date(input.value) : null}
+        value = {input.value !== '' ? new Date(input.value) : null}
         onChange = {(event, value) => {input.onChange(value)}}
       />
     </div>
