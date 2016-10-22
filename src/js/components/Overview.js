@@ -1,23 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import '../../stylesheets/components/overview.scss';
 import { updateOverview } from '../actions/actionCreators';
 
 const Overview = ({ destination, startDate, endDate, complete, updateOverview}) => {
 
-  var summaryClass = classNames({
-    'hidden': !complete,
-    'active': complete
-  })
-
   return (
     <Paper
-      id='summary'
-      className={ summaryClass }
-      style={{width: '100%', position: 'relative'}}>
+      style={{marginTop: '30px', width: '100%', position: 'relative'}}>
       <div
         style={{fontSize: '30px', fontWeight: 'bold', display: 'inline-block', marginRight: '40px', padding: '12px', verticalAlign: 'middle'}}>
         {destination}

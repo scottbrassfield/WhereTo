@@ -4,6 +4,7 @@ import moment from 'moment'
 import RaisedButton from 'material-ui/RaisedButton'
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import momentLocalizer from 'react-widgets/lib/localizers/moment'
+import { valueToTime } from '../util'
 import { addPlan, showForm } from '../../actions/actionCreators'
 import '../../../stylesheets/config/config.scss'
 import 'react-widgets/dist/css/react-widgets.css'
@@ -83,24 +84,3 @@ PlanInput = reduxForm({
 })(PlanInput)
 
 export default PlanInput;
-
-function valueToTime (value, currentDate) {
-  if (value === '') {
-    return null
-  } else {
-    let div = value.indexOf(':')
-    let hour = parseInt(value.slice(0, div))
-    let min = parseInt(value.slice(div + 1, div + 3))
-
-    let tod = value.slice(-2)
-
-    if (tod === 'PM') {
-      hour = hour < 12 ? hour + 12 : 12
-    } else {
-      hour = hour < 12 ? hour : 0
-    }
-
-    return moment(currentDate, 'MM/DD/YYYY')
-      .hour(hour).minute(min).toDate()
-  }
-}

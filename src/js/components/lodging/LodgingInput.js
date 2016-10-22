@@ -1,12 +1,32 @@
 import React from 'react'
 import { reduxForm, Field }from 'redux-form'
-import { TextField, RaisedButton } from 'material-ui/'
+import moment from 'moment'
+import DateTimePicker from 'react-widgets/lib/DateTimePicker'
+import momentLocalizer from 'react-widgets/lib/localizers/moment'
+import { RaisedButton } from 'material-ui/'
 import { addLodging, showForm } from '../../actions/actionCreators'
 import '../../../stylesheets/config/config.scss'
+import 'react-widgets/lib/less/react-widgets.less'
 
-const renderTextField = ({ input, label, style }) => {
+momentLocalizer(moment)
+
+const renderInput = ({ input, label, style }) => {
   return (
-    <TextField {...input} hintText={label} style={style} />
+    <input {...input} placeholder={label} style={style} />
+  )
+}
+
+const renderDatePicker= ({ input, label }) => {
+  return (
+    <div style={{width: '17em', marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px'}}>
+      <DateTimePicker
+        {...input}
+        time={false}
+        placeholder={label}
+        value = {input.value !== '' ? new Date(input.value) : null}
+        onChange = {(event, value) => {input.onChange(value)}}
+      />
+    </div>
   )
 }
 
@@ -15,22 +35,26 @@ let LodgingInput = ({ handleSubmit, formVisible, dispatch }) => {
     return (
       <div className='toggle-form'>
         <form
-          onSubmit={ handleSubmit }>
-          <Field name='lodging' component={renderTextField}
+          onSubmit={ handleSubmit }
+        >
+          <Field name='lodging' component={renderInput}
             label='Where are you staying?'
-            style={{ marginRight: '10px', width: '98%'}} />
-          <Field name='startDate' component={renderTextField}
+            style={{width: '15em', height: '24px', borderRadius: '4px', marginBottom: '10px', border: '1px solid #cccccc', padding: '7px 14px', fontSize: '16px', backgroundImage: 'none'}}
+          />
+          <Field name='startDate' component={renderDatePicker}
             label='Start Date'
-            style={{ display: 'inline-block', marginRight: '10px', marginTop: '20px', width: '45%'}} />
-          <Field name='endDate' component={renderTextField}
+          />
+          <Field name='endDate' component={renderDatePicker}
             label='End Date'
-            style={{ display: 'inline-block', marginRight: '10px', width: '45%'}} />
+          />
           <div style={{marginTop: '15px'}}>
             <RaisedButton type='submit' label='Add'
-              style={{minWidth: '40px', marginRight: '8px'}} labelStyle={{fontSize: '10px', }} />
+              style={{minWidth: '40px', marginRight: '8px'}} labelStyle={{fontSize: '10px', }}
+            />
             <RaisedButton type='button' label='Cancel'
               style={{minWidth: '40px'}} labelStyle={{fontSize: '10px'}}
-              onClick={() => dispatch(showForm('lodging', false))} />
+              onClick={() => dispatch(showForm('lodging', false))}
+            />
           </div>
         </form>
       </div>
@@ -46,7 +70,13 @@ export default reduxForm({
   form: 'lodging',
   enableReinitialize: true,
   onSubmit: (values, dispatch, { tripDates, reset }) => {
-    dispatch(addLodging(values, tripDates))
+    let { startDate, endDate } = values
+    let newValues = {
+      ...values,
+      startDate: moment(startDate, 'MM/D/YYYY'),
+      endDate: moment(endDate, 'MM/D/YYYY')
+    }
+    dispatch(addLodging(newValues, tripDates))
     dispatch(showForm('lodging', false))
     reset()
   }

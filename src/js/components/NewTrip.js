@@ -1,14 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { reduxForm, Field }from 'redux-form'
-import Moment from 'moment'
+import moment from 'moment'
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import momentLocalizer from 'react-widgets/lib/localizers/moment'
 import { addOverview } from '../actions/actionCreators'
-import '../../stylesheets/components/overview.scss'
 import 'react-widgets/lib/less/react-widgets.less'
 
-momentLocalizer(Moment)
+momentLocalizer(moment)
 
 const validate = values => {
   const errors = {}
@@ -49,7 +48,7 @@ const renderDatePicker= ({ input, placeholder }) => {
 
 let NewTrip = ({ handleSubmit, dispatch }) => {
   return (
-    <div id="input">
+    <div style={{position: 'absolute', top: '20%', left: '50%', transform: 'translateX(-50%)', textAlign: 'center'}}>
       <h1>Where are you headed?</h1>
       <form
         onSubmit={ handleSubmit(values => {
@@ -58,7 +57,7 @@ let NewTrip = ({ handleSubmit, dispatch }) => {
       >
         <Field name='destination' component={renderInput}
           placeholder='Destination'
-          style={{width: '15em', height: '24px', borderRadius: '4px', marginBottom: '10px', border: '1px solid #cccccc', padding: '7px 14px', fontSize: '16px'}}
+          style={{width: '15em', height: '24px', borderRadius: '4px', marginBottom: '10px', border: '1px solid #cccccc', padding: '7px 14px', fontSize: '16px', backgroundImage: 'none'}}
         />
         <Field name='startDate' component={renderDatePicker} placeholder='Start date'/>
         <Field name='endDate' component={renderDatePicker} placeholder='End date' />

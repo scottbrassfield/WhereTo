@@ -12,7 +12,7 @@ const ListItem = ({name, startDate, endDate}) => (
       </div>
       <div
         style={{display: 'inline-block', position: 'absolute', right: '60px' }}>
-        {startDate} - {endDate}
+        {startDate.format('MMM D')} - {endDate.format('MMM D')}
       </div>
     </li>
 
@@ -57,16 +57,3 @@ let LodgingList = ({ lodging, dispatch}) => {
 }
 
 export default LodgingList
-
-
-// <RaisedButton label='Edit'/>
-// <RaisedButton label='Remove' />
-// <IconMenu
-//   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-//   anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-//   targetOrigin={{horizontal: 'left', vertical: 'top'}}
-// >
-//   <MenuItem primaryText='Edit' />
-//   <MenuItem primaryText='Remove' />
-//   <MenuItem primaryText='Details' />
-// </IconMenu>
