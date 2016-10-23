@@ -64,7 +64,7 @@
 	
 	var _store2 = _interopRequireDefault(_store);
 	
-	var _reactTapEventPlugin = __webpack_require__(1051);
+	var _reactTapEventPlugin = __webpack_require__(1052);
 	
 	var _reactTapEventPlugin2 = _interopRequireDefault(_reactTapEventPlugin);
 	
@@ -26423,7 +26423,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.showForm = exports.priorDay = exports.nextDay = exports.addPlan = exports.updateLodging = exports.addLodging = exports.updateOverview = exports.addOverview = undefined;
+	exports.getMainMarker = exports.addMarker = exports.showForm = exports.priorDay = exports.nextDay = exports.addPlan = exports.updateLodging = exports.addLodging = exports.updateOverview = exports.addOverview = undefined;
 	
 	var _actionTypes = __webpack_require__(240);
 	
@@ -26509,6 +26509,26 @@
 	    show: bool
 	  };
 	};
+	
+	var markerId = 0;
+	var addMarker = exports.addMarker = function addMarker(place) {
+	  return {
+	    type: _actionTypes.ADD_MARKER,
+	    id: markerId++,
+	    place: place
+	  };
+	};
+	
+	var getMainMarker = exports.getMainMarker = function getMainMarker(query) {
+	  return function (dispatch) {
+	    return fetch('/map/places?' + 'place=' + query).then(function (res) {
+	      return res.json();
+	    }).then(function (place) {
+	      var marker = place.json.results[0];
+	      dispatch(addMarker(marker));
+	    });
+	  };
+	};
 
 /***/ },
 /* 240 */
@@ -26530,6 +26550,7 @@
 	var NEXT_DAY = exports.NEXT_DAY = 'NEXT_DAY';
 	var PRIOR_DAY = exports.PRIOR_DAY = 'PRIOR_DAY';
 	var SHOW_FORM = exports.SHOW_FORM = 'SHOW_FORM';
+	var ADD_MARKER = exports.ADD_MARKER = 'ADD_MARKER';
 
 /***/ },
 /* 241 */
@@ -26638,6 +26659,7 @@
 	      {
 	        onSubmit: handleSubmit(function (values) {
 	          dispatch((0, _actionCreators.addOverview)(values, true));
+	          dispatch((0, _actionCreators.getMainMarker)(values.destination));
 	        })
 	      },
 	      _react2.default.createElement(_reduxForm.Field, { name: 'destination', component: renderInput,
@@ -56481,6 +56503,10 @@
 	
 	var _PlanInput2 = _interopRequireDefault(_PlanInput);
 	
+	var _moment = __webpack_require__(417);
+	
+	var _moment2 = _interopRequireDefault(_moment);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Plans = function Plans(props) {
@@ -56504,7 +56530,14 @@
 	  thePlans.sort(function (a, b) {
 	    return a.startTime - b.startTime;
 	  });
-	  return thePlans;
+	
+	  return thePlans.map(function (plan) {
+	    var startTime = plan.startTime;
+	    var endTime = plan.endTime;
+	
+	    return Object.assign({}, plan, { startTime: (0, _moment2.default)(startTime).format('LT'), endTime: (0, _moment2.default)(endTime).format('LT')
+	    });
+	  });
 	};
 	
 	var getPlans = function getPlans(_ref) {
@@ -56527,7 +56560,6 @@
 	  if (byId[currentDay]) {
 	    var currentDate = byId[currentDay].date.format('MM/DD/YYYY');
 	  }
-	  console.log(currentDate);
 	  return currentDate;
 	};
 	
@@ -60357,15 +60389,11 @@
 	  value: true
 	});
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var _react = __webpack_require__(11);
 	
 	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRedux = __webpack_require__(182);
 	
 	var _reduxForm = __webpack_require__(242);
 	
@@ -60428,7 +60456,7 @@
 	    _react2.default.createElement(_DateTimePicker2.default, _extends({}, input, {
 	      calendar: false,
 	      placeholder: placeholder,
-	      value: input.value !== '' ? new Date() : null,
+	      value: valueToTime(input.value, currentDate),
 	      onChange: function onChange(event, value) {
 	        input.onChange(value);
 	      },
@@ -60478,40 +60506,47 @@
 	
 	PlanInput = (0, _reduxForm.reduxForm)({
 	  form: 'plans',
+	  destroyOnUnmount: true,
 	  onSubmit: function onSubmit(values, dispatch, _ref4) {
-	    var dayId = _ref4.dayId;
+	    var currentDay = _ref4.currentDay;
 	    var reset = _ref4.reset;
+	    var currentDate = _ref4.currentDate;
+	    var startTime = values.startTime;
+	    var endTime = values.endTime;
 	
-	    for (var prop in values) {
-	      console.log(_typeof(values[prop]));
-	    }
-	    dispatch((0, _actionCreators.addPlan)(values, dayId));
+	    var newValues = _extends({}, values, {
+	      startTime: valueToTime(startTime, currentDate),
+	      endTime: valueToTime(endTime, currentDate)
+	    });
+	    dispatch((0, _actionCreators.addPlan)(newValues, currentDay));
 	    dispatch((0, _actionCreators.showForm)('plans', false));
 	    reset();
-	  },
-	  initialValues: {
-	    startTime: new Date(),
-	    endTime: new Date()
-	  },
-	  destroyOnUnmount: true
+	  }
+	
 	})(PlanInput);
 	
-	var getDayId = function getDayId(_ref5) {
-	  var days = _ref5.entities.days;
-	  var currentDay = _ref5.currentDay;
-	
-	  return days.byId ? currentDay : '';
-	};
-	
-	var mapState = function mapState(state) {
-	  return {
-	    dayId: getDayId(state)
-	  };
-	};
-	
-	PlanInput = (0, _reactRedux.connect)(mapState)(PlanInput);
-	
 	exports.default = PlanInput;
+	
+	
+	function valueToTime(value, currentDate) {
+	  if (value === '') {
+	    return null;
+	  } else {
+	    var div = value.indexOf(':');
+	    var hour = parseInt(value.slice(0, div));
+	    var min = parseInt(value.slice(div + 1, div + 3));
+	
+	    var tod = value.slice(-2);
+	
+	    if (tod === 'PM') {
+	      hour = hour < 12 ? hour + 12 : 12;
+	    } else {
+	      hour = hour < 12 ? hour : 0;
+	    }
+	
+	    return (0, _moment2.default)(currentDate, 'MM/DD/YYYY').hour(hour).minute(min).toDate();
+	  }
+	}
 
 /***/ },
 /* 636 */
@@ -60570,8 +60605,7 @@
 	
 	var mapState = function mapState(state) {
 	  return {
-	    mapOptions: state.map.details,
-	    markers: state.map.markers,
+	    markers: state.entities.markers,
 	    destination: state.overview.destination,
 	    overview: state.overview.complete
 	  };
@@ -94691,16 +94725,21 @@
 	
 	var _currentDayReducer2 = _interopRequireDefault(_currentDayReducer);
 	
-	var _mapReducer = __webpack_require__(1050);
+	var _markersReducer = __webpack_require__(1050);
 	
-	var _mapReducer2 = _interopRequireDefault(_mapReducer);
+	var _markersReducer2 = _interopRequireDefault(_markersReducer);
+	
+	var _loadedMapReducer = __webpack_require__(1051);
+	
+	var _loadedMapReducer2 = _interopRequireDefault(_loadedMapReducer);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var entities = (0, _redux.combineReducers)({
 	  days: _daysReducer2.default,
 	  plans: _plansReducer2.default,
-	  lodging: _lodgingReducer2.default
+	  lodging: _lodgingReducer2.default,
+	  markers: _markersReducer2.default
 	});
 	
 	var rootReducer = (0, _redux.combineReducers)({
@@ -94708,7 +94747,7 @@
 	  overview: _overviewReducer2.default,
 	  entities: entities,
 	  currentDay: _currentDayReducer2.default,
-	  map: _mapReducer2.default
+	  loadedMap: _loadedMapReducer2.default
 	});
 	
 	exports.default = rootReducer;
@@ -95119,63 +95158,72 @@
 	  value: true
 	});
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	var _redux = __webpack_require__(189);
 	
 	var _actionTypes = __webpack_require__(240);
 	
-	var main = function main() {
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	var marker = function marker() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 	  var action = arguments[1];
 	
 	  switch (action.type) {
-	    case _actionTypes.LOAD_MAP:
-	      return Object.assign({}, state, action.map);
-	    default:
-	      return state;
+	    case _actionTypes.ADD_MARKER:
+	      return _extends({}, state, {
+	        id: action.id,
+	        place: action.place
+	      });
 	  }
 	};
 	
-	var initialMarkerState = [{
-	  position: { lat: 48.858093, lng: 2.375 },
-	  title: ''
-	}];
-	
-	var markers = function markers() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? initialMarkerState : arguments[0];
+	var byId = function byId() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 	  var action = arguments[1];
 	
 	  switch (action.type) {
+	    case _actionTypes.ADD_MARKER:
+	      return _extends({}, state, _defineProperty({}, action.id, marker(undefined, action)));
 	    default:
 	      return state;
 	  }
 	};
 	
-	var initialDetailState = {
-	  center: { lat: 48.858093, lng: 2.294694 },
-	  zoom: 8
-	};
-	
-	var details = function details() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? initialDetailState : arguments[0];
-	  var action = arguments[1];
-	
-	  switch (action.type) {
-	    default:
-	      return state;
-	  }
-	};
-	
-	var searchResults = function searchResults() {
+	var allIds = function allIds() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 	  var action = arguments[1];
 	
 	  switch (action.type) {
+	    case _actionTypes.ADD_MARKER:
+	      return [].concat(_toConsumableArray(state), [action.id]);
 	    default:
 	      return state;
 	  }
 	};
+	var markers = (0, _redux.combineReducers)({
+	  byId: byId,
+	  allIds: allIds
+	});
 	
-	var loaded = function loaded() {
+	exports.default = markers;
+
+/***/ },
+/* 1051 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _actionTypes = __webpack_require__(240);
+	
+	var loadedMap = function loadedMap() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
 	  var action = arguments[1];
 	
@@ -95188,22 +95236,14 @@
 	  }
 	};
 	
-	var map = (0, _redux.combineReducers)({
-	  main: main,
-	  markers: markers,
-	  details: details,
-	  searchResults: searchResults,
-	  loaded: loaded
-	});
-	
-	exports.default = map;
+	exports.default = loadedMap;
 
 /***/ },
-/* 1051 */
+/* 1052 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var invariant = __webpack_require__(1052);
-	var defaultClickRejectionStrategy = __webpack_require__(1053);
+	/* WEBPACK VAR INJECTION */(function(process) {var invariant = __webpack_require__(1053);
+	var defaultClickRejectionStrategy = __webpack_require__(1054);
 	
 	var alreadyInjected = false;
 	
@@ -95225,14 +95265,14 @@
 	  alreadyInjected = true;
 	
 	  __webpack_require__(53).injection.injectEventPluginsByName({
-	    'TapEventPlugin':       __webpack_require__(1054)(shouldRejectClick)
+	    'TapEventPlugin':       __webpack_require__(1055)(shouldRejectClick)
 	  });
 	};
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)))
 
 /***/ },
-/* 1052 */
+/* 1053 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -95287,7 +95327,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)))
 
 /***/ },
-/* 1053 */
+/* 1054 */
 /***/ function(module, exports) {
 
 	module.exports = function(lastTouchEvent, clickTimestamp) {
@@ -95298,7 +95338,7 @@
 
 
 /***/ },
-/* 1054 */
+/* 1055 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -95326,10 +95366,10 @@
 	var EventPluginUtils = __webpack_require__(55);
 	var EventPropagators = __webpack_require__(52);
 	var SyntheticUIEvent = __webpack_require__(86);
-	var TouchEventUtils = __webpack_require__(1055);
+	var TouchEventUtils = __webpack_require__(1056);
 	var ViewportMetrics = __webpack_require__(87);
 	
-	var keyOf = __webpack_require__(1056);
+	var keyOf = __webpack_require__(1057);
 	var topLevelTypes = EventConstants.topLevelTypes;
 	
 	var isStartish = EventPluginUtils.isStartish;
@@ -95474,7 +95514,7 @@
 
 
 /***/ },
-/* 1055 */
+/* 1056 */
 /***/ function(module, exports) {
 
 	/**
@@ -95522,7 +95562,7 @@
 
 
 /***/ },
-/* 1056 */
+/* 1057 */
 /***/ function(module, exports) {
 
 	/**

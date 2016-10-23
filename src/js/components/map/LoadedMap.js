@@ -17,8 +17,7 @@ const LoadedMap = ( ) => {
 
 const mapState = (state) => {
   return {
-    mapOptions: state.map.details,
-    markers: state.map.markers,
+    markers: state.entities.markers,
     destination: state.overview.destination,
     overview: state.overview.complete,
   }

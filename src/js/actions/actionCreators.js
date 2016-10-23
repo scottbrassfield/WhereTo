@@ -6,7 +6,8 @@ import {
   ADD_PLAN,
   NEXT_DAY,
   PRIOR_DAY,
-  SHOW_FORM
+  SHOW_FORM,
+  ADD_MARKER
 } from './actionTypes'
 
 export const addOverview = ({ destination, startDate, endDate }, complete) => {
@@ -77,5 +78,27 @@ export const showForm = (form, bool) => {
     type: SHOW_FORM,
     form,
     show: bool
+  }
+}
+
+let markerId = 0
+export const addMarker = (place) => {
+  return {
+    type: ADD_MARKER,
+    id: markerId++,
+    place
+  }
+}
+
+export const getMainMarker = query => {
+  return dispatch => {
+    return fetch('/map/places?' + 'place=' + query)
+      .then( res => {
+        return res.json()
+      })
+      .then( place => {
+        let marker = place.json.results[0]
+        dispatch(addMarker(marker))
+      })
   }
 }

@@ -4,7 +4,7 @@ import { reduxForm, Field }from 'redux-form'
 import Moment from 'moment'
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import momentLocalizer from 'react-widgets/lib/localizers/moment'
-import { addOverview } from '../actions/actionCreators'
+import { addOverview, getMainMarker } from '../actions/actionCreators'
 import '../../stylesheets/components/overview.scss'
 import 'react-widgets/lib/less/react-widgets.less'
 
@@ -53,7 +53,9 @@ let NewTrip = ({ handleSubmit, dispatch }) => {
       <h1>Where are you headed?</h1>
       <form
         onSubmit={ handleSubmit(values => {
-          dispatch(addOverview(values, true)) })
+          dispatch(addOverview(values, true))
+          dispatch(getMainMarker(values.destination))
+          })
         }
       >
         <Field name='destination' component={renderInput}
