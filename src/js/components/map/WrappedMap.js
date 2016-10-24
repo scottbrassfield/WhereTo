@@ -1,13 +1,16 @@
 import React from 'react'
 
-import { withGoogleMap, GoogleMap } from "react-google-maps";
+import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 
-const WrappedMap = withGoogleMap(() => {
+const WrappedMap = withGoogleMap( ({ markers, center }) => {
   return (
     <GoogleMap
-      defaultZoom={3}
-      defaultCenter={{ lat: -25.363882, lng: 131.044922 }}
+      defaultZoom={12}
+      center={center}
     >
+    { markers.map((marker, index) => (
+      <Marker position={marker.place.geometry.location} key={index} />
+    )) }
     </GoogleMap>
 )});
 

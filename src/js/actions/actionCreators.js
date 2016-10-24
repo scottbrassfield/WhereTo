@@ -90,15 +90,18 @@ export const addMarker = (place) => {
   }
 }
 
-export const getMainMarker = query => {
+export const initiateTrip = (values, complete) => {
   return dispatch => {
-    return fetch('/map/places?' + 'place=' + query)
+    return fetch('/map/places?' + 'place=' + values.destination)
       .then( res => {
         return res.json()
       })
       .then( place => {
         let marker = place.json.results[0]
         dispatch(addMarker(marker))
+      })
+      .then(() => {
+        dispatch(addOverview(values, complete))
       })
   }
 }

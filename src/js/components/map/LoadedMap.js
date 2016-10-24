@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import WrappedMap from './WrappedMap'
 import '../../../stylesheets/config/config.scss'
 
-const LoadedMap = ( ) => {
+const LoadedMap = ({markers, ...rest}) => {
 
   let style = {display: 'block', height: '400px', marginTop: '12px'}
 
@@ -11,13 +11,24 @@ const LoadedMap = ( ) => {
     <WrappedMap
       containerElement={<div style={style} />}
       mapElement={<div style={style} />}
+      center={markers[0].place.geometry.location}
+      markers={markers}
+      {...rest}
     />
   )
 }
 
+const getMarkers = ({ entities: { markers: { byId } }}) => {
+  let markerArray = [];
+  for (var prop in byId) {
+    markerArray.push(byId[prop])
+  }
+  return markerArray
+}
+
 const mapState = (state) => {
   return {
-    markers: state.entities.markers,
+    markers: getMarkers(state),
     destination: state.overview.destination,
     overview: state.overview.complete,
   }
