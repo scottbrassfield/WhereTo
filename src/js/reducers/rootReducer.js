@@ -5,12 +5,14 @@ import plans from './plansReducer'
 import lodging from './lodgingReducer'
 import overview from './overviewReducer'
 import currentDay from './currentDayReducer'
-import map from './mapReducer'
+import markers from './markersReducer'
+import loadedMap from './loadedMapReducer'
 
 const entities = combineReducers({
   days,
   plans,
-  lodging
+  lodging,
+  markers
 })
 
 const rootReducer = combineReducers({
@@ -18,7 +20,7 @@ const rootReducer = combineReducers({
   overview,
   entities,
   currentDay,
-  map
+  loadedMap
 })
 
-export default rootReducer;
+export default rootReducer

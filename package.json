@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "watch": "webpack --watch",
-    "serve": "webpack-dev-server"
+    "serve": "webpack-dev-server",
+    "start": "node ./src/js/server/app.js",
+    "watch": "nodemon ./src/js/server/app.js"
   },
   "author": "Scott Brassfield",
   "license": "ISC",
@@ -22,6 +23,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "htmlhint": "0.9.13",
+    "http-proxy-middleware": "^0.17.2",
     "less-loader": "^2.2.3",
     "lintspaces-cli": "0.4.0",
     "node-sass": "^3.10.0",
@@ -35,9 +37,12 @@
     "webpack-dev-server": "^1.16.1"
   },
   "dependencies": {
+    "@google/maps": "^0.3.0",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
+    "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",
     "classnames": "^2.2.5",
+    "express": "^4.14.0",
     "jquery": "^3.1.1",
     "less": "^2.7.1",
     "lodash": "^4.16.4",

@@ -1,4 +1,5 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const proxy = require('http-proxy-middleware');
 
 module.exports = {
   devtool: 'source-map',
@@ -9,10 +10,13 @@ module.exports = {
     filename: 'bundle.js'
   },
   devServer:  {
-    port: 3000,
+    port: 3001,
     contentBase: './dist/public/',
     inline: true,
-    stats: 'minimal'
+    stats: 'minimal',
+    proxy: {
+      '/map': { target: 'http://localhost:3000' }
+    }
   },
   module: {
     loaders: [
