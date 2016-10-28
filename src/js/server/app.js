@@ -7,6 +7,7 @@ const mapRoutes = require('./map-routes')
 const PORT = process.env.PORT || 3000
 
 express()
+  .use(express.static('dist/public'))
   .use(bodyParser.json())
   .use('/map', mapRoutes)
   .listen(PORT, () => {
