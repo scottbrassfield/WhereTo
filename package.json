@@ -2,7 +2,7 @@
   "name": "project-2",
   "version": "1.0.0",
   "description": "The second project",
-  "main": "index.js",
+  "main": "./src/js/server/app.js",
   "scripts": {
     "build": "webpack",
     "serve": "webpack-dev-server",
