@@ -1,12 +1,12 @@
 {
-  "name": "project-2",
+  "name": "trip-planner",
   "version": "1.0.0",
   "description": "The second project",
-  "main": "./src/js/server/app.js",
+  "main": "./index.js",
   "scripts": {
     "build": "webpack",
     "serve": "webpack-dev-server",
-    "start": "node ./src/js/server/app.js",
+    "start": "npm run build && node ./src/js/server/app.js",
     "watch": "nodemon ./src/js/server/app.js"
   },
   "author": "Scott Brassfield",
