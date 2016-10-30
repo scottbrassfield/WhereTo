@@ -4,13 +4,16 @@
   "description": "The second project",
   "main": "./index.js",
   "scripts": {
-    "build": "webpack",
-    "serve": "webpack-dev-server",
-    "start": "npm run build && node ./src/server/index.js",
-    "watch": "nodemon ./src/js/server/app.js"
+    "start-dev": "webpack && webpack-dev-server",
+    "start": "node ./src/server/index.js",
+    "postinstall": "webpack -p",
+    "watch": "nodemon ./src/server/index.js"
   },
   "author": "Scott Brassfield",
   "license": "ISC",
+  "engines": {
+    "node": "6.4.0"
+  },
   "devDependencies": {
     "babel-core": "^6.14.0",
     "babel-eslint": "^7.0.0",
