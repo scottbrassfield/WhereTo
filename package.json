@@ -36,7 +36,6 @@
     "stylelint-config-standard": "12.0.0",
     "susy": "^2.2.12",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.1"
   },
   "dependencies": {
@@ -61,6 +60,7 @@
     "redux": "^3.6.0",
     "redux-form": "^6.1.1",
     "redux-thunk": "^2.1.0",
-    "request": "^2.75.0"
+    "request": "^2.75.0",
+    "webpack": "^1.13.2",
   }
 }
