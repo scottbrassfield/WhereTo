@@ -4,7 +4,8 @@
   "description": "The second project",
   "main": "./index.js",
   "scripts": {
-    "start-dev": "webpack && webpack-dev-server",
+    "build": "webpack",
+    "serve": "webpack-dev-server",
     "start": "node ./src/server/index.js",
     "postinstall": "webpack -p",
     "watch": "nodemon ./src/server/index.js"
@@ -23,7 +24,6 @@
     "css-loader": "^0.25.0",
     "eslint": "3.3.1",
     "eslint-plugin-react": "6.3.0",
-    "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "htmlhint": "0.9.13",
     "http-proxy-middleware": "^0.17.2",
@@ -45,6 +45,7 @@
     "bootstrap": "^3.3.7",
     "classnames": "^2.2.5",
     "express": "^4.14.0",
+    "extract-text-webpack-plugin": "^1.0.1",
     "jquery": "^3.1.1",
     "less": "^2.7.1",
     "lodash": "^4.16.4",

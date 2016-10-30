@@ -1,5 +1,4 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const proxy = require('http-proxy-middleware');
 
 module.exports = {
   devtool: 'source-map',
