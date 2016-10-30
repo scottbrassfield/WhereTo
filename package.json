@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "serve": "webpack-dev-server",
-    "start": "npm run build && node ./src/js/server/app.js",
+    "start": "npm run build && node ./src/server/index.js",
     "watch": "nodemon ./src/js/server/app.js"
   },
   "author": "Scott Brassfield",
