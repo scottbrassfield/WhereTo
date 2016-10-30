@@ -61,6 +61,6 @@
     "redux-form": "^6.1.1",
     "redux-thunk": "^2.1.0",
     "request": "^2.75.0",
-    "webpack": "^1.13.2",
+    "webpack": "^1.13.2"
   }
 }
