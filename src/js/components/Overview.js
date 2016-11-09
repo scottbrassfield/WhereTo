@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
+import moment from 'moment';
 import RaisedButton from 'material-ui/RaisedButton';
 import { updateOverview } from '../actions/actionCreators';
 
@@ -26,12 +27,14 @@ const Overview = ({ destination, startDate, endDate, complete, updateOverview}) 
   )
 }
 
+const formatDate = (date) => moment(date).format('M/D/YY')
+
 const mapState = (state) => {
   return (
     {
       destination: state.overview.destination,
-      startDate: state.overview.startDate,
-      endDate: state.overview.endDate,
+      startDate: formatDate(state.overview.startDate),
+      endDate: formatDate(state.overview.endDate),
       complete: state.overview.complete
     }
   )
