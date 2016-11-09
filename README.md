@@ -11,6 +11,9 @@ The current version allows a user to:
 * Add plans and times to that itinerary
 * View a basic map from Google Maps
 
+![Alt text](/images/screenshots/login.png?raw=true "Login")
+![Alt text](/images/screenshots/main.png?raw=true "Main Page")
+
 In progress:
 * View suggested events and restaurants based on Google Places and Yelp APIs
 * Add markers to the map for relevant locations
