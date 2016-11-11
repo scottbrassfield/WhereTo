@@ -27,3 +27,9 @@ In progress:
 * Moment.js
 * Sass/Susy
 * Google Maps API
+
+###Run in Development Environment
+- Clone the repo
+- ```npm install```
+- ```npm run dev```
+- Open http://localhost:3000/
