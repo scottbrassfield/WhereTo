@@ -9,7 +9,7 @@
     "start": "node ./src/server/index.js",
     "postinstall": "webpack -p --define process.env.NODE_ENV='\"production\"' --progress --colors",
     "watch": "nodemon ./src/server/index.js",
-    "dev": "npm run watch && npm run serve"
+    "dev": "npm run watch & npm run serve"
   },
   "author": "Scott Brassfield",
   "license": "ISC",
