@@ -7,6 +7,7 @@ import overview from './overviewReducer'
 import currentDay from './currentDayReducer'
 import markers from './markersReducer'
 import loadedMap from './loadedMapReducer'
+import places from './placesReducer'
 
 const entities = combineReducers({
   days,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   overview,
   entities,
   currentDay,
-  loadedMap
+  loadedMap,
+  places
 })
 
 export default rootReducer
