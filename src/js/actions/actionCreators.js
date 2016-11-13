@@ -10,7 +10,8 @@ import {
   ADD_MARKER,
   CLEAR_MARKERS,
   ADD_RESULTS,
-  SHOW_RESULTS
+  SHOW_RESULTS,
+  CLEAR_RESULTS
 } from './actionTypes'
 
 export const addOverview = ({ destination, startDate, endDate }, complete) => {
@@ -118,8 +119,13 @@ export const retrySearch = message => {
     window.alert(message)
 }
 
+export const clearResults = () => {
+  return {
+    type: CLEAR_RESULTS
+  }
+}
 export const showResults = (results) => {
-  return (getState, dispatch) => {
+  return (dispatch, getState) => {
     let show = getState().places.showResults
     dispatch({ type: ADD_RESULTS, results }),
     dispatch({ type: SHOW_RESULTS, show: !show})

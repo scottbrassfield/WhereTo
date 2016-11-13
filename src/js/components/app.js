@@ -8,11 +8,14 @@ import Lodging from '../containers/ConnectedLodging'
 import Places from './Places'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
-const App = ({ overview }) => {
+const App = ({ overview, showResults }) => {
   if (!overview) {
     return (
       <MuiThemeProvider>
-        <NewTrip />
+        <div>
+          <NewTrip />
+          {showResults && <Places />}
+        </div>
       </MuiThemeProvider>
     )
   } else {
@@ -23,7 +26,7 @@ const App = ({ overview }) => {
             <Overview />
             <Lodging />
             <LoadedMap />
-            <Places />
+            {showResults && <Places />}
           </div>
           <div id='right'>
             <Itinerary />
@@ -35,7 +38,10 @@ const App = ({ overview }) => {
 }
 
 const mapState = (state) => {
-  return { overview: state.overview.complete }
+  return {
+    overview: state.overview.complete,
+    showResults: state.places.showResults
+  }
 }
 
 export default connect(mapState)(App);

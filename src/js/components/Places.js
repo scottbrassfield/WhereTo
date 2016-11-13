@@ -1,33 +1,44 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addMarkers } from '../actions/actionCreators'
+import { formValueSelector } from 'redux-form'
+import { SHOW_RESULTS } from '../actions/actionTypes'
+import { addMarkers, addOverview, clearMarkers } from '../actions/actionCreators'
+import { Modal } from 'react-bootstrap'
 
-const Places = ({ show, places, dispatch }) => {
-
-  if (!show) {
-    return <div></div>
-  } else {
-    return (
-      <div style={{position: 'fixed', top: '20%', left: '20%', border: '1px solid black'}}>
-        <h1>Choose your destination</h1>
-        { places.results.map(place => (
+const Places = ({ show, places, values, dispatch }) => {
+  return (
+    <Modal show={show} onHide={() => dispatch({type: SHOW_RESULTS, show: false})}>
+      <Modal.Header>
+        <Modal.Title>Choose your destination</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        { places && places.map(place => (
             <div
               key={place.id}
-              onClick={() => dispatch(addMarkers([place]))}
+              onClick={() => {
+                dispatch(clearMarkers())
+                dispatch(addMarkers([place]))
+                dispatch(addOverview(values, true))
+                dispatch({type: SHOW_RESULTS, show: false})
+              }}
             >
               {place.formatted_address}
             </div>
           )
         )}
-      </div>
-    )
-  }
+      </Modal.Body>
+    </Modal>
+  )
 }
 
 const mapState = (state) => {
+
+  const selector = formValueSelector('overview')
+
   return {
     show: state.places.showResults,
-    places: state.places.searchResults
+    places: state.places.searchResults,
+    values: selector(state, 'destination', 'startDate', 'endDate')
   }
 }
 
