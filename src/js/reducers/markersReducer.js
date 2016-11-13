@@ -7,7 +7,7 @@ const marker = (state = {}, action) => {
       return {
         ...state,
         id: action.id,
-        place: action.place
+        place: action.marker
       }
   }
 }

@@ -7,7 +7,10 @@ import {
   NEXT_DAY,
   PRIOR_DAY,
   SHOW_FORM,
-  ADD_MARKER
+  ADD_MARKER,
+  CLEAR_MARKERS,
+  ADD_RESULTS,
+  SHOW_RESULTS
 } from './actionTypes'
 
 export const addOverview = ({ destination, startDate, endDate }, complete) => {
@@ -82,26 +85,69 @@ export const showForm = (form, bool) => {
 }
 
 let markerId = 0
-export const addMarker = (place) => {
+
+export const clearMarkers = () => {
+  markerId = 0
   return {
-    type: ADD_MARKER,
-    id: markerId++,
-    place
+    type: CLEAR_MARKERS
+  }
+}
+
+
+
+export const addMarkers = markers => {
+  return dispatch => {
+    markers.forEach(marker => {
+      dispatch({
+        type: ADD_MARKER,
+        id: markerId++,
+        marker
+      })
+    })
+  }
+}
+
+export const setInitialMarker = places => {
+  return dispatch => {
+    dispatch(clearMarkers())
+    dispatch(addMarkers(places))
+  }
+}
+
+export const retrySearch = message => {
+    window.alert(message)
+}
+
+export const showResults = (results) => {
+  return (getState, dispatch) => {
+    let show = getState().places.showResults
+    dispatch({ type: ADD_RESULTS, results }),
+    dispatch({ type: SHOW_RESULTS, show: !show})
   }
 }
 
 export const initiateTrip = (values, complete) => {
   return dispatch => {
     return fetch('/map/places?' + 'place=' + values.destination)
-      .then( res => {
+      .then(res => {
         return res.json()
       })
-      .then( place => {
-        let marker = place.json.results[0]
-        dispatch(addMarker(marker))
+      .then(places => {
+        let results = places.json.results
+        if (!results.length) {
+          console.log(0)
+          retrySearch('Your destination didn\'t yield any results. Perhaps try again with more detail')
+        } else if (results.length === 1) {
+          console.log(1)
+          dispatch(setInitialMarker(results))
+          dispatch(addOverview(values, complete))
+        } else {
+          console.log('many')
+          dispatch(showResults(results))
+        }
       })
-      .then(() => {
-        dispatch(addOverview(values, complete))
+      .catch(err => {
+        console.log(err)
       })
   }
 }

@@ -32,10 +32,10 @@ const formatDate = (date) => moment(date).format('M/D/YY')
 const mapState = (state) => {
   return (
     {
-      destination: state.overview.destination,
+      destination: state.entities.markers.byId[0].place.formatted_address,
       startDate: formatDate(state.overview.startDate),
       endDate: formatDate(state.overview.endDate),
-      complete: state.overview.complete
+      complete: state.overview.complete,
     }
   )
 }
