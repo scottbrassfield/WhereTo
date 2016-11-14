@@ -65,6 +65,7 @@
     "style-loader": "^0.13.1",
     "susy": "^2.2.12",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.2"
+    "webpack": "^1.13.2",
+    "whatwg-fetch": "^1.0.0"
   }
 }
