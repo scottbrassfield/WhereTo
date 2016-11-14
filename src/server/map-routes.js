@@ -2,7 +2,7 @@ const { Router } = require('express')
 
 const googleMapsClient = require('@google/maps').createClient({
   Promise: Promise,
-  key: 'AIzaSyAXi_K8crUx_aUUTHsssh4fYK60-CTGn1g'
+  key: process.env.GOOGLE_MAPS_API
 })
 
 const router = new Router()
