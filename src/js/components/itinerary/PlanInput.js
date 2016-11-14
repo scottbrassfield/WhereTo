@@ -13,7 +13,7 @@ momentLocalizer(moment)
 
 const renderInput = ({ input, meta: { touched, error}, style, placeholder}) => {
   return (
-    <div>
+    <div style={{width: '17em', marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px'}}>
       <input {...input} style={style} placeholder={placeholder}/>
       {error && touched && <span>{error}</span>}
     </div>
@@ -23,7 +23,7 @@ const renderInput = ({ input, meta: { touched, error}, style, placeholder}) => {
 const renderTimePicker = ({ input, placeholder, currentDate }) => {
   return (
     <div
-      style={{display: 'inline-block', marginRight: '10px', width: '45%'}}
+      style={{display: 'inline-block', width: '45%', marginLeft: '1px', marginRight: '1px'}}
     >
       <DateTimePicker
         {...input}
@@ -46,9 +46,11 @@ let PlanInput = ({ handleSubmit, formVisible, dispatch, currentDate }) => {
           onSubmit={ handleSubmit }>
           <Field name='plan' component={renderInput}
             placeholder='Description of plans'
-            style={{ marginRight: '10px', width: '90%', height: '25px', marginBottom: '10px', borderRadius: '4px', border: '1px solid #cccccc', padding: '7px 13px', fontSize: '16px'}} />
-          <Field name='startTime' component={renderTimePicker} placeholder='Start Time' currentDate={currentDate} />
-          <Field name='endTime' component={renderTimePicker} placeholder='End Time'currentDate={currentDate} />
+            style={{width: '100%', borderRadius: '4px', border: '1px solid #cccccc', padding: '6px 14px', fontSize: '16px' }} />
+          <div style={{marginRight: 'auto', marginLeft: 'auto'}}>
+            <Field name='startTime' component={renderTimePicker} placeholder='Start Time' currentDate={currentDate} />
+            <Field name='endTime' component={renderTimePicker} placeholder='End Time'currentDate={currentDate} />
+          </div>
           <div style={{marginTop: '15px'}}>
             <RaisedButton type='submit' label='Add'
               style={{minWidth: '40px', marginRight: '8px'}} labelStyle={{fontSize: '10px', }} />

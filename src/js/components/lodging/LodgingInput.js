@@ -12,7 +12,9 @@ momentLocalizer(moment)
 
 const renderInput = ({ input, label, style }) => {
   return (
-    <input {...input} placeholder={label} style={style} />
+    <div style={{width: '17em', marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px'}}>
+      <input {...input} placeholder={label} style={style} />
+    </div>
   )
 }
 
@@ -39,7 +41,7 @@ let LodgingInput = ({ handleSubmit, formVisible, dispatch }) => {
         >
           <Field name='lodging' component={renderInput}
             label='Where are you staying?'
-            style={{width: '15em', height: '24px', borderRadius: '4px', marginBottom: '10px', border: '1px solid #cccccc', padding: '7px 14px', fontSize: '16px', backgroundImage: 'none'}}
+            style={{width: '100%', borderRadius: '4px', border: '1px solid #cccccc', padding: '6px 14px', fontSize: '16px' }}
           />
           <Field name='startDate' component={renderDatePicker}
             label='Start Date'

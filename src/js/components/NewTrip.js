@@ -25,7 +25,7 @@ const validate = values => {
 
 const renderInput = ({ input, meta: { touched, error}, style, placeholder}) => {
   return (
-    <div>
+    <div style={{width: '17em', marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px'}}>
       <input {...input} style={style} placeholder={placeholder}/>
       {error && touched && <span>{error}</span>}
     </div>
@@ -57,7 +57,7 @@ let NewTrip = ({ handleSubmit, dispatch }) => {
       >
         <Field name='destination' component={renderInput}
           placeholder='Destination'
-          style={{width: '15em', height: '24px', borderRadius: '4px', marginBottom: '10px', border: '1px solid #cccccc', padding: '7px 14px', fontSize: '16px', backgroundImage: 'none'}}
+          style={{width: '100%', border: '1px solid #cccccc', borderRadius: '4px', padding: '6px 14px', fontSize: '16px' }}
         />
         <Field name='startDate' component={renderDatePicker} placeholder='Start date'/>
         <Field name='endDate' component={renderDatePicker} placeholder='End date' />
