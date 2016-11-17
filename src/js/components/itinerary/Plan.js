@@ -1,14 +1,20 @@
 import React from 'react'
-import { TableRow, TableRowColumn } from 'material-ui/Table'
+import { connect } from 'react-redux'
+import { searchPlanLocation } from '../../actions/actionCreators'
+import { TableRow, TableRowColumn, RaisedButton } from 'material-ui'
 
-let Plan = ({ startTime, plan }) => {
+let Plan = ({ startTime, plan, dispatch }) => {
   return (
       <TableRow>
         <TableRowColumn style={{width: '20%'}}>{startTime}</TableRowColumn>
         <TableRowColumn>{plan}</TableRowColumn>
-        <TableRowColumn></TableRowColumn>
+        <TableRowColumn>
+          <RaisedButton onClick={() => { dispatch(searchPlanLocation(plan))}}>
+            Add Marker
+          </RaisedButton>
+        </TableRowColumn>
       </TableRow>
   )
 }
 
-export default Plan
+export default connect()(Plan)

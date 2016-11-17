@@ -9,7 +9,7 @@ let PlanList = ({ plans }) => {
         <TableRow>
           <TableHeaderColumn style={{width: '20%'}}>Time</TableHeaderColumn>
           <TableHeaderColumn>Plans</TableHeaderColumn>
-          <TableHeaderColumn>Status</TableHeaderColumn>
+          <TableHeaderColumn>Options</TableHeaderColumn>
         </TableRow>
       </TableHeader>
       <TableBody showRowHover={true}>
