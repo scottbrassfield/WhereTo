@@ -94,8 +94,6 @@ export const clearMarkers = () => {
   }
 }
 
-
-
 export const addMarkers = markers => {
   return dispatch => {
     markers.forEach(marker => {
@@ -124,6 +122,7 @@ export const clearResults = () => {
     type: CLEAR_RESULTS
   }
 }
+
 export const showResults = (results) => {
   return (dispatch, getState) => {
     let show = getState().places.showResults
@@ -132,28 +131,45 @@ export const showResults = (results) => {
   }
 }
 
+export const getPlace = (search) => {
+
+  return fetch('/map/places?' + 'place=' + search)
+    .then(res => res.json())
+    .then(places => {
+      let results = places.json.results
+      if (!results.length) {
+        retrySearch('That location didn\'t yield any results. Perhaps try again with more detail')
+      }
+      return results
+    })
+  }
+
 export const initiateTrip = (values, complete) => {
+
   return dispatch => {
-    return fetch('/map/places?' + 'place=' + values.destination)
+    getPlace(values.destination)
       .then(res => {
-        return res.json()
-      })
-      .then(places => {
-        let results = places.json.results
-        if (!results.length) {
-          console.log(0)
-          retrySearch('Your destination didn\'t yield any results. Perhaps try again with more detail')
-        } else if (results.length === 1) {
-          console.log(1)
-          dispatch(setInitialMarker(results))
+        if (res.length === 1) {
+          dispatch(setInitialMarker(res))
           dispatch(addOverview(values, complete))
         } else {
-          console.log('many')
-          dispatch(showResults(results))
+          dispatch(showResults(res))
         }
       })
-      .catch(err => {
-        console.log(err)
+      .catch(err => { console.error(err) })
+  }
+}
+
+export const searchPlanLocation = (search) => {
+  return dispatch => {
+    getPlace(search)
+      .then(res => {
+        if (res.length === 1) {
+          dispatch(addMarkers(res))
+        } else {
+          dispatch(showResults(res))
+        }
       })
+      .catch(err => { console.error(err) })
   }
 }
