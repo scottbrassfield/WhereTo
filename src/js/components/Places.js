@@ -1,45 +1,56 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { formValueSelector } from 'redux-form'
-import { SHOW_RESULTS } from '../actions/actionTypes'
-import { addMarkers, addOverview, clearMarkers } from '../actions/actionCreators'
 import { Modal } from 'react-bootstrap'
+import { initiateTrip, addMarkers, toggleResults} from '../actions/actionCreators'
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui'
 
-const Places = ({ show, places, values, dispatch }) => {
+const Places = ({ show, places, onClick, onHide, title }) => {
+
   return (
-    <Modal show={show} onHide={() => dispatch({type: SHOW_RESULTS, show: false})}>
+    <Modal bsSize='large' show={show} onHide={onHide}>
       <Modal.Header>
-        <Modal.Title>Choose your destination</Modal.Title>
+        <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        { places && places.map(place => (
-            <div
-              key={place.id}
-              onClick={() => {
-                dispatch(clearMarkers())
-                dispatch(addMarkers([place]))
-                dispatch(addOverview(values, true))
-                dispatch({type: SHOW_RESULTS, show: false})
-              }}
-            >
-              {place.formatted_address}
-            </div>
-          )
-        )}
+        <Table
+          onRowSelection={row => {onClick(places[row])}}
+        >
+          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+            <TableRow>
+              <TableHeaderColumn>Location</TableHeaderColumn>
+              <TableHeaderColumn>Address</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody showRowHover={true} displayRowCheckbox={false}>
+            { places && places.map(place => (
+              <TableRow key={place.id} >
+                <TableRowColumn>{place.name}</TableRowColumn>
+                <TableRowColumn>{place.formatted_address}</TableRowColumn>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </Modal.Body>
     </Modal>
   )
 }
 
-const mapState = (state) => {
-
-  const selector = formValueSelector('overview')
-
+const mapDispatch = (dispatch, ownProps) => {
   return {
-    show: state.places.showResults,
-    places: state.places.searchResults,
-    values: selector(state, 'destination', 'startDate', 'endDate')
+    onClick: (place) => {
+      const { overview, values } = ownProps
+      if (!overview) {
+        dispatch(initiateTrip(values, place, true))
+      } else {
+        dispatch(addMarkers(place))
+      }
+      dispatch(toggleResults())
+    },
+    onHide: () => {
+      dispatch(toggleResults())
+    },
+    dispatch
   }
 }
 
-export default connect(mapState)(Places)
+export default connect(null, mapDispatch)(Places)

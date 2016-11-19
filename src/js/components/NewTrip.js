@@ -4,7 +4,7 @@ import { reduxForm, Field }from 'redux-form'
 import moment from 'moment'
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import momentLocalizer from 'react-widgets/lib/localizers/moment'
-import { initiateTrip } from '../actions/actionCreators'
+import { getPlace } from '../actions/actionCreators'
 import 'react-widgets/lib/less/react-widgets.less'
 
 momentLocalizer(moment)
@@ -46,15 +46,11 @@ const renderDatePicker= ({ input, placeholder }) => {
   )
 }
 
-let NewTrip = ({ handleSubmit, dispatch }) => {
+let NewTrip = ({ handleSubmit }) => {
   return (
     <div style={{position: 'absolute', top: '20%', left: '50%', transform: 'translateX(-50%)', textAlign: 'center'}}>
       <h1>Where are you headed?</h1>
-      <form onSubmit={ handleSubmit(values => {
-            dispatch(initiateTrip(values, true))
-          })
-        }
-      >
+      <form onSubmit={handleSubmit}>
         <Field name='destination' component={renderInput}
           placeholder='Destination'
           style={{width: '100%', border: '1px solid #cccccc', borderRadius: '4px', padding: '6px 14px', fontSize: '16px' }}
@@ -78,7 +74,10 @@ function mapState(state) {
 NewTrip = reduxForm({
   form: 'overview',
   destroyOnUnmount: false,
-  validate
+  validate,
+  onSubmit: (values, dispatch) => {
+    dispatch(getPlace(values.destination))
+  }
 })(NewTrip)
 
 module.exports = connect(mapState)(NewTrip)
