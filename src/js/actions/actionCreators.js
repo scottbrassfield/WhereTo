@@ -137,6 +137,7 @@ export const toggleResults = () => {
 
 export const getPlace = (search) => {
   return dispatch => {
+    dispatch(clearResults())
     fetch('/map/places?' + 'place=' + search)
       .then(res => res.json())
       .then(res => {

@@ -15,7 +15,7 @@ const Places = ({ show, places, onClick, onHide, title }) => {
               key={place.id}
               onClick={onClick}
             >
-              {place.formatted_address}
+              {place.name}
             </div>
           )
         )}
