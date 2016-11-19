@@ -96,15 +96,22 @@ export const clearMarkers = () => {
   }
 }
 
+export const addMarker = marker => {
+  return {
+    type: ADD_MARKER,
+    id: markerId++,
+    marker
+  }
+}
 export const addMarkers = markers => {
   return dispatch => {
-    markers.forEach(marker => {
-      dispatch({
-        type: ADD_MARKER,
-        id: markerId++,
-        marker
+    if (Array.isArray(markers)) {
+      markers.forEach(marker => {
+        dispatch(addMarker(marker))
       })
-    })
+    } else {
+      dispatch(addMarker(markers))
+    }
   }
 }
 
