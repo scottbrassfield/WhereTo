@@ -1,26 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { formValueSelector } from 'redux-form'
-import { SHOW_RESULTS } from '../actions/actionTypes'
-import { addMarkers, addOverview, clearMarkers } from '../actions/actionCreators'
 import { Modal } from 'react-bootstrap'
+import { initiateTrip, addMarkers, toggleResults} from '../actions/actionCreators'
 
-const Places = ({ show, places, values, dispatch }) => {
+const Places = ({ show, places, onClick, onHide, title }) => {
   return (
-    <Modal show={show} onHide={() => dispatch({type: SHOW_RESULTS, show: false})}>
+    <Modal show={show} onHide={onHide}>
       <Modal.Header>
-        <Modal.Title>Choose your destination</Modal.Title>
+        <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         { places && places.map(place => (
             <div
               key={place.id}
-              onClick={() => {
-                dispatch(clearMarkers())
-                dispatch(addMarkers([place]))
-                dispatch(addOverview(values, true))
-                dispatch({type: SHOW_RESULTS, show: false})
-              }}
+              onClick={onClick}
             >
               {place.formatted_address}
             </div>
@@ -31,15 +24,23 @@ const Places = ({ show, places, values, dispatch }) => {
   )
 }
 
-const mapState = (state) => {
 
-  const selector = formValueSelector('overview')
-
+const mapDispatch = (dispatch, ownProps) => {
   return {
-    show: state.places.showResults,
-    places: state.places.searchResults,
-    values: selector(state, 'destination', 'startDate', 'endDate')
+    onClick: () => {
+      const { overview, values, places } = ownProps
+      if (!overview) {
+        dispatch(initiateTrip(values, places, true))
+      } else {
+        dispatch(addMarkers(places))
+      }
+      dispatch(toggleResults())
+    },
+    onHide: () => {
+      dispatch(toggleResults())
+    },
+    dispatch
   }
 }
 
-export default connect(mapState)(Places)
+export default connect(null, mapDispatch)(Places)

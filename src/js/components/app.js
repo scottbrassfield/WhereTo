@@ -5,7 +5,7 @@ import NewTrip from './NewTrip'
 import Itinerary from './itinerary/index'
 import LoadedMap from './map/LoadedMap'
 import Lodging from '../containers/ConnectedLodging'
-import Places from './Places'
+import Places from '../containers/PlacesResults'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 const App = ({ overview, showResults }) => {

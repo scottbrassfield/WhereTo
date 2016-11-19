@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import {
   ADD_OVERVIEW,
   UPDATE_OVERVIEW,
@@ -106,70 +108,66 @@ export const addMarkers = markers => {
   }
 }
 
-export const setInitialMarker = places => {
-  return dispatch => {
-    dispatch(clearMarkers())
-    dispatch(addMarkers(places))
-  }
-}
-
-export const retrySearch = message => {
-    window.alert(message)
-}
-
 export const clearResults = () => {
   return {
     type: CLEAR_RESULTS
   }
 }
 
-export const showResults = (results) => {
+export const addResults = (results) => {
+  return {
+    type: ADD_RESULTS,
+    results
+  }
+}
+
+export const showResults = (show) => {
+  return {
+    type: SHOW_RESULTS,
+    show
+  }
+}
+
+export const toggleResults = () => {
   return (dispatch, getState) => {
     let show = getState().places.showResults
-    dispatch({ type: ADD_RESULTS, results }),
-    dispatch({ type: SHOW_RESULTS, show: !show})
+    dispatch(showResults(!show))
   }
 }
 
 export const getPlace = (search) => {
-
-  return fetch('/map/places?' + 'place=' + search)
-    .then(res => res.json())
-    .then(places => {
-      let results = places.json.results
-      if (!results.length) {
-        retrySearch('That location didn\'t yield any results. Perhaps try again with more detail')
-      }
-      return results
-    })
-  }
-
-export const initiateTrip = (values, complete) => {
-
   return dispatch => {
-    getPlace(values.destination)
+    fetch('/map/places?' + 'place=' + search)
+      .then(res => res.json())
       .then(res => {
-        if (res.length === 1) {
-          dispatch(setInitialMarker(res))
-          dispatch(addOverview(values, complete))
-        } else {
-          dispatch(showResults(res))
-        }
+        let places = res.json.results
+        dispatch(addResults(places))
+        dispatch(toggleResults())
       })
-      .catch(err => { console.error(err) })
   }
 }
 
-export const searchPlanLocation = (search) => {
+export const initiateTrip = (values, places, complete) => {
   return dispatch => {
-    getPlace(search)
-      .then(res => {
-        if (res.length === 1) {
-          dispatch(addMarkers(res))
-        } else {
-          dispatch(showResults(res))
-        }
-      })
-      .catch(err => { console.error(err) })
+    dispatch(clearMarkers())
+    dispatch(addMarkers(places))
+    dispatch(addOverview(values, complete))
   }
 }
+
+
+//
+// export const searchPlanLocation = (search) => {
+//
+//   return dispatch => {
+//     getPlace(search).then(res => {
+//       if (res.length === 1) {
+//         dispatch(addMarkers(res))
+//       } else {
+//         dispatch(addResults(res))
+//         dispatch(toggleResults())
+//       }
+//     })
+//     .catch(err => { console.error(err) })
+//   }
+// }
