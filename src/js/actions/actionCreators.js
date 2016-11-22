@@ -56,15 +56,23 @@ export const updateLodging = (id) => {
 }
 
 let planId = 0
-export const addPlan = ({ plan, startTime, endTime }, dayId) => {
-  return {
-    type: ADD_PLAN,
-    property: 'plans',
-    dayId,
-    id: planId++,
-    plan,
-    startTime,
-    endTime
+export const addPlan = (planDetails, dayId) => {
+  return dispatch => {
+    return fetch('/api/plans', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify(Object.assign({}, planDetails))
+    })
+    .then(res => res.json())
+    .then(planDetails => {
+      dispatch({
+          type: ADD_PLAN,
+          property: 'plans',
+          dayId,
+          id: planId++,
+          ...planDetails
+        })
+    })
   }
 }
 
@@ -105,27 +113,34 @@ export const addMarker = marker => {
     marker
   }
 }
+
 export const addMarkers = markers => {
   return dispatch => {
     if (Array.isArray(markers)) {
-      async.each(markers, (marker, cb) => {
-        dispatch(addMarker(marker))
+      return async.each(markers, (marker, cb) => {
         fetch('/api/markers', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(Object.assign({}, marker))
           })
-          .then(() => { cb() })
+          .then(res => res.json())
+          .then(marker => {
+            dispatch(addMarker(marker))
+            cb()
+          })
           .catch(err => { console.error(err) })
       })
     } else {
-      dispatch(addMarker(markers))
-      fetch('/api/markers', {
+      return fetch('/api/markers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(Object.assign({}, markers))
       })
-      .then(() => { console.log('Marker added to database')})
+      .then(res => res.json())
+      .then(marker => {
+        dispatch(addMarker(marker))
+        console.log('Marker added to database')
+      })
       .catch(err => { console.error(err) })
     }
   }
@@ -174,7 +189,9 @@ export const getPlace = (search) => {
 export const initiateTrip = (values, places, complete) => {
   return dispatch => {
     dispatch(clearMarkers())
-    dispatch(addMarkers(places))
-    dispatch(addOverview(values, complete))
+    dispatch(addMarkers(places)).then(() => {
+      dispatch(addOverview(values, complete))
+    })
+
   }
 }

@@ -78,9 +78,10 @@ PlanInput = reduxForm({
       startTime: valueToTime(startTime, currentDate),
       endTime: valueToTime(endTime, currentDate)
     }
-    dispatch(addPlan(newValues, currentDay))
-    dispatch(showForm('plans', false))
-    reset()
+    dispatch(addPlan(newValues, currentDay)).then(() => {
+      dispatch(showForm('plans', false))
+      reset()
+    })
   },
 
 })(PlanInput)
