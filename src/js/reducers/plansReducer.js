@@ -30,7 +30,7 @@ const byId = (state = {}, action) => {
 const allIds = (state = [], action) => {
   switch (action.type) {
     case ADD_PLAN:
-      return [...state, action.planId]
+      return [...state, action.id]
     default:
       return state;
   }
