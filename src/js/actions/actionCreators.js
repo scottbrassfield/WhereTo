@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
 
+import async from 'async'
+
 import {
   ADD_OVERVIEW,
   UPDATE_OVERVIEW,
@@ -106,11 +108,25 @@ export const addMarker = marker => {
 export const addMarkers = markers => {
   return dispatch => {
     if (Array.isArray(markers)) {
-      markers.forEach(marker => {
+      async.each(markers, (marker, cb) => {
         dispatch(addMarker(marker))
+        fetch('/api/markers', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(Object.assign({}, marker))
+          })
+          .then(() => { cb() })
+          .catch(err => { console.error(err) })
       })
     } else {
       dispatch(addMarker(markers))
+      fetch('/api/markers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.assign({}, markers))
+      })
+      .then(() => { console.log('Marker added to database')})
+      .catch(err => { console.error(err) })
     }
   }
 }
@@ -145,7 +161,7 @@ export const toggleResults = () => {
 export const getPlace = (search) => {
   return dispatch => {
     dispatch(clearResults())
-    fetch('/map/places?' + 'place=' + search)
+    fetch('/api/map/places?' + 'place=' + search)
       .then(res => res.json())
       .then(res => {
         let places = res.json.results
@@ -162,20 +178,3 @@ export const initiateTrip = (values, places, complete) => {
     dispatch(addOverview(values, complete))
   }
 }
-
-
-//
-// export const searchPlanLocation = (search) => {
-//
-//   return dispatch => {
-//     getPlace(search).then(res => {
-//       if (res.length === 1) {
-//         dispatch(addMarkers(res))
-//       } else {
-//         dispatch(addResults(res))
-//         dispatch(toggleResults())
-//       }
-//     })
-//     .catch(err => { console.error(err) })
-//   }
-// }

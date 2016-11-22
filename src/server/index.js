@@ -8,7 +8,6 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-const mapRoutes = require('./map-routes')
 const plansRoutes = require('./plans-routes')
 const markersRoutes = require('./markers-routes')
 
@@ -24,9 +23,9 @@ MongoClient.connect(DB_URI, (err, db) => {
   express()
     .use(express.static(path.normalize(__dirname + '/../../dist/public')))
     .use(bodyParser.json())
-    .use('/map', mapRoutes)
-    .use('/plans', plansRoutes(db))
-    .use('/markers', markersRoutes(db))
+    .use('/api/map', require('./map-routes'))
+    .use('/api/plans', plansRoutes(db))
+    .use('/api/markers', markersRoutes(db))
     .listen(PORT, () => {
       console.log('Listening on port ' + PORT)
     })
