@@ -1,4 +1,5 @@
 /*eslint-disable no-console*/
+
 const { Router } = require('express')
 const { ObjectId } = require('mongodb')
 const { returnDocument } = require('./util')
@@ -7,10 +8,10 @@ const router = new Router()
 
 module.exports = function(db) {
 
-  const plans = db.collection('plans')
+  const markers = db.collection('markers')
 
     router.get('/', (req, res) => {
-      plans
+      markers
         .find()
         .toArray((err, docs) => {
           if (err) return res.sendStatus(500)
@@ -18,13 +19,13 @@ module.exports = function(db) {
         })
     })
 
-    router.get('/:planId', (req, res) => {
-      let _id = ObjectId(req.params.planId)
-      returnDocument(plans, _id, res)
+    router.get('/:markerId', (req, res) => {
+      let _id = ObjectId(req.params.markerId)
+      returnDocument(markers, _id, res)
     })
 
     router.post('/', (req, res) => {
-      plans
+      markers
         .insertOne(req.body)
         .then((data, err) => {
           if (err) return res.sendStatus(500)
@@ -32,18 +33,18 @@ module.exports = function(db) {
         })
     })
 
-    router.put('/:planId', (req, res) => {
-      let _id = ObjectId(req.params.planId)
-      plans
+    router.put('/:markerId', (req, res) => {
+      let _id = ObjectId(req.params.markerId)
+      markers
         .update({ _id }, { $set: req.body })
         .then(() => {
-          returnDocument(plans, _id, res)
+          returnDocument(markers, _id, res)
         })
     })
 
-    router.delete('/:planId', (req, res) => {
-      let _id = ObjectId(req.params.planId)
-      plans
+    router.delete('/:markerId', (req, res) => {
+      let _id = ObjectId(req.params.markerId)
+      markers
         .removeOne({ _id })
         .then(() => {
           res.send('Deleted plan: ' + _id)

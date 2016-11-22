@@ -10,6 +10,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const mapRoutes = require('./map-routes')
 const plansRoutes = require('./plans-routes')
+const markersRoutes = require('./markers-routes')
 
 const DB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/where-to'
 const PORT = process.env.PORT || 3030
@@ -25,6 +26,7 @@ MongoClient.connect(DB_URI, (err, db) => {
     .use(bodyParser.json())
     .use('/map', mapRoutes)
     .use('/plans', plansRoutes(db))
+    .use('/markers', markersRoutes(db))
     .listen(PORT, () => {
       console.log('Listening on port ' + PORT)
     })
