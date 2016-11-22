@@ -48,6 +48,8 @@
     "lodash": "^4.16.4",
     "material-ui": "^0.15.4",
     "moment": "^2.15.1",
+    "mongodb": "^2.2.11",
+    "mongoose": "^4.6.8",
     "node-sass": "^3.10.0",
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.6",
