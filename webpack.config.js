@@ -17,7 +17,7 @@ module.exports = {
     inline: true,
     stats: 'minimal',
     proxy: {
-      '/map': { target: 'http://localhost:3030' }
+      '/api/*': { target: 'http://localhost:3030' }
     }
   },
   module: {
