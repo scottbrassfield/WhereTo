@@ -2,28 +2,48 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap'
-import ModalWrapper from './Modal'
+import Modal from './Modal'
 import { showModal } from '../actions/actionCreators'
 
+const validate = values => {
+  const errors = {}
+  if (!values.username) {
+    errors.username = 'Enter a username'
+  }
+  if (!values.password) {
+    errors.password = 'Enter a password'
+  }
+  return errors
+}
+
+
+const renderInput = ({ label, type, input, meta: { error, touched } }) => {
+  return (
+    <FormGroup>
+      <ControlLabel>{label}</ControlLabel>
+      <FormControl
+        {...input}
+        type={type}
+        onChange={(event) => {
+          input.onChange(event.target.value)
+        }}
+      />
+      {touched && error && <div style={{color: 'darkred'}}>{error}</div>}
+    </FormGroup>
+  )
+}
 
 let Login = ({ handleSubmit, modal, dispatch }) => {
 
-  const renderInput = ({ label, type }) => {
-    return (
-      <FormGroup>
-        <ControlLabel>{label}</ControlLabel>
-        <FormControl type={type}/>
-      </FormGroup>
-    )
-  }
-
   return (
-    <ModalWrapper
+    <Modal
+      general={{
+        show: modal === 'login',
+        keyboard: true,
+        onHide: () => { dispatch(showModal(null)) }
+      }}
+      header={{ closeButton: true }}
       title='Enter your login information'
-      show={modal === 'login'}
-      keyboard={true}
-      closeButton={true}
-      onHide={() => { dispatch(showModal(null)) }}
     >
       <form onSubmit={handleSubmit}>
         <Field
@@ -40,12 +60,13 @@ let Login = ({ handleSubmit, modal, dispatch }) => {
         />
         <Button bsStyle='primary' type='submit'>Submit</Button>
       </form>
-    </ModalWrapper>
+    </Modal>
   )
 }
 
 Login = reduxForm({
   form: 'login',
+  validate,
   onSubmit: (values, dispatch) => {
     dispatch(showModal(null))
   }
