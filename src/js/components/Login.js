@@ -4,15 +4,11 @@ import { reduxForm, Field } from 'redux-form'
 import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap'
 import Modal from './Modal'
 import { showModal } from '../actions/actionCreators'
+import { emptyValidate } from './util'
 
 const validate = values => {
-  const errors = {}
-  if (!values.username) {
-    errors.username = 'Enter a username'
-  }
-  if (!values.password) {
-    errors.password = 'Enter a password'
-  }
+  const fields = ['username', 'password']
+  const errors = emptyValidate(values, fields)
   return errors
 }
 
