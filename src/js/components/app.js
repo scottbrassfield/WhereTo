@@ -1,47 +1,54 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Overview from './Overview'
-import NewTrip from './NewTrip'
-import Itinerary from './itinerary/index'
-import LoadedMap from './map/LoadedMap'
-import Lodging from '../containers/ConnectedLodging'
-import Places from '../containers/PlacesResults'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import RootModal from '../containers/RootModal'
+import { showModal } from '../actions/actionCreators'
 
-const App = ({ overview, showResults }) => {
-  if (!overview) {
-    return (
-      <MuiThemeProvider>
-        <div>
-          <NewTrip />
-          {showResults && <Places />}
-        </div>
-      </MuiThemeProvider>
-    )
-  } else {
-    return (
-      <MuiThemeProvider>
-        <div>
-          <div id='left'>
-            <Overview />
-            <Lodging />
-            <LoadedMap />
-            {showResults && <Places />}
-          </div>
-          <div id='right'>
-            <Itinerary />
-          </div>
-        </div>
-      </MuiThemeProvider>
-    )
+const App = ({ modal, dispatch }) => {
+  const styles = {
+    nav: {
+      position: 'fixed', top: 0, left: 0,
+      height: 50,
+      width: '100%',
+      backgroundColor: 'rgb(50,50,50)'
+    },
+    navUser: {
+      position: 'absolute',
+      top: '50%',
+      right: 0,
+      transform: 'translateY(-50%)'
+    },
+    navUserItem: {
+      marginRight: 20,
+      display: 'inline-block',
+      fontSize: 20,
+      border: 'none',
+      backgroundColor: 'transparent',
+      color: 'white'
+    }
   }
+  return (
+    <div>
+      <nav style={styles.nav}>
+        <div style={styles.navUser}>
+          <button
+            onClick={() => {dispatch(showModal('login'))}}
+            style={styles.navUserItem}>
+            Login
+          </button>
+          <button
+            onClick={() => {dispatch(showModal('register'))}}
+            style={styles.navUserItem}>
+            Sign Up
+          </button>
+        </div>
+      </nav>
+      {modal && <RootModal />}
+    </div>
+  )
 }
 
 const mapState = (state) => {
-  return {
-    overview: state.overview.complete,
-    showResults: state.places.showResults
-  }
+  return { modal: state.modal.modalType }
 }
 
-export default connect(mapState)(App);
+export default connect(mapState)(App)
