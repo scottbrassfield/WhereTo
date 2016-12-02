@@ -14,7 +14,7 @@ import {
   ADD_MARKER,
   CLEAR_MARKERS,
   ADD_RESULTS,
-  SHOW_RESULTS,
+  SHOW_MODAL,
   CLEAR_RESULTS
 } from './actionTypes'
 
@@ -146,42 +146,37 @@ export const addMarkers = markers => {
   }
 }
 
-export const clearResults = () => {
+export const clearResults = (resultsType) => {
   return {
-    type: CLEAR_RESULTS
+    type: CLEAR_RESULTS,
+    resultsType
   }
 }
 
-export const addResults = (results) => {
+export const addResults = (results, resultsType) => {
   return {
     type: ADD_RESULTS,
-    results
+    results,
+    resultsType
   }
 }
 
-export const showResults = (show) => {
+export const showModal = (modal) => {
   return {
-    type: SHOW_RESULTS,
-    show
-  }
-}
-
-export const toggleResults = () => {
-  return (dispatch, getState) => {
-    let show = getState().places.showResults
-    dispatch(showResults(!show))
+    type: SHOW_MODAL,
+    modal
   }
 }
 
 export const getPlace = (search) => {
   return dispatch => {
-    dispatch(clearResults())
+    dispatch(clearResults('places'))
     fetch('/api/map/places?' + 'place=' + search)
       .then(res => res.json())
       .then(res => {
         let places = res.json.results
-        dispatch(addResults(places))
-        dispatch(toggleResults())
+        dispatch(addResults(places, 'places'))
+        dispatch(showModal('results'))
       })
   }
 }
