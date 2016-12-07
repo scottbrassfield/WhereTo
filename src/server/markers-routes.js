@@ -1,56 +1,50 @@
 /*eslint-disable no-console*/
 
-const { Router } = require('express')
-const { ObjectId } = require('mongodb')
-const { returnDocument } = require('./util')
+const Router = require('express').Router
+const ObjectId = require('mongodb').ObjectId
+const returnDocument = require('./util').returnDocument
+const Marker = require('../models/Markers')
 
 const router = new Router()
 
-module.exports = function(db) {
+router.get('/', (req, res) => {
+    Marker
+      .find()
+      .toArray((err, docs) => {
+        if (err) return res.sendStatus(500)
+        res.json(docs)
+      })
+})
 
-  const markers = db.collection('markers')
+router.get('/:markerId', (req, res) => {
+  let _id = ObjectId(req.params.markerId)
+  returnDocument(Marker, _id, res)
+})
 
-    router.get('/', (req, res) => {
-      markers
-        .find()
-        .toArray((err, docs) => {
-          if (err) return res.sendStatus(500)
-          res.json(docs)
-        })
+router.post('/', (req, res) => {
+  let marker = new Marker(req.body)
+  marker.save((err, data) => {
+    if (err) return res.send('Marker could not be saved')
+    res.send(data)
+  })
+})
+
+router.put('/:markerId', (req, res) => {
+  let _id = ObjectId(req.params.markerId)
+  Marker
+    .update({ _id }, { $set: req.body })
+    .then(() => {
+      returnDocument(Marker, _id, res)
     })
+})
 
-    router.get('/:markerId', (req, res) => {
-      let _id = ObjectId(req.params.markerId)
-      returnDocument(markers, _id, res)
+router.delete('/:markerId', (req, res) => {
+  let _id = ObjectId(req.params.markerId)
+  Marker
+    .removeOne({ _id })
+    .then(() => {
+      res.send('Deleted plan: ' + _id)
     })
+})
 
-    router.post('/', (req, res) => {
-      markers
-        .insertOne(req.body)
-        .then((data, err) => {
-          if (err) return res.sendStatus(500)
-          res.json(data.ops[0])
-        })
-    })
-
-    router.put('/:markerId', (req, res) => {
-      let _id = ObjectId(req.params.markerId)
-      markers
-        .update({ _id }, { $set: req.body })
-        .then(() => {
-          returnDocument(markers, _id, res)
-        })
-    })
-
-    router.delete('/:markerId', (req, res) => {
-      let _id = ObjectId(req.params.markerId)
-      markers
-        .removeOne({ _id })
-        .then(() => {
-          res.send('Deleted plan: ' + _id)
-        })
-    })
-
-    return router
-
-}
+module.exports = router
