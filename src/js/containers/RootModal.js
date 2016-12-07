@@ -1,11 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Login from '../components/Login'
+import Signup from '../components/Signup'
 import Results from '../containers/PlacesResults'
 
 const modals = {
   'login': Login,
-  'results': Results
+  'results': Results,
+  'signup': Signup
 }
 
 const RootModal = ({ modal }) => {
@@ -16,8 +18,4 @@ const RootModal = ({ modal }) => {
   return <CurrentModal modal={modal}/>
 }
 
-const mapState = (state) => {
-  return { modal: state.modal.modalType }
-}
-
-export default connect(mapState)(RootModal)
+export default connect()(RootModal)

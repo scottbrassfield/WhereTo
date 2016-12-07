@@ -1,15 +1,10 @@
 import React from 'react'
 import { Modal } from 'react-bootstrap'
 
-const ModalWrapper = ({ title, size, show, onHide, children, keyboard, closeButton }) => {
+const ModalTemplate = ({ general, header, title, children }) => {
   return (
-    <Modal
-      bsSize={size}
-      show={show}
-      onHide={onHide}
-      keyboard={keyboard}
-    >
-      <Modal.Header closeButton={closeButton}>
+    <Modal {...general}>
+      <Modal.Header {...header}>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -19,4 +14,4 @@ const ModalWrapper = ({ title, size, show, onHide, children, keyboard, closeButt
   )
 }
 
-export default ModalWrapper
+export default ModalTemplate
