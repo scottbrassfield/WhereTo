@@ -5,29 +5,24 @@ import moment from 'moment'
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import momentLocalizer from 'react-widgets/lib/localizers/moment'
 import { getPlace } from '../actions/actionCreators'
+// import PlacesResults from '../containers/PlacesResults'
 import 'react-widgets/lib/less/react-widgets.less'
+import { emptyValidate } from './util'
 
 momentLocalizer(moment)
 
 const validate = values => {
-  const errors = {}
-  if (!values.destination) {
-    errors.username = 'Field is required'
-  }
-  if (!values.startDate) {
-    errors.startDate = 'Field is required'
-  }
-  if (!values.endDate) {
-    errors.endDate = 'Field is required'
-  }
+  const fields = ['destination', 'startDate', 'endDate']
+  const errors = emptyValidate(values, fields)
   return errors
 }
+
 
 const renderInput = ({ input, meta: { touched, error}, style, placeholder}) => {
   return (
     <div style={{width: '17em', marginLeft: 'auto', marginRight: 'auto', marginBottom: '10px'}}>
       <input {...input} style={style} placeholder={placeholder}/>
-      {error && touched && <span>{error}</span>}
+      {touched && error && <span>{error}</span>}
     </div>
   )
 }
@@ -48,8 +43,10 @@ const renderDatePicker= ({ input, placeholder }) => {
 
 let NewTrip = ({ handleSubmit }) => {
   return (
-    <div style={{position: 'absolute', top: '20%', left: '50%', transform: 'translateX(-50%)', textAlign: 'center'}}>
-      <h1>Where are you headed?</h1>
+    <div
+      style={{position: 'absolute', top: '20%', left: '50%', transform: 'translateX(-50%)', textAlign: 'center'}}
+    >
+      <h1>Where are you going?</h1>
       <form onSubmit={handleSubmit}>
         <Field name='destination' component={renderInput}
           placeholder='Destination'
@@ -67,8 +64,11 @@ let NewTrip = ({ handleSubmit }) => {
   )
 }
 
-function mapState(state) {
-  return { complete: state.overview.complete }
+const mapState = (state) => {
+  return {
+    complete: state.overview.complete,
+    results: state.modal.modalType === 'results'
+  }
 }
 
 NewTrip = reduxForm({

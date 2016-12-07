@@ -18,12 +18,13 @@ import {
   CLEAR_RESULTS
 } from './actionTypes'
 
-export const addOverview = ({ destination, startDate, endDate }, complete) => {
+export const addOverview = ({ destination, startDate, endDate}, complete, tripId) => {
   return {
     type: ADD_OVERVIEW,
     destination,
     startDate,
     endDate,
+    tripId,
     complete
   }
 }
@@ -139,7 +140,6 @@ export const addMarkers = markers => {
       .then(res => res.json())
       .then(marker => {
         dispatch(addMarker(marker))
-        console.log('Marker added to database')
       })
       .catch(err => { console.error(err) })
     }
@@ -181,12 +181,11 @@ export const getPlace = (search) => {
   }
 }
 
-export const initiateTrip = (values, places, complete) => {
+export const initiateTrip = (values, places, complete, tripId) => {
   return dispatch => {
     dispatch(clearMarkers())
-    dispatch(addMarkers(places)).then(() => {
-      dispatch(addOverview(values, complete))
+    return dispatch(addMarkers(places)).then(() => {
+      dispatch(addOverview(values, complete, tripId))
     })
-
   }
 }

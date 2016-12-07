@@ -10,6 +10,7 @@ const overview = (state = initialState, action) => {
     case ADD_OVERVIEW:
       return Object.assign({}, state,
         {
+          tripId: action.tripId,
           destination: action.destination,
           startDate: action.startDate,
           endDate: action.endDate,
