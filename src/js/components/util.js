@@ -20,3 +20,14 @@ export const valueToTime = (value, currentDate) => {
       .hour(hour).minute(min).toDate()
   }
 }
+
+
+export const emptyValidate = (values, fields) => {
+  const errors = {}
+  fields.forEach(field => {
+    if (!values[field]) {
+      errors[field] = `Enter ${field}`
+    }
+  })
+  return errors
+}
