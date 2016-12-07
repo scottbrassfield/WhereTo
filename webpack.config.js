@@ -6,7 +6,6 @@ module.exports = {
   devtool: 'source-map',
 
   entry: [
-    'webpack-hot-middleware/client',
     'whatwg-fetch',
     './src/index.js'
   ],
@@ -54,7 +53,6 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new ExtractTextPlugin('style.css')
   ]
