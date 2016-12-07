@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import RootModal from '../containers/RootModal'
 import { showModal } from '../actions/actionCreators'
 
-const App = ({ modal, dispatch }) => {
+const App = ({modal, children, dispatch}) => {
   const styles = {
     nav: {
       position: 'fixed', top: 0, left: 0,
@@ -36,13 +36,14 @@ const App = ({ modal, dispatch }) => {
             Login
           </button>
           <button
-            onClick={() => {dispatch(showModal('register'))}}
+            onClick={() => {dispatch(showModal('signup'))}}
             style={styles.navUserItem}>
             Sign Up
           </button>
         </div>
       </nav>
-      {modal && <RootModal />}
+      {children}
+      {modal && <RootModal modal={modal}/>}
     </div>
   )
 }

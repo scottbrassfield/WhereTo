@@ -16,10 +16,10 @@ const Root = ({store}) => (
       <Router history={browserHistory}>
         <Route path='/' component={App} >
           <IndexRoute component={Home} />
-          <Route path='/user' component={Dashboard}>
+          <Route path=':username' component={Dashboard}>
             <IndexRoute component={TripList} />
-            <Route path='/trips/:tripId' component={Trip} />
-            <Route path='/newTrip' component={NewTrip} />
+            <Route path='trips/:tripId' component={Trip} />
+            <Route path='newTrip' component={NewTrip} />
           </Route>
         </Route>
       </Router>
