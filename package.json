@@ -26,7 +26,9 @@
     "morgan": "^1.7.0",
     "stylelint": "7.1.0",
     "stylelint-config-standard": "12.0.0",
-    "webpack-dev-server": "^1.16.1"
+    "webpack-dev-middleware": "^1.8.4",
+    "webpack-dev-server": "^1.16.1",
+    "webpack-hot-middleware": "^2.13.2"
   },
   "dependencies": {
     "@google/maps": "^0.3.0",
@@ -79,6 +81,7 @@
     "style-loader": "^0.13.1",
     "susy": "^2.2.12",
     "url-loader": "^0.5.7",
+    "uuid": "^3.0.1",
     "webpack": "^1.13.2",
     "whatwg-fetch": "^1.0.0"
   }
