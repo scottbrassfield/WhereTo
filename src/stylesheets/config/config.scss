@@ -5,7 +5,6 @@ $susy: (
   gutters: 1/4,
   gutter-position: split,
   global-box-sizing: border-box,
-  container: 95%
 );
 
 $primary-font: 'Roboto', sans-serif;
@@ -31,11 +30,11 @@ body {
 }
 
 #left {
-  @include span(7);
+  @include span(6 at 2);
 }
 
 #right {
-  @include span(9 at 8);
+  @include span(8 at 8);
 }
 
 .toggle-form {
