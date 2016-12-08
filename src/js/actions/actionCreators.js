@@ -2,6 +2,8 @@
 
 import async from 'async'
 
+import { browserHistory } from 'react-router'
+
 import {
   ADD_OVERVIEW,
   UPDATE_OVERVIEW,
@@ -15,7 +17,10 @@ import {
   CLEAR_MARKERS,
   ADD_RESULTS,
   SHOW_MODAL,
-  CLEAR_RESULTS
+  CLEAR_RESULTS,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_ERROR
 } from './actionTypes'
 
 export const addOverview = ({ destination, startDate, endDate}, complete, tripId) => {
@@ -181,11 +186,58 @@ export const getPlace = (search) => {
   }
 }
 
-export const initiateTrip = (values, places, complete, tripId) => {
+export const initiateTrip = (values, places, complete, tripId, username) => {
   return dispatch => {
     dispatch(clearMarkers())
     return dispatch(addMarkers(places)).then(() => {
       dispatch(addOverview(values, complete, tripId))
+      browserHistory.push(`/users/${username}/trips/${tripId}`)
+    })
+  }
+}
+
+export const requestLogin = (credentials) => {
+  return {
+    type: LOGIN_REQUEST,
+    isFetching: true,
+    isAuthenticated: false,
+    credentials
+  }
+}
+
+export const confirmLogin = (credentials) => {
+  return {
+    type: LOGIN_SUCCESS,
+    isFetching: false,
+    isAuthenticated: true,
+    credentials
+  }
+}
+
+export const loginError = (error) => {
+  return {
+    type: LOGIN_ERROR,
+    isFetching: false,
+    isAuthenticated: false,
+    error
+  }
+}
+
+export const userLogin = (credentials) => {
+  return dispatch => {
+    dispatch(requestLogin(credentials))
+    return fetch('/api/users/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(credentials)
+    })
+    .then(res => res.json())
+    .then(credentials => {
+      dispatch(confirmLogin(credentials))
+      browserHistory.push(`/users/${credentials.username}/newTrip`)
+    })
+    .catch(err => {
+      dispatch(loginError(err))
     })
   }
 }

@@ -1,10 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
-import { withRouter } from 'react-router'
 import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap'
 import Modal from './Modal'
-import { showModal } from '../actions/actionCreators'
+import { showModal, userLogin } from '../actions/actionCreators'
 import { emptyValidate } from './util'
 
 const validate = values => {
@@ -63,10 +62,10 @@ let Login = ({ handleSubmit, modal, dispatch }) => {
 Login = reduxForm({
   form: 'login',
   validate,
-  onSubmit: (values, dispatch, props) => {
+  onSubmit: (values, dispatch) => {
     dispatch(showModal(null))
-    props.router.push('/' + values.username + '/newTrip')
+    dispatch(userLogin(values))
   }
 })(Login)
 
-export default withRouter(connect()(Login))
+export default connect()(Login)
