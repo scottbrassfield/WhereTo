@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose')
 const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
 const passport = require('passport')
 const plansRoutes = require('./plans-routes')
 const markersRoutes = require('./markers-routes')
@@ -12,8 +13,6 @@ const usersRoutes = require('./users-routes')
 const webpack = require('webpack')
 const config = require('../../webpack.config')
 const compiler = webpack(config)
-
-require('./passport')(passport)
 
 const app = express()
 
@@ -36,6 +35,18 @@ const PORT = process.env.PORT || 3030
 mongoose.Promise = global.Promise
 mongoose.connect(DB_URI)
 
+require('./passport')(passport)
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+app.use(session({
+  secret: 'secret',
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  resave: false,
+  saveUninitialized: false
+}))
+
 // app.use( express.static( __dirname + '../../dist/public/index.html' ));
 
 app.use(bodyParser.json())
@@ -50,15 +61,6 @@ app.use('/api/markers', markersRoutes)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../../dist/public/index.html'))
 })
-
-app.use(session({
-  secret: 'secret',
-  resave: true,
-  saveUninitialized: true
-}))
-
-app.use(passport.initialize())
-app.use(passport.session())
 
 app.listen(PORT, () => {
   console.log('Listening on port ' + PORT)

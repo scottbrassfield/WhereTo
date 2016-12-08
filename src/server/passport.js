@@ -6,6 +6,16 @@ const bCrypt = require('bcrypt-nodejs')
 
 module.exports = function(passport) {
 
+  passport.serializeUser((user, done) => {
+    return done(null, user._id)
+  })
+
+  passport.deserializeUser((id, done) => {
+    User.findById(id, (err, user) => {
+      done(err, user)
+    })
+  })
+
   passport.use('local-login', new LocalStrategy({ passReqToCallback: true },
     function(req, username, password, done) {
       User.findOne({ username: username },
@@ -14,13 +24,13 @@ module.exports = function(passport) {
             return done(err)
           }
           if (!user) {
-            console.log('User Not Found with username '+username);
-            return done(null, false,
-              req.flash('message', 'User Not Found'))
+            console.log('User not found with username ' + username);
+            return done(null, false)
           }
-          if (!checkPassword(user, password)) {
-            return done(null, false,
-              req.flash('message', 'Invalid Password'))
+          // if (!checkPassword(user, password)) {
+          if (password !== user.password) {
+            console.log('Invalid Password')
+            return done(null, false)
           }
           return done(null, user)
         }
@@ -29,7 +39,7 @@ module.exports = function(passport) {
   ))
 
 
-  passport.use('local-register', new LocalStrategy({ passReqToCallback: true },
+  passport.use('local-signup', new LocalStrategy({ passReqToCallback: true },
     function(req, username, password, done) {
       process.nextTick(function() {
         User.findOne({ username: username }, function(err, user) {
@@ -39,8 +49,7 @@ module.exports = function(passport) {
           }
           if (user) {
             console.log('User already exists');
-            return done(null, false,
-              req.flash('signupMessage', 'User already exists.'))
+            return done(null, false)
           } else {
             var newUser = new User({
               username: username,
@@ -59,19 +68,9 @@ module.exports = function(passport) {
       })
   }))
 
-  passport.serializeUser((user, done) => {
-    return done(null, user._id)
-  })
-
-  passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => {
-      done(err, user)
-    })
-  })
-
-  function checkPassword(user, password) {
-    return bCrypt.compareSync(password, user.password)
-  }
+  // function checkPassword(user, password) {
+  //   return bCrypt.compareSync(password, user.password)
+  // }
 
   function createHash(password) {
     return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null)
