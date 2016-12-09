@@ -11,7 +11,7 @@ import '../../stylesheets/components/trip.scss'
 
 const Trip = ({ showResults }) => {
   return (
-    <div>
+    <div className='trip-main'>
       <div className='main-left'>
         <Overview />
         <Lodging />
