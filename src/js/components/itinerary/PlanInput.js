@@ -6,7 +6,7 @@ import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import momentLocalizer from 'react-widgets/lib/localizers/moment'
 import { valueToTime } from '../util'
 import { addPlan, showForm } from '../../actions/actionCreators'
-import '../../../stylesheets/config/config.scss'
+import '../../../stylesheets/config.scss'
 import 'react-widgets/dist/css/react-widgets.css'
 
 momentLocalizer(moment)

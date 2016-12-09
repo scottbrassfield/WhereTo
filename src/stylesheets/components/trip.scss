@@ -1,0 +1,36 @@
+@import "../config";
+
+@media screen and (max-width: 649px) {
+  .main-left,
+  .main-right {
+    @include span(16);
+  }
+}
+
+@media screen and (min-width: 650px) and (max-width: 959px) {
+  .main-left,
+  .main-right {
+    width: span(14);
+    margin: 0 auto;
+  }
+}
+
+@media screen and (min-width: 960px) and (max-width: 1350px) {
+  .main-left {
+    @include span(6);
+  }
+
+  .main-right {
+    @include span(8 at 7);
+  }
+}
+
+@media screen and (min-width: 1351px) {
+  .main-left {
+    @include span(6 at 3);
+  }
+
+  .main-right {
+    @include span(6 at 9);
+  }
+}

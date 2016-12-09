@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import LodgingInput from '../components/lodging/LodgingInput'
 import LodgingList from '../components/lodging/LodgingList'
 import { addLodging, showForm } from '../actions/actionCreators'
-import '../../stylesheets/config/config.scss'
 
 const Lodging = (props) => {
   return (
