@@ -8,7 +8,7 @@ import '../../../stylesheets/config.scss'
 const Itinerary = () => {
 
   return (
-    <Paper style={{height: '570px'}}>
+    <Paper className='itinerary'>
       <Header />
       <VisiblePlans />
     </Paper>

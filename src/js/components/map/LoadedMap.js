@@ -4,12 +4,13 @@ import WrappedMap from './WrappedMap'
 
 const LoadedMap = ({markers, ...rest}) => {
 
-  let style = {display: 'block', height: '400px', marginTop: '12px'}
+  let style = { height: '65vh' }
 
   return (
     <WrappedMap
-      containerElement={<div style={style} />}
-      mapElement={<div style={style} />}
+
+      containerElement={<div className='map'/>}
+      mapElement={<div className='map' />}
       center={markers[0].place.geometry.location}
       markers={markers}
       {...rest}

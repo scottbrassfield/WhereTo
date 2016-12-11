@@ -19,12 +19,14 @@ $susy: (
   global-box-sizing: border-box,
 );
 
+$fixed-layout: (
+  container: 1450px,
+);
+
 $primary-font: 'Roboto', sans-serif;
 $primary-color: #5d5d5d;
 
 body {
-  @include container;
-
   background-color: #fafafa;
   font-family: $primary-font;
 }

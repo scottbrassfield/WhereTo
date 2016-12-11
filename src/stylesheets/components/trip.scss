@@ -1,7 +1,8 @@
 @import "../config";
 
 .trip-main {
-  width: 100%;
+  @include container;
+
   margin-top: 80px;
 }
 
@@ -12,7 +13,7 @@
   }
 }
 
-@media screen and (min-width: 650px) and (max-width: 959px) {
+@media screen and (min-width: 650px) and (max-width: 1100px) {
   .main-left,
   .main-right {
     width: span(14);
@@ -20,22 +21,47 @@
   }
 }
 
-@media screen and (min-width: 960px) and (max-width: 1350px) {
-  .main-left {
-    @include span(8);
+@media screen and (max-width: 1100px) {
+  .itinerary {
+    margin-top: 12px;
+    height: 600px;
   }
 
-  .main-right {
-    @include span(8 at 9);
+  .map {
+    margin-top: 12px;
+    height: 400px;
   }
 }
 
-@media screen and (min-width: 1351px) {
-  .main-left {
-    @include span(6 at 3);
+@media screen and (min-width: 1101px) {
+  .main-left,
+  .main-right {
+    @include span(8);
   }
 
-  .main-right {
-    @include span(6 at 9);
+  .itinerary {
+    height: 84vh;
+    max-height: 850px;
+  }
+
+  .map {
+    height: 60vh;
+    max-height: 690px;
+  }
+}
+
+@media screen and (min-width: 1500px) {
+  @include with-layout($fixed-layout) {
+    body {
+      @include container;
+    }
+
+    // .main-left {
+    //   @include span(6 at 3);
+    // }
+    //
+    // .main-right {
+    //   @include span(6 at 9);
+    // }
   }
 }
