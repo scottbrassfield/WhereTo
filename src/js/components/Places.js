@@ -40,11 +40,11 @@ const Places = ({ dispatch, places, onClick, modal, ...rest }) => {
 const mapDispatch = (dispatch, ownProps) => {
   return {
     onClick: (place) => {
-      const { overview, values, router } = ownProps
+      const { overview, values, username} = ownProps
       if (!overview) {
         const tripId = uuidV4()
-        dispatch(initiateTrip(values, place, true, tripId)).then(() => {
-          router.push('../trips/' + tripId)
+        dispatch(initiateTrip(values, place, true, tripId, username))
+        .then(() => {
           dispatch(showModal(null))
         })
       } else {

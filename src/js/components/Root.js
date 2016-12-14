@@ -7,7 +7,6 @@ import App from './app'
 import Home from './Home'
 import Dashboard from './Dashboard'
 import NewTrip from './NewTrip'
-import TripList from './TripList'
 import Trip from './Trip'
 
 const Root = ({store}) => (
@@ -16,8 +15,8 @@ const Root = ({store}) => (
       <Router history={browserHistory}>
         <Route path='/' component={App} >
           <IndexRoute component={Home} />
-          <Route path=':username' component={Dashboard}>
-            <IndexRoute component={TripList} />
+          <Route path='user'>
+            <IndexRoute component={Dashboard} />
             <Route path='trips/:tripId' component={Trip} />
             <Route path='newTrip' component={NewTrip} />
           </Route>

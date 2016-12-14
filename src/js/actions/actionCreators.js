@@ -189,12 +189,12 @@ export const getPlace = (search) => {
   }
 }
 
-export const initiateTrip = (values, places, complete, tripId, username) => {
+export const initiateTrip = (values, places, complete, tripId) => {
   return dispatch => {
     dispatch(clearMarkers())
     return dispatch(addMarkers(places)).then(() => {
       dispatch(addOverview(values, complete, tripId))
-      browserHistory.push(`/users/${username}/trips/${tripId}`)
+      browserHistory.push(`/user/trips/${tripId}`)
     })
   }
 }
@@ -266,7 +266,7 @@ export const userLogin = (credentials) => {
       console.log(res.message)
       dispatch(confirmLogin(credentials.username))
       dispatch(showModal(null))
-      browserHistory.push(`/users/${credentials.username}/newTrip`)
+      browserHistory.push(`/user/newTrip`)
     })
     .catch(err => {
       dispatch(loginError(err))
@@ -285,9 +285,9 @@ export const userSignup = (credentials) => {
     .then(res => res.json())
     .then(res => {
       console.log(res.message)
-      dispatch(confirmSignup())
+      dispatch(confirmSignup(credentials.username))
       dispatch(showModal(null))
-      browserHistory.push(`/users/${credentials.username}/newTrip`)
+      browserHistory.push(`/user/newTrip`)
     })
     .catch(err => {
       console.log(err);
