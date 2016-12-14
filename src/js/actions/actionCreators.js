@@ -20,7 +20,10 @@ import {
   CLEAR_RESULTS,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
-  LOGIN_ERROR
+  LOGIN_ERROR,
+  SIGNUP_REQUEST,
+  SIGNUP_SUCCESS,
+  SIGNUP_ERROR
 } from './actionTypes'
 
 export const addOverview = ({ destination, startDate, endDate}, complete, tripId) => {
@@ -205,18 +208,45 @@ export const requestLogin = (credentials) => {
   }
 }
 
-export const confirmLogin = (credentials) => {
+export const confirmLogin = (user) => {
   return {
     type: LOGIN_SUCCESS,
     isFetching: false,
     isAuthenticated: true,
-    credentials
+    user
   }
 }
 
 export const loginError = (error) => {
   return {
     type: LOGIN_ERROR,
+    isFetching: false,
+    isAuthenticated: false,
+    error
+  }
+}
+
+export const requestSignup = (credentials) => {
+  return {
+    type: SIGNUP_REQUEST,
+    isFetching: true,
+    isAuthenticated: false,
+    credentials
+  }
+}
+
+export const confirmSignup = (user) => {
+  return {
+    type: SIGNUP_SUCCESS,
+    isFetching: false,
+    isAuthenticated: true,
+    user
+  }
+}
+
+export const signupError = (error) => {
+  return {
+    type: SIGNUP_ERROR,
     isFetching: false,
     isAuthenticated: false,
     error
@@ -232,12 +262,36 @@ export const userLogin = (credentials) => {
       body: JSON.stringify(credentials)
     })
     .then(res => res.json())
-    .then(credentials => {
-      dispatch(confirmLogin(credentials))
+    .then(res => {
+      console.log(res.message)
+      dispatch(confirmLogin(credentials.username))
+      dispatch(showModal(null))
       browserHistory.push(`/users/${credentials.username}/newTrip`)
     })
     .catch(err => {
       dispatch(loginError(err))
+    })
+  }
+}
+
+export const userSignup = (credentials) => {
+  return dispatch => {
+    dispatch(requestSignup(credentials))
+    return fetch('/api/users/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(credentials)
+    })
+    .then(res => res.json())
+    .then(res => {
+      console.log(res.message)
+      dispatch(confirmSignup())
+      dispatch(showModal(null))
+      browserHistory.push(`/users/${credentials.username}/newTrip`)
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch(signupError(err))
     })
   }
 }

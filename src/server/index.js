@@ -7,9 +7,6 @@ const mongoose = require('mongoose')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const passport = require('passport')
-const plansRoutes = require('./plans-routes')
-const markersRoutes = require('./markers-routes')
-const usersRoutes = require('./users-routes')
 const webpack = require('webpack')
 const config = require('../../webpack.config')
 const compiler = webpack(config)
@@ -26,7 +23,6 @@ if (process.env.NODE_ENV !== 'production') {
   }))
 
   app.use(require('webpack-hot-middleware')(compiler))
-
 }
 
 const DB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/where-to'
@@ -37,9 +33,6 @@ mongoose.connect(DB_URI)
 
 require('./passport')(passport)
 
-app.use(passport.initialize())
-app.use(passport.session())
-
 app.use(session({
   secret: 'secret',
   store: new MongoStore({ mongooseConnection: mongoose.connection }),
@@ -47,14 +40,22 @@ app.use(session({
   saveUninitialized: false
 }))
 
-// app.use( express.static( __dirname + '../../dist/public/index.html' ));
+app.use(passport.initialize())
+app.use(passport.session())
+
+app.use(express.static( __dirname + '../../dist/public/'));
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cookieParser())
 
+const plansRoutes = require('./plans-routes')
+const markersRoutes = require('./markers-routes')
+const usersRoutes = require('./users-routes')
+const mapRoutes = require('./map-routes')
+
 app.use('/api/users', usersRoutes(passport))
-app.use('/api/map', require('./map-routes'))
+app.use('/api/map', mapRoutes)
 app.use('/api/plans', plansRoutes)
 app.use('/api/markers', markersRoutes)
 

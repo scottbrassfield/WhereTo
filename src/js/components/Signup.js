@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap'
 import Modal from './Modal'
-import { showModal } from '../actions/actionCreators'
+import { showModal, userSignup } from '../actions/actionCreators'
 import { emptyValidate } from './util'
 
 const validate = values => {
@@ -63,7 +63,7 @@ Signup = reduxForm({
   form: 'signup',
   validate,
   onSubmit: (values, dispatch) => {
-    dispatch(showModal(null))
+    dispatch(userSignup(values))
   }
 })(Signup)
 

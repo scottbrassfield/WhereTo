@@ -27,8 +27,7 @@ module.exports = function(passport) {
             console.log('User not found with username ' + username);
             return done(null, false)
           }
-          // if (!checkPassword(user, password)) {
-          if (password !== user.password) {
+          if (!checkPassword(user, password)) {
             console.log('Invalid Password')
             return done(null, false)
           }
@@ -53,8 +52,7 @@ module.exports = function(passport) {
           } else {
             var newUser = new User({
               username: username,
-              password: createHash(password),
-              email: req.param('email'),
+              password: createHash(password)
             })
             newUser.save(function(err) {
               if (err) {
@@ -68,9 +66,9 @@ module.exports = function(passport) {
       })
   }))
 
-  // function checkPassword(user, password) {
-  //   return bCrypt.compareSync(password, user.password)
-  // }
+  function checkPassword(user, password) {
+    return bCrypt.compareSync(password, user.password)
+  }
 
   function createHash(password) {
     return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null)

@@ -63,7 +63,6 @@ Login = reduxForm({
   form: 'login',
   validate,
   onSubmit: (values, dispatch) => {
-    dispatch(showModal(null))
     dispatch(userLogin(values))
   }
 })(Login)
