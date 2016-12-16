@@ -23,7 +23,10 @@ import {
   LOGIN_ERROR,
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
-  SIGNUP_ERROR
+  SIGNUP_ERROR,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_ERROR
 } from './actionTypes'
 
 export const addOverview = ({ destination, startDate, endDate}, complete, tripId) => {
@@ -130,7 +133,9 @@ export const addMarkers = markers => {
         fetch('/api/markers', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(Object.assign({}, marker))
+            body: JSON.stringify(Object.assign({}, marker)),
+            credentials: 'include',
+            mode: 'cors'
           })
           .then(res => res.json())
           .then(marker => {
@@ -143,7 +148,9 @@ export const addMarkers = markers => {
       return fetch('/api/markers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.assign({}, markers))
+        body: JSON.stringify(Object.assign({}, markers)),
+        credentials: 'include',
+        mode: 'cors'
       })
       .then(res => res.json())
       .then(marker => {
@@ -179,7 +186,7 @@ export const showModal = (modal) => {
 export const getPlace = (search) => {
   return dispatch => {
     dispatch(clearResults('places'))
-    fetch('/api/map/places?' + 'place=' + search)
+    fetch('/api/map/places?' + 'place=' + search, { credentials: 'same-origin' })
       .then(res => res.json())
       .then(res => {
         let places = res.json.results
@@ -253,13 +260,37 @@ export const signupError = (error) => {
   }
 }
 
+export const requestLogout = () => {
+  return {
+    type: LOGOUT_REQUEST,
+    isFetching: true,
+    isAuthenticated: true
+  }
+}
+
+export const confirmLogout = () => {
+  return {
+    type: LOGOUT_SUCCESS,
+    isFetching: false,
+    isAuthenticated: false
+  }
+}
+
+export const logoutError = () => {
+  return {
+    type: LOGOUT_ERROR,
+    isFetching: false,
+    isAuthenticated: true
+  }
+}
+
 export const userLogin = (credentials) => {
   return dispatch => {
     dispatch(requestLogin(credentials))
     return fetch('/api/users/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(credentials)
+      body: JSON.stringify(credentials),
     })
     .then(res => res.json())
     .then(res => {
@@ -293,5 +324,21 @@ export const userSignup = (credentials) => {
       console.log(err);
       dispatch(signupError(err))
     })
+  }
+}
+
+export const userLogout = () => {
+  return dispatch => {
+    dispatch(requestLogout())
+    return fetch('/api/users/logout')
+      .then(res => res.json())
+      .then(res => {
+        console.log(res.message)
+        dispatch(confirmLogout())
+        browserHistory.push('/')
+      })
+      .catch(() => {
+        dispatch(logoutError())
+      })
   }
 }

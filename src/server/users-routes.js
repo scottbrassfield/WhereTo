@@ -7,9 +7,10 @@ module.exports = function(passport) {
     passport.authenticate('local-login', function(err, user) {
       if (err) return next(err)
       if (!user) res.send('Invalid Username')
-      req.login(user, function(err) {
+      req.logIn(user, function(err) {
         if (err) return next(err)
-        return res.send({message: 'Login successful'})
+        res.setHeader('Access-Control-Allow-Credentials', 'true')
+        res.send({message: 'Login successful'})
       })
     })(req, res, next)
   })
@@ -17,12 +18,18 @@ module.exports = function(passport) {
   router.post('/signup', function(req, res, next) {
     passport.authenticate('local-signup', function(err, user) {
       if (err) return next(err)
-      if (!user) res.send('Information not saved.  Try again')
-      req.login(user, function(err) {
+      if (!user) res.send('Information not saved. Try again')
+      req.logIn(user, function(err) {
         if (err) return next(err)
-        return res.send({message: 'Signup successful'})
+        res.setHeader('Access-Control-Allow-Credentials', 'true')
+        res.send({message: 'Signup successful'})
       })
     })(req, res, next)
+  })
+
+  router.get('/logout', function(req, res) {
+    req.logout();
+    res.send({message: 'Successfully logged out'})
   })
 
   return router

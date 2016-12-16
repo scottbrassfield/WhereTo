@@ -16,7 +16,7 @@ const initialState = {
 }
 
 const user = (state = initialState, action) => {
-  const { type, isFetching, isAuthenticated, error } = action
+  const { type, isFetching, isAuthenticated, user, error } = action
   switch(type) {
     case LOGIN_REQUEST:
     case SIGNUP_REQUEST:
@@ -25,7 +25,7 @@ const user = (state = initialState, action) => {
     case LOGIN_SUCCESS:
     case SIGNUP_SUCCESS:
     case LOGOUT_SUCCESS:
-      return { ...state, isFetching, isAuthenticated }
+      return { ...state, isFetching, isAuthenticated, user }
     case LOGIN_ERROR:
     case SIGNUP_ERROR:
     case LOGOUT_ERROR:
