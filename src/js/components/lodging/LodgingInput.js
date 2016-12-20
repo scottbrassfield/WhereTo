@@ -5,7 +5,7 @@ import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import momentLocalizer from 'react-widgets/lib/localizers/moment'
 import { RaisedButton } from 'material-ui/'
 import { addLodging, showForm } from '../../actions/actionCreators'
-import '../../../stylesheets/config/config.scss'
+import '../../../stylesheets/config.scss'
 import 'react-widgets/lib/less/react-widgets.less'
 
 momentLocalizer(moment)

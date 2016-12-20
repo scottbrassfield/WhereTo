@@ -9,7 +9,7 @@ const Overview = ({ destination, startDate, endDate, complete, updateOverview}) 
 
   return (
     <Paper
-      style={{marginTop: '30px', width: '100%', position: 'relative'}}>
+      style={{width: '100%', position: 'relative'}}>
       <div
         style={{display: 'inline-block', verticalAlign: 'middle', padding: '12px', maxWidth: '90%'}}
       >

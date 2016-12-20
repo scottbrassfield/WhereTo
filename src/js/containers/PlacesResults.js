@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { formValueSelector } from 'redux-form'
+import { withRouter } from 'react-router'
 import Places from '../components/Places'
 
 const PlacesResults = ({places, ...rest}) => {
@@ -21,11 +22,10 @@ const PlacesResults = ({places, ...rest}) => {
 const mapState = (state) => {
   const selector = formValueSelector('overview')
   return {
-    show: state.places.showResults,
-    places: state.places.searchResults,
+    places: state.results.places,
     values: selector(state, 'destination', 'startDate', 'endDate'),
     overview: state.overview.complete
   }
 }
 
-export default connect(mapState)(PlacesResults)
+export default withRouter(connect(mapState)(PlacesResults))

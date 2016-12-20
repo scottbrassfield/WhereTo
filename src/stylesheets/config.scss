@@ -1,19 +1,32 @@
 @import "~susy/sass/susy";
 
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 $susy: (
+  flow: ltr,
+  output: float,
+  math: fluid,
+  container: 90%,
+  container-position: center,
+  last-flow: to,
   columns: 16,
   gutters: 1/4,
   gutter-position: split,
   global-box-sizing: border-box,
-  container: 95%
+);
+
+$fixed-layout: (
+  container: 1450px,
 );
 
 $primary-font: 'Roboto', sans-serif;
 $primary-color: #5d5d5d;
 
 body {
-  @include container;
-
   background-color: #fafafa;
   font-family: $primary-font;
 }
@@ -28,14 +41,6 @@ body {
 
 .active {
   display: block;
-}
-
-#left {
-  @include span(7);
-}
-
-#right {
-  @include span(9 at 8);
 }
 
 .toggle-form {

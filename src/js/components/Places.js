@@ -1,36 +1,38 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Modal } from 'react-bootstrap'
-import { initiateTrip, addMarkers, toggleResults} from '../actions/actionCreators'
+import Modal from './Modal'
+import uuidV4 from 'uuid/v4'
+import { initiateTrip, addMarkers, showModal} from '../actions/actionCreators'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui'
 
-const Places = ({ show, places, onClick, onHide, title }) => {
-
+const Places = ({ dispatch, places, onClick, modal, ...rest }) => {
   return (
-    <Modal bsSize='large' show={show} onHide={onHide}>
-      <Modal.Header>
-        <Modal.Title>{title}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Table
-          onRowSelection={row => {onClick(places[row])}}
-        >
-          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-            <TableRow>
-              <TableHeaderColumn>Location</TableHeaderColumn>
-              <TableHeaderColumn>Address</TableHeaderColumn>
+    <Modal
+      general={{
+        show: modal === 'results',
+        size: 'large',
+        keyboard: true,
+        onHide: () => { dispatch(showModal(null)) }
+      }}
+      header={{ closeButton: true }}
+      {...rest}
+    >
+      <Table onRowSelection={row => {onClick(places[row])}}>
+        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+          <TableRow>
+            <TableHeaderColumn>Location</TableHeaderColumn>
+            <TableHeaderColumn>Address</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody showRowHover={true} displayRowCheckbox={false}>
+          { places && places.map(place => (
+            <TableRow key={place.id} >
+              <TableRowColumn>{place.name}</TableRowColumn>
+              <TableRowColumn>{place.formatted_address}</TableRowColumn>
             </TableRow>
-          </TableHeader>
-          <TableBody showRowHover={true} displayRowCheckbox={false}>
-            { places && places.map(place => (
-              <TableRow key={place.id} >
-                <TableRowColumn>{place.name}</TableRowColumn>
-                <TableRowColumn>{place.formatted_address}</TableRowColumn>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Modal.Body>
+          ))}
+        </TableBody>
+      </Table>
     </Modal>
   )
 }
@@ -38,16 +40,21 @@ const Places = ({ show, places, onClick, onHide, title }) => {
 const mapDispatch = (dispatch, ownProps) => {
   return {
     onClick: (place) => {
-      const { overview, values } = ownProps
+      const { overview, values, username} = ownProps
       if (!overview) {
-        dispatch(initiateTrip(values, place, true))
+        const tripId = uuidV4()
+        dispatch(initiateTrip(values, place, true, tripId, username))
+        .then(() => {
+          dispatch(showModal(null))
+        })
       } else {
         dispatch(addMarkers(place))
+        showModal(null)
       }
-      dispatch(toggleResults())
+
     },
     onHide: () => {
-      dispatch(toggleResults())
+      dispatch(showModal(null))
     },
     dispatch
   }

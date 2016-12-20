@@ -1,4 +1,6 @@
+const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path')
 
 module.exports = {
   devtool: 'source-map',
@@ -8,17 +10,9 @@ module.exports = {
     './src/index.js'
   ],
   output: {
-    path: './dist/public/',
-    filename: 'bundle.js'
-  },
-  devServer:  {
-    port: 3000,
-    contentBase: './dist/public/',
-    inline: true,
-    stats: 'minimal',
-    proxy: {
-      '/api/*': { target: 'http://localhost:3030' }
-    }
+    path: path.join(__dirname, 'dist/public/'),
+    filename: 'bundle.js',
+    publicPath: '/'
   },
   module: {
     loaders: [
@@ -58,7 +52,8 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('style.css'),
-
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.NoErrorsPlugin(),
+    new ExtractTextPlugin('style.css')
   ]
 }

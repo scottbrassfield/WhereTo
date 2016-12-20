@@ -2,6 +2,8 @@
 
 import async from 'async'
 
+import { browserHistory } from 'react-router'
+
 import {
   ADD_OVERVIEW,
   UPDATE_OVERVIEW,
@@ -14,16 +16,26 @@ import {
   ADD_MARKER,
   CLEAR_MARKERS,
   ADD_RESULTS,
-  SHOW_RESULTS,
-  CLEAR_RESULTS
+  SHOW_MODAL,
+  CLEAR_RESULTS,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_ERROR,
+  SIGNUP_REQUEST,
+  SIGNUP_SUCCESS,
+  SIGNUP_ERROR,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_ERROR
 } from './actionTypes'
 
-export const addOverview = ({ destination, startDate, endDate }, complete) => {
+export const addOverview = ({ destination, startDate, endDate}, complete, tripId) => {
   return {
     type: ADD_OVERVIEW,
     destination,
     startDate,
     endDate,
+    tripId,
     complete
   }
 }
@@ -121,7 +133,9 @@ export const addMarkers = markers => {
         fetch('/api/markers', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(Object.assign({}, marker))
+            body: JSON.stringify(Object.assign({}, marker)),
+            credentials: 'include',
+            mode: 'cors'
           })
           .then(res => res.json())
           .then(marker => {
@@ -134,64 +148,197 @@ export const addMarkers = markers => {
       return fetch('/api/markers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.assign({}, markers))
+        body: JSON.stringify(Object.assign({}, markers)),
+        credentials: 'include',
+        mode: 'cors'
       })
       .then(res => res.json())
       .then(marker => {
         dispatch(addMarker(marker))
-        console.log('Marker added to database')
       })
       .catch(err => { console.error(err) })
     }
   }
 }
 
-export const clearResults = () => {
+export const clearResults = (resultsType) => {
   return {
-    type: CLEAR_RESULTS
+    type: CLEAR_RESULTS,
+    resultsType
   }
 }
 
-export const addResults = (results) => {
+export const addResults = (results, resultsType) => {
   return {
     type: ADD_RESULTS,
-    results
+    results,
+    resultsType
   }
 }
 
-export const showResults = (show) => {
+export const showModal = (modal) => {
   return {
-    type: SHOW_RESULTS,
-    show
-  }
-}
-
-export const toggleResults = () => {
-  return (dispatch, getState) => {
-    let show = getState().places.showResults
-    dispatch(showResults(!show))
+    type: SHOW_MODAL,
+    modal
   }
 }
 
 export const getPlace = (search) => {
   return dispatch => {
-    dispatch(clearResults())
-    fetch('/api/map/places?' + 'place=' + search)
+    dispatch(clearResults('places'))
+    fetch('/api/map/places?' + 'place=' + search, { credentials: 'same-origin' })
       .then(res => res.json())
       .then(res => {
         let places = res.json.results
-        dispatch(addResults(places))
-        dispatch(toggleResults())
+        dispatch(addResults(places, 'places'))
+        dispatch(showModal('results'))
       })
   }
 }
 
-export const initiateTrip = (values, places, complete) => {
+export const initiateTrip = (values, places, complete, tripId) => {
   return dispatch => {
     dispatch(clearMarkers())
-    dispatch(addMarkers(places)).then(() => {
-      dispatch(addOverview(values, complete))
+    return dispatch(addMarkers(places)).then(() => {
+      dispatch(addOverview(values, complete, tripId))
+      browserHistory.push(`/user/trips/${tripId}`)
     })
+  }
+}
 
+export const requestLogin = (credentials) => {
+  return {
+    type: LOGIN_REQUEST,
+    isFetching: true,
+    isAuthenticated: false,
+    credentials
+  }
+}
+
+export const confirmLogin = (user) => {
+  return {
+    type: LOGIN_SUCCESS,
+    isFetching: false,
+    isAuthenticated: true,
+    user
+  }
+}
+
+export const loginError = (error) => {
+  return {
+    type: LOGIN_ERROR,
+    isFetching: false,
+    isAuthenticated: false,
+    error
+  }
+}
+
+export const requestSignup = (credentials) => {
+  return {
+    type: SIGNUP_REQUEST,
+    isFetching: true,
+    isAuthenticated: false,
+    credentials
+  }
+}
+
+export const confirmSignup = (user) => {
+  return {
+    type: SIGNUP_SUCCESS,
+    isFetching: false,
+    isAuthenticated: true,
+    user
+  }
+}
+
+export const signupError = (error) => {
+  return {
+    type: SIGNUP_ERROR,
+    isFetching: false,
+    isAuthenticated: false,
+    error
+  }
+}
+
+export const requestLogout = () => {
+  return {
+    type: LOGOUT_REQUEST,
+    isFetching: true,
+    isAuthenticated: true
+  }
+}
+
+export const confirmLogout = () => {
+  return {
+    type: LOGOUT_SUCCESS,
+    isFetching: false,
+    isAuthenticated: false
+  }
+}
+
+export const logoutError = () => {
+  return {
+    type: LOGOUT_ERROR,
+    isFetching: false,
+    isAuthenticated: true
+  }
+}
+
+export const userLogin = (credentials) => {
+  return dispatch => {
+    dispatch(requestLogin(credentials))
+    return fetch('/api/users/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(credentials),
+    })
+    .then(res => res.json())
+    .then(res => {
+      console.log(res.message)
+      dispatch(confirmLogin(credentials.username))
+      dispatch(showModal(null))
+      browserHistory.push(`/user/newTrip`)
+    })
+    .catch(err => {
+      dispatch(loginError(err))
+    })
+  }
+}
+
+export const userSignup = (credentials) => {
+  return dispatch => {
+    dispatch(requestSignup(credentials))
+    return fetch('/api/users/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(credentials)
+    })
+    .then(res => res.json())
+    .then(res => {
+      console.log(res.message)
+      dispatch(confirmSignup(credentials.username))
+      dispatch(showModal(null))
+      browserHistory.push(`/user/newTrip`)
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch(signupError(err))
+    })
+  }
+}
+
+export const userLogout = () => {
+  return dispatch => {
+    dispatch(requestLogout())
+    return fetch('/api/users/logout')
+      .then(res => res.json())
+      .then(res => {
+        console.log(res.message)
+        dispatch(confirmLogout())
+        browserHistory.push('/')
+      })
+      .catch(() => {
+        dispatch(logoutError())
+      })
   }
 }

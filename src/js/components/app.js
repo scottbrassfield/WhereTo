@@ -1,47 +1,88 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Overview from './Overview'
-import NewTrip from './NewTrip'
-import Itinerary from './itinerary/index'
-import LoadedMap from './map/LoadedMap'
-import Lodging from '../containers/ConnectedLodging'
-import Places from '../containers/PlacesResults'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import RootModal from '../containers/RootModal'
+import { showModal, userLogout } from '../actions/actionCreators'
 
-const App = ({ overview, showResults }) => {
-  if (!overview) {
-    return (
-      <MuiThemeProvider>
-        <div>
-          <NewTrip />
-          {showResults && <Places />}
+const App = ({ modal, children, dispatch, isAuthenticated }) => {
+
+  return (
+    <div>
+      <nav style={styles.nav}>
+        <div style={styles.navUser}>
+          {
+            isAuthenticated ? <Logout dispatch={dispatch} /> :
+              <div>
+                <Login dispatch={dispatch} />
+                <Signup dispatch={dispatch} />
+              </div>
+           }
         </div>
-      </MuiThemeProvider>
-    )
-  } else {
-    return (
-      <MuiThemeProvider>
-        <div>
-          <div id='left'>
-            <Overview />
-            <Lodging />
-            <LoadedMap />
-            {showResults && <Places />}
-          </div>
-          <div id='right'>
-            <Itinerary />
-          </div>
-        </div>
-      </MuiThemeProvider>
-    )
-  }
+      </nav>
+      {children}
+      {modal && <RootModal modal={modal}/>}
+    </div>
+  )
 }
 
 const mapState = (state) => {
   return {
-    overview: state.overview.complete,
-    showResults: state.places.showResults
-  }
+    modal: state.modal.modalType,
+    isAuthenticated: state.user.isAuthenticated
+   }
 }
 
-export default connect(mapState)(App);
+export default connect(mapState)(App)
+
+
+const Logout = ({dispatch}) => (
+  <NavButton
+    onClick={() => {dispatch(userLogout())}}>
+    Logout
+  </NavButton>
+)
+
+const Login = ({dispatch}) => (
+  <NavButton
+    onClick={() => {dispatch(showModal('login'))}}>
+    Login
+  </NavButton>
+)
+
+const Signup = ({dispatch}) => (
+  <NavButton
+    onClick={() => {dispatch(showModal('signup'))}}>
+    Sign Up
+  </NavButton>
+)
+
+const NavButton = ({onClick, children}) => (
+  <button
+    onClick={onClick}
+    style={styles.navUserItem} >
+    {children}
+  </button>
+)
+
+
+const styles = {
+  nav: {
+    position: 'fixed', top: 0, left: 0,
+    height: 50,
+    width: '100%',
+    backgroundColor: 'rgb(50,50,50)'
+  },
+  navUser: {
+    position: 'absolute',
+    top: '50%',
+    right: 0,
+    transform: 'translateY(-50%)'
+  },
+  navUserItem: {
+    marginRight: 20,
+    display: 'inline-block',
+    fontSize: 20,
+    border: 'none',
+    backgroundColor: 'transparent',
+    color: 'white'
+  }
+}

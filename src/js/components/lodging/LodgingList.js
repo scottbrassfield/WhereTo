@@ -1,7 +1,6 @@
 import React from 'react'
 import { Paper, Divider, RaisedButton } from 'material-ui/'
 import { showForm } from '../../actions/actionCreators'
-import '../../../stylesheets/config/config.scss'
 
 const ListItem = ({name, startDate, endDate}) => (
   <div style={{paddingLeft: '30px', paddingRight: '30px'}}>

@@ -1,17 +1,13 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import App from './js/components/app'
+import { render } from 'react-dom'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+import Root from './js/components/Root'
 import store from './js/store'
-import injectTapEventPlugin from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
-
 window.store = store;
 
-ReactDOM.render(
-    <Provider store={ store }>
-      <App />
-    </Provider>,
+render(
+  <Root store = {store} />,
   document.getElementById('root')
 )
