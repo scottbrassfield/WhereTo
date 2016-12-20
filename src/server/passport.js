@@ -7,10 +7,12 @@ const bCrypt = require('bcrypt-nodejs')
 module.exports = function(passport) {
 
   passport.serializeUser((user, done) => {
-    return done(null, user._id)
+    console.log('serialize');
+    done(null, user._id)
   })
 
   passport.deserializeUser((id, done) => {
+    console.log('deserialize');
     User.findById(id, (err, user) => {
       done(err, user)
     })
@@ -41,6 +43,7 @@ module.exports = function(passport) {
   passport.use('local-signup', new LocalStrategy({ passReqToCallback: true },
     function(req, username, password, done) {
       process.nextTick(function() {
+        console.log(req);
         User.findOne({ username: username }, function(err, user) {
           if (err) {
             console.log('Error in signup' + err);

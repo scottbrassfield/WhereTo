@@ -2,7 +2,6 @@
 const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
@@ -26,28 +25,29 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const DB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/where-to'
-const PORT = process.env.PORT || 3030
+const PORT = process.env.PORT || 3000
 
 mongoose.Promise = global.Promise
 mongoose.connect(DB_URI)
 
 require('./passport')(passport)
 
-app.use(session({
-  secret: 'secret',
-  store: new MongoStore({ mongooseConnection: mongoose.connection }),
-  resave: false,
-  saveUninitialized: false
-}))
-
-app.use(passport.initialize())
-app.use(passport.session())
-
 app.use(express.static( __dirname + '../../dist/public/'));
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
-app.use(cookieParser())
+
+app.use(session({
+  secret: 'secret',
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection
+  }),
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false }
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 
 const plansRoutes = require('./plans-routes')
 const markersRoutes = require('./markers-routes')
