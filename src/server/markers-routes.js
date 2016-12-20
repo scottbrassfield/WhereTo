@@ -8,12 +8,12 @@ const Marker = require('../models/Markers')
 const router = new Router()
 
 router.get('/', (req, res) => {
-    Marker
-      .find()
-      .toArray((err, docs) => {
-        if (err) return res.sendStatus(500)
-        res.json(docs)
-      })
+  Marker
+    .find()
+    .toArray((err, docs) => {
+      if (err) return res.sendStatus(500)
+      res.json(docs)
+    })
 })
 
 router.get('/:markerId', (req, res) => {
@@ -22,6 +22,8 @@ router.get('/:markerId', (req, res) => {
 })
 
 router.post('/', (req, res) => {
+  console.log(req.sessionID)
+  console.log(req.user)
   let marker = new Marker(req.body)
   marker.save((err, data) => {
     if (err) return res.send('Marker could not be saved')
